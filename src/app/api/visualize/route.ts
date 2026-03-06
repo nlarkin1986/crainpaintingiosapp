@@ -3,9 +3,14 @@ import { put, type PutCommandOptions } from "@vercel/blob";
 
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
 import { nanoid } from "nanoid";
-import { buildPaintPrompt } from "@/lib/prompt";
+import { buildPaintPrompt, normalizeCustomInstruction } from "@/lib/prompt";
 import { rateLimit } from "@/lib/rate-limit";
-import { generatePaintVisualization } from "@/lib/gemini";
+import { generatePaintVisualization, GeminiGenerationError } from "@/lib/gemini";
+import {
+  extensionForMimeType,
+  isSupportedImageMimeType,
+  normalizeImageMimeType,
+} from "@/lib/image-mime";
 
 export const maxDuration = 60;
 
@@ -14,6 +19,13 @@ const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB
 
 export async function POST(request: NextRequest) {
   try {
+    if (!blobToken) {
+      return NextResponse.json(
+        { error: "Storage is not configured. Please contact support." },
+        { status: 500 }
+      );
+    }
+
     // --- Parse FormData ---
     const formData = await request.formData();
     const image = formData.get("image") as File | null;
@@ -23,6 +35,7 @@ export async function POST(request: NextRequest) {
     const surface = formData.get("surface") as string | null;
     const customInstruction = formData.get("customInstruction") as string | null;
     const brand = (formData.get("brand") as string | null) ?? "benjamin_moore";
+    const normalizedCustomInstruction = normalizeCustomInstruction(customInstruction);
 
     // --- Validate required fields ---
     if (!image || !colorName || !colorHex || !colorNumber || !surface) {
@@ -32,11 +45,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (surface === "custom" && !normalizedCustomInstruction) {
+      return NextResponse.json(
+        { error: "Please describe the custom surface you want to repaint." },
+        { status: 400 }
+      );
+    }
+
     // --- Validate file type ---
     if (!image.type.startsWith("image/")) {
       return NextResponse.json(
         { error: "File must be an image" },
         { status: 400 }
+      );
+    }
+
+    const inputMimeType = normalizeImageMimeType(image.type);
+    if (!inputMimeType || !isSupportedImageMimeType(inputMimeType)) {
+      return NextResponse.json(
+        { error: "Unsupported image type. Please upload JPEG, PNG, WEBP, HEIC, or HEIF." },
+        { status: 415 }
       );
     }
 
@@ -63,10 +91,10 @@ export async function POST(request: NextRequest) {
 
     // --- Upload original image to Vercel Blob ---
     const imageBuffer = Buffer.from(await image.arrayBuffer());
-    const ext = image.type.split("/")[1] || "jpg";
+    const ext = extensionForMimeType(inputMimeType);
     const originalBlob = await put(`originals/${nanoid(10)}.${ext}`, imageBuffer, {
       access: "public",
-      contentType: image.type,
+      contentType: inputMimeType,
       token: blobToken,
     });
     const originalUrl = originalBlob.url;
@@ -81,15 +109,21 @@ export async function POST(request: NextRequest) {
       colorNumber,
       colorHex,
       brand,
-      customInstruction: customInstruction || undefined,
+      customInstruction: normalizedCustomInstruction,
     });
 
     // --- Call Gemini API ---
     let geminiResult: { data: string; mimeType: string };
     try {
-      geminiResult = await generatePaintVisualization(prompt, imageBase64, image.type);
+      geminiResult = await generatePaintVisualization(prompt, imageBase64, inputMimeType);
     } catch (err) {
       console.error("Gemini API error:", err);
+      if (err instanceof GeminiGenerationError) {
+        return NextResponse.json(
+          { error: err.message, code: err.code },
+          { status: err.status }
+        );
+      }
       return NextResponse.json(
         { error: "Failed to generate visualization. Please try again." },
         { status: 500 }
@@ -98,10 +132,11 @@ export async function POST(request: NextRequest) {
 
     // --- Upload result image to Vercel Blob ---
     const resultBuffer = Buffer.from(geminiResult.data, "base64");
-    const resultExt = geminiResult.mimeType.split("/")[1] || "png";
+    const resultMimeType = normalizeImageMimeType(geminiResult.mimeType) ?? "image/png";
+    const resultExt = extensionForMimeType(resultMimeType);
     const resultBlob = await put(`results/${nanoid(10)}.${resultExt}`, resultBuffer, {
       access: "public",
-      contentType: geminiResult.mimeType,
+      contentType: resultMimeType,
       token: blobToken,
     });
     const resultUrl = resultBlob.url;
@@ -114,6 +149,7 @@ export async function POST(request: NextRequest) {
       colorName,
       colorNumber,
       colorHex,
+      brand,
       surface,
       createdAt: new Date().toISOString(),
     };

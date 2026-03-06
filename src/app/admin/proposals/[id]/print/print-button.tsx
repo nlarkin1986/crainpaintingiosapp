@@ -19,7 +19,7 @@ export function PrintButton({ proposalId }: PrintButtonProps) {
   return (
     <button
       onClick={() => window.print()}
-      className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-lg hover:bg-primary/90"
+      className="rounded-lg bg-primary-fill px-4 py-2 text-sm font-medium text-primary-fill-foreground shadow-lg hover:bg-primary-fill/90"
     >
       Print / Save as PDF
     </button>

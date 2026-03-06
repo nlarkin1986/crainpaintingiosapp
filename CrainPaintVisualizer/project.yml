@@ -16,10 +16,24 @@ settings:
     INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait"
     INFOPLIST_KEY_NSCameraUsageDescription: "We need camera access to photograph your room for paint visualization"
     INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "We need photo library access to select room photos for paint visualization"
+packages:
+  Stripe:
+    url: https://github.com/stripe/stripe-ios-spm
+    from: 24.8.0
 targets:
   CrainPaintVisualizer:
     type: application
     platform: iOS
+    info:
+      path: Sources/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: "Crain Paint"
+        NSCameraUsageDescription: "We need camera access to photograph your room for paint visualization"
+        NSPhotoLibraryUsageDescription: "We need photo library access to select room photos for paint visualization"
+        STRIPE_MERCHANT_IDENTIFIER: "merchant.com.crainpainting.visualizer"
+    dependencies:
+      - package: Stripe
+        product: StripePaymentSheet
     sources:
       - path: Sources
         type: group
@@ -31,4 +45,38 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.crainpainting.visualizer
         MARKETING_VERSION: "1.0.0"
         CURRENT_PROJECT_VERSION: 1
-        INFOPLIST_KEY_CFBundleDisplayName: "Crain Paint"
+  CrainPaintVisualizerTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/Unit
+        type: group
+    dependencies:
+      - target: CrainPaintVisualizer
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crainpainting.visualizerTests
+        GENERATE_INFOPLIST_FILE: true
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/CrainPaintVisualizer.app/CrainPaintVisualizer"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+  CrainPaintVisualizerUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: Tests/UI
+        type: group
+    dependencies:
+      - target: CrainPaintVisualizer
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crainpainting.visualizerUITests
+        GENERATE_INFOPLIST_FILE: true
+schemes:
+  CrainPaintVisualizer:
+    build:
+      targets:
+        CrainPaintVisualizer: all
+    test:
+      targets:
+        - CrainPaintVisualizerTests
+        - CrainPaintVisualizerUITests

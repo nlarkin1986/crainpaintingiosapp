@@ -36,14 +36,14 @@ export async function sendReportEmail({ to, reportUrl, pdfUrl, packageName }: Se
         </p>
 
         <a href="${reportUrl}"
-           style="display: inline-block; background-color: #27CCC0; color: white; padding: 14px 28px;
+           style="display: inline-block; background-color: #13D4D4; color: #0f172a; padding: 14px 28px;
                   text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
           View Your Report
         </a>
 
         ${pdfUrl ? `
           <p style="margin-top: 24px; color: #666; font-size: 14px;">
-            <a href="${pdfUrl}" style="color: #27CCC0;">Download PDF version</a>
+            <a href="${pdfUrl}" style="color: #0A8080;">Download PDF version</a>
           </p>
         ` : ''}
 

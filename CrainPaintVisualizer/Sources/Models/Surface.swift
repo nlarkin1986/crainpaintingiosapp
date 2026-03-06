@@ -20,4 +20,16 @@ enum SurfaceType: String, CaseIterable, Hashable, Sendable {
         case .custom: "paintpalette"
         }
     }
+
+    var testIdentifier: String {
+        switch self {
+        case .walls: "fullWalls"
+        case .trimBase: "trimBase"
+        case .accentWall: "accentWall"
+        case .doors: "doors"
+        case .cabinets: "cabinets"
+        case .ceiling: "ceiling"
+        case .custom: "custom"
+        }
+    }
 }

@@ -3,10 +3,10 @@
 import type { BMColor } from "@/types/colors";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, PaintRoller, LayoutGrid, DoorOpen, Minus, ArrowUpFromDot, PanelLeftClose, Pencil, Home } from "lucide-react";
+import { ArrowLeft, PaintRoller, LayoutGrid, DoorOpen, Minus, ArrowUpFromDot, PanelLeftClose, Pencil, Home, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 
 interface SurfacePickerProps {
   selectedSurface: string;
@@ -17,6 +17,7 @@ interface SurfacePickerProps {
   photo: File | null;
   onSubmit: () => void;
   onBack: () => void;
+  isSubmitting: boolean;
 }
 
 const CUSTOM_SURFACE = "custom";
@@ -40,12 +41,19 @@ export function SurfacePicker({
   photo,
   onSubmit,
   onBack,
+  isSubmitting,
 }: SurfacePickerProps) {
-  const photoPreviewUrl = useMemo(() => {
-    if (photo) {
-      return URL.createObjectURL(photo);
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!photo) {
+      setPhotoPreviewUrl(null);
+      return;
     }
-    return null;
+
+    const objectUrl = URL.createObjectURL(photo);
+    setPhotoPreviewUrl(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
   }, [photo]);
 
   return (
@@ -182,6 +190,7 @@ export function SurfacePicker({
               className="h-12 text-base"
               style={{ fontSize: "16px" }}
               autoFocus
+              maxLength={80}
               aria-label="Custom surface description"
             />
           </div>
@@ -194,6 +203,7 @@ export function SurfacePicker({
           variant="outline"
           size="lg"
           onClick={onBack}
+          disabled={isSubmitting}
           className="h-12 gap-2 text-lg"
         >
           <ArrowLeft className="h-5 w-5" />
@@ -202,11 +212,24 @@ export function SurfacePicker({
         <Button
           variant="cta"
           onClick={onSubmit}
-          disabled={!selectedSurface || (selectedSurface === CUSTOM_SURFACE && !customInstruction.trim())}
+          disabled={
+            isSubmitting ||
+            !selectedSurface ||
+            (selectedSurface === CUSTOM_SURFACE && !customInstruction.trim())
+          }
           size="lg"
           className="h-12 flex-1 text-lg"
         >
-          {selectedColors.length > 1 ? `See My ${selectedColors.length} Colors` : "See My Room"}
+          {isSubmitting ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Starting...
+            </>
+          ) : selectedColors.length > 1 ? (
+            `See My ${selectedColors.length} Colors`
+          ) : (
+            "See My Room"
+          )}
         </Button>
       </div>
     </div>

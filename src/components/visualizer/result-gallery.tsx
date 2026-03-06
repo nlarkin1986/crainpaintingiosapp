@@ -14,6 +14,7 @@ interface ResultGalleryProps {
   onRetry: (colorNumber: string) => void;
   onAddAnotherColor: () => void;
   onStartOver: () => void;
+  onCancelGeneration: () => void;
   surface: string;
   onSaved?: (proposalId: string) => void;
 }
@@ -24,6 +25,7 @@ export function ResultGallery({
   onRetry,
   onAddAnotherColor,
   onStartOver,
+  onCancelGeneration,
   surface,
   onSaved,
 }: ResultGalleryProps) {
@@ -85,7 +87,7 @@ export function ResultGallery({
       {isGenerating && (
         <div className="text-center">
           <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2">
-            <div className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+            <div className="h-2 w-2 animate-pulse rounded-full bg-primary-fill" />
             <span className="text-sm font-medium text-primary">
               Generating {generatingIndex + 1} of {totalCount}...
             </span>
@@ -136,9 +138,21 @@ export function ResultGallery({
             size="lg"
             className="h-11 gap-2 text-sm"
             onClick={handleDownloadAll}
+            disabled={isGenerating}
           >
             <Download className="h-4 w-4" />
             Download All
+          </Button>
+        )}
+        {isGenerating && (
+          <Button
+            variant="outline"
+            size="lg"
+            className="h-11 gap-2 text-sm"
+            onClick={onCancelGeneration}
+          >
+            <RotateCcw className="h-4 w-4" />
+            Cancel Generation
           </Button>
         )}
       </div>

@@ -18,7 +18,9 @@ import { CONSULTATION_PACKAGES } from "@/types/consultation";
 // Styles
 // ---------------------------------------------------------------------------
 
-const teal = "#27CCC0";
+const teal = "#13D4D4";
+const tealStrong = "#0A8080";
+const tealInk = "#0f172a";
 const orange = "#F6653C";
 const dark = "#0f172a";
 const muted = "#64748b";
@@ -64,7 +66,7 @@ const s = StyleSheet.create({
   },
   badge: {
     backgroundColor: teal,
-    color: "#ffffff",
+    color: tealInk,
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 10,
@@ -120,7 +122,7 @@ const s = StyleSheet.create({
   },
   colorNumber: {
     fontSize: 10,
-    color: teal,
+    color: tealStrong,
     fontFamily: "Helvetica-Bold",
   },
   finishRow: {
@@ -165,7 +167,7 @@ const s = StyleSheet.create({
     height: 16,
     borderRadius: 8,
     backgroundColor: teal,
-    color: "#ffffff",
+    color: tealInk,
     fontSize: 8,
     textAlign: "center",
     lineHeight: 1,
@@ -176,7 +178,7 @@ const s = StyleSheet.create({
     width: 10,
     height: 10,
     borderWidth: 1.5,
-    borderColor: teal,
+    borderColor: tealStrong,
     borderRadius: 2,
     marginTop: 2,
   },

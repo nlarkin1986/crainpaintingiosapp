@@ -102,7 +102,7 @@ export function PackageCards() {
                 {/* Popular Badge */}
                 {isPopular && (
                   <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2">
-                    <Badge className="bg-accent px-4 py-1 text-sm font-semibold text-white">
+                    <Badge className="bg-accent px-4 py-1 text-sm font-semibold text-accent-foreground">
                       Most Popular
                     </Badge>
                   </div>

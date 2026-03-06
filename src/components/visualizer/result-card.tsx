@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Download, Share2, X, RotateCcw, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { getBrandLabel } from "@/lib/brands";
 
 interface ResultCardProps {
   result: ColorResult;
@@ -110,13 +111,14 @@ function CompletedCard({ result, onRemove, isGenerating }: {
     typeof window !== "undefined"
       ? `${window.location.origin}/share/${result.shareId}`
       : "";
+  const brandLabel = getBrandLabel(result.color.brand);
 
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${result.color.name} - Crain Painting Visualizer`,
-          text: `Check out this room visualized in Benjamin Moore ${result.color.name}!`,
+          title: `${brandLabel} ${result.color.name} - Crain Painting Visualizer`,
+          text: `Check out this room visualized in ${brandLabel} ${result.color.name}!`,
           url: shareUrl,
         });
       } catch {

@@ -448,7 +448,7 @@ export function ConsultationForm({
                 )}
               >
                 {pkg.popular && (
-                  <Badge className="absolute -top-3 right-3 bg-accent text-white text-xs shadow-sm">
+                  <Badge className="absolute -top-3 right-3 bg-accent text-accent-foreground text-xs shadow-sm">
                     Most Popular
                   </Badge>
                 )}

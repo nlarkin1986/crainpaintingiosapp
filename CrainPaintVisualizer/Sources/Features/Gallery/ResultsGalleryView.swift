@@ -3,63 +3,137 @@ import SwiftUI
 struct ResultsGalleryView: View {
     @Environment(Theme.self) private var theme
     @Environment(RouterPath.self) private var router
-    @State private var viewModel = GalleryViewModel()
+    @Environment(VisualizerViewModel.self) private var visualizerVM
+
+    private let galleryViewModel = GalleryViewModel()
+
+    private var sections: [GalleryViewModel.RoomSection] {
+        galleryViewModel.sections(using: visualizerVM)
+    }
+
+    private var isUsingLiveSelections: Bool {
+        !visualizerVM.selectedColors.isEmpty
+    }
+
+    private var featuredVisualization: Visualization? {
+        sections.first?.visualizations.first
+    }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: theme.spacingLG) {
-                ForEach(viewModel.sections) { section in
-                    VStack(alignment: .leading, spacing: theme.spacingMD) {
-                        // Section header
-                        HStack {
-                            Image(systemName: section.icon)
-                                .font(.system(size: 20))
-                                .foregroundStyle(theme.primary)
-                            Text(section.name)
-                                .font(theme.headline)
-                            AppBadge(text: "\(section.visualizations.count)", isFilled: false)
-                            Spacer()
-                            Button("View All") {}
-                                .font(theme.subhead)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(theme.primary)
-                        }
-                        .padding(.horizontal, theme.spacingMD)
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(spacing: theme.spacingLG) {
+                    // Congratulatory header
+                    VStack(spacing: theme.spacingSM) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 32))
+                            .foregroundStyle(theme.primary)
+                        Text("Your Visualizations Are Ready!")
+                            .font(theme.title)
+                            .foregroundStyle(theme.foreground)
+                        Text(isUsingLiveSelections ? "Swipe through your latest room studies" : "Swipe through saved inspirations below")
+                            .font(theme.caption)
+                            .foregroundStyle(theme.mutedForeground)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, theme.spacingMD)
 
-                        // Horizontal scroll of cards
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: theme.spacingMD) {
-                                ForEach(section.visualizations) { viz in
-                                    VisualizationCard(visualization: viz) {
-                                        router.navigate(to: .visualizationDetail(id: viz.id))
-                                    }
+                    if let featuredVisualization {
+                        Button {
+                            router.navigate(to: .visualizationDetail(id: featuredVisualization.id))
+                        } label: {
+                            HStack(spacing: theme.spacingSM) {
+                                Circle()
+                                    .fill(theme.primary.opacity(0.1))
+                                    .frame(width: 42, height: 42)
+                                    .overlay(
+                                        Image(systemName: "sparkles")
+                                            .foregroundStyle(theme.primary)
+                                    )
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Review Your Featured Result")
+                                        .font(theme.subhead)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(theme.foreground)
+                                    Text("Open the strongest concept first, then request Curt's expert report.")
+                                        .font(theme.caption)
+                                        .foregroundStyle(theme.mutedForeground)
                                 }
+
+                                Spacer()
+
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .foregroundStyle(theme.mutedForeground)
+                            }
+                            .padding(theme.spacingMD)
+                            .background(theme.primary.opacity(0.05))
+                            .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: theme.radiusLG)
+                                    .stroke(theme.primary.opacity(0.18), lineWidth: 1)
+                            )
+                        }
+                        .buttonStyle(ScaleButtonStyle())
+                        .padding(.horizontal, theme.spacingMD)
+                        .accessibilityIdentifier("gallery.reviewFeatured")
+                    }
+
+                    ForEach(sections) { section in
+                        VStack(alignment: .leading, spacing: theme.spacingMD) {
+                            // Section header
+                            HStack {
+                                Image(systemName: section.icon)
+                                    .font(.system(size: 20))
+                                    .foregroundStyle(theme.primary)
+                                Text(section.name)
+                                    .font(theme.headline)
+                                AppBadge(text: "\(section.visualizations.count)", isFilled: false)
+                                Spacer()
+                                Text("\(section.visualizations.count) items")
+                                    .font(theme.caption)
+                                    .foregroundStyle(theme.mutedForeground)
                             }
                             .padding(.horizontal, theme.spacingMD)
+
+                            // Horizontal scroll of cards with snap
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHStack(spacing: theme.spacingMD) {
+                                    ForEach(section.visualizations) { viz in
+                                        VisualizationCard(visualization: viz) {
+                                            router.navigate(to: .visualizationDetail(id: viz.id))
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal, theme.spacingMD)
+                                .scrollTargetLayout()
+                            }
+                            .scrollTargetBehavior(.viewAligned)
                         }
                     }
                 }
+                .padding(.vertical, theme.spacingMD)
+                .padding(.bottom, featuredVisualization == nil ? 0 : 88)
             }
-            .padding(.vertical, theme.spacingMD)
+
+            if let featuredVisualization {
+                FloatingActionBar {
+                    AppButton("Review Featured Result", variant: .cta, icon: "sparkles") {
+                        router.navigate(to: .visualizationDetail(id: featuredVisualization.id))
+                    }
+                    .accessibilityIdentifier("gallery.reviewFeatured.primary")
+                }
+            }
         }
         .navigationTitle("Gallery")
         .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button {} label: {
-                    Image(systemName: "folder.badge.plus")
-                        .foregroundStyle(theme.primary)
-                }
-                Button {} label: {
-                    Image(systemName: "magnifyingglass")
-                }
-            }
-        }
     }
 }
 
 private struct VisualizationCard: View {
     @Environment(Theme.self) private var theme
+    @Environment(VisualizerViewModel.self) private var visualizerVM
     let visualization: Visualization
     let action: () -> Void
 
@@ -68,13 +142,7 @@ private struct VisualizationCard: View {
             VStack(spacing: theme.spacingSM) {
                 // Image placeholder
                 ZStack(alignment: .topTrailing) {
-                    RoundedRectangle(cornerRadius: theme.radiusXL)
-                        .fill(Color(hex: visualization.colorHex).opacity(0.3))
-                        .overlay(
-                            Image(systemName: "photo")
-                                .font(.system(size: 32))
-                                .foregroundStyle(theme.mutedForeground.opacity(0.5))
-                        )
+                    previewCard
                         .aspectRatio(3/4, contentMode: .fit)
 
                     Image(systemName: "arrow.up.left.and.arrow.down.right")
@@ -86,7 +154,7 @@ private struct VisualizationCard: View {
                         .padding(12)
                 }
                 .overlay(
-                    RoundedRectangle(cornerRadius: theme.radiusXL)
+                    RoundedRectangle(cornerRadius: theme.radiusLG)
                         .stroke(theme.border, lineWidth: 1)
                 )
                 .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
@@ -120,8 +188,33 @@ private struct VisualizationCard: View {
                         .stroke(theme.border, lineWidth: 1)
                 )
             }
-            .frame(width: 240)
+            .frame(width: UIScreen.main.bounds.width * 0.72)
         }
         .buttonStyle(ScaleButtonStyle())
+        .accessibilityIdentifier("gallery.visualization.\(visualization.id)")
+    }
+
+    @ViewBuilder
+    private var previewCard: some View {
+        if visualization.hasReferenceImages {
+            Image(visualization.afterImageName)
+                .resizable()
+                .scaledToFill()
+                .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
+        } else if let photo = visualizerVM.photo {
+            Image(uiImage: photo)
+                .resizable()
+                .scaledToFill()
+                .overlay(Color(hex: visualization.colorHex).opacity(0.28))
+                .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
+        } else {
+            RoundedRectangle(cornerRadius: theme.radiusLG)
+                .fill(Color(hex: visualization.colorHex).opacity(0.3))
+                .overlay(
+                    Image(systemName: "photo")
+                        .font(.system(size: 32))
+                        .foregroundStyle(theme.mutedForeground.opacity(0.5))
+                )
+        }
     }
 }

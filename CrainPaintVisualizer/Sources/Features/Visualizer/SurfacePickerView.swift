@@ -3,8 +3,7 @@ import SwiftUI
 struct SurfacePickerView: View {
     @Environment(Theme.self) private var theme
     @Environment(RouterPath.self) private var router
-    @State private var selectedSurface: SurfaceType?
-    @State private var customText = ""
+    @Environment(VisualizerViewModel.self) private var visualizerVM
 
     private let presets: [SurfaceType] = [.walls, .trimBase, .accentWall, .doors, .cabinets, .ceiling]
     private let columns = [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)]
@@ -13,74 +12,87 @@ struct SurfacePickerView: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(spacing: theme.spacingMD) {
-                    StepProgressView(steps: ["Color", "Photo", "Surface"], currentStep: 2)
+                    BrandedHeader(
+                        title: "Select Surface",
+                        subtitle: "Where do you want to apply the color?"
+                    )
 
-                    Text("Where do you want to apply the color?")
-                        .font(theme.title)
-                        .foregroundStyle(theme.foreground)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, theme.spacingMD)
+                    StepProgressView(steps: ["Color", "Photo", "Surface"], currentStep: 2, icons: ["paintpalette", "camera", "sofa"])
 
                     // Surface grid
                     LazyVGrid(columns: columns, spacing: 12) {
                         ForEach(presets, id: \.self) { surface in
                             SurfaceTile(
                                 surface: surface,
-                                isSelected: selectedSurface == surface
+                                isSelected: visualizerVM.selectedSurface == surface
                             ) {
-                                selectedSurface = surface
-                                customText = ""
+                                visualizerVM.selectedSurface = surface
+                                visualizerVM.customSurfaceText = ""
                             }
                         }
                     }
-                    .padding(.horizontal, theme.spacingMD)
+                    .padding(.horizontal, theme.spacingLG)
 
                     // Custom / Other tile
                     Button {
-                        selectedSurface = .custom
+                        visualizerVM.selectedSurface = .custom
                     } label: {
                         HStack(spacing: theme.spacingSM) {
-                            Image(systemName: "paintpalette")
-                                .font(.system(size: 20))
-                            Text("Custom / Other")
-                                .font(theme.subhead)
+                            ZStack {
+                                Circle()
+                                    .fill(visualizerVM.selectedSurface == .custom ? theme.primary.opacity(0.1) : theme.muted)
+                                    .frame(width: 48, height: 48)
+                                Image(systemName: "paintpalette")
+                                    .font(.system(size: 20))
+                                    .foregroundStyle(visualizerVM.selectedSurface == .custom ? theme.primary : theme.mutedForeground)
+                            }
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Custom / Other")
+                                    .font(theme.subhead)
+                                    .foregroundStyle(visualizerVM.selectedSurface == .custom ? theme.primary : theme.foreground)
+                                Text("Describe the surface to paint")
+                                    .font(theme.caption)
+                                    .foregroundStyle(theme.mutedForeground)
+                            }
                             Spacer()
-                            Image(systemName: "chevron.down")
+                            Image(systemName: "chevron.right")
                                 .font(.system(size: 12))
+                                .foregroundStyle(theme.mutedForeground)
                         }
-                        .foregroundStyle(selectedSurface == .custom ? theme.primary : theme.foreground)
                         .padding(theme.spacingMD)
-                        .background(selectedSurface == .custom ? theme.primary.opacity(0.05) : .clear)
+                        .background(visualizerVM.selectedSurface == .custom ? theme.primary.opacity(0.05) : .clear)
                         .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
                         .overlay(
                             RoundedRectangle(cornerRadius: theme.radiusLG)
                                 .stroke(
-                                    selectedSurface == .custom ? theme.primary : theme.border,
-                                    style: StrokeStyle(lineWidth: selectedSurface == .custom ? 2 : 1.5, dash: [6])
+                                    visualizerVM.selectedSurface == .custom ? theme.primary : theme.border,
+                                    style: StrokeStyle(lineWidth: visualizerVM.selectedSurface == .custom ? 2 : 1.5, dash: [6])
                                 )
                         )
                     }
                     .buttonStyle(ScaleButtonStyle())
-                    .padding(.horizontal, theme.spacingMD)
+                    .padding(.horizontal, theme.spacingLG)
 
                     // Custom input
-                    if selectedSurface == .custom {
-                        AppInput(placeholder: "e.g., garage door, fence, brick exterior...", text: $customText)
-                            .padding(.horizontal, theme.spacingMD)
+                    if visualizerVM.selectedSurface == .custom {
+                        AppInput(placeholder: "e.g., garage door, fence, brick exterior...", text: Bindable(visualizerVM).customSurfaceText)
+                            .padding(.horizontal, theme.spacingLG)
                             .transition(.move(edge: .top).combined(with: .opacity))
                     }
                 }
-                .animation(.spring(response: 0.3), value: selectedSurface)
+                .animation(.spring(response: 0.3), value: visualizerVM.selectedSurface)
             }
+            .scrollDismissesKeyboard(.interactively)
 
             FloatingActionBar {
-                let isDisabled = selectedSurface == nil || (selectedSurface == .custom && customText.isEmpty)
+                let isDisabled = visualizerVM.selectedSurface == nil || (visualizerVM.selectedSurface == .custom && visualizerVM.customSurfaceText.isEmpty)
                 AppButton("Visualize Now", variant: .cta, icon: "wand.and.stars", isDisabled: isDisabled) {
                     router.navigate(to: .resultsGallery)
                 }
+                .accessibilityIdentifier("surfacePicker.visualizeNow")
             }
         }
-        .navigationTitle("Select Surface")
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -94,9 +106,14 @@ private struct SurfaceTile: View {
     var body: some View {
         Button(action: action) {
             VStack(spacing: theme.spacingSM) {
-                Image(systemName: surface.iconName)
-                    .font(.system(size: 24))
-                    .foregroundStyle(isSelected ? theme.primary : theme.foreground)
+                ZStack {
+                    Circle()
+                        .fill(isSelected ? theme.primary.opacity(0.1) : theme.muted)
+                        .frame(width: 48, height: 48)
+                    Image(systemName: surface.iconName)
+                        .font(.system(size: 22))
+                        .foregroundStyle(isSelected ? theme.primary : theme.mutedForeground)
+                }
                 Text(surface.rawValue)
                     .font(theme.subhead)
                     .foregroundStyle(isSelected ? theme.primary : theme.foreground)
@@ -104,7 +121,7 @@ private struct SurfaceTile: View {
                     .minimumScaleFactor(0.8)
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 80)
+            .frame(height: 100)
             .background(isSelected ? theme.primary.opacity(0.05) : theme.card)
             .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
             .overlay(
@@ -114,6 +131,10 @@ private struct SurfaceTile: View {
         }
         .buttonStyle(ScaleButtonStyle())
         .contentShape(Rectangle())
+        .sensoryFeedback(.selection, trigger: isSelected)
         .accessibilityLabel(surface.rawValue)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .accessibilityHint("Double tap to select this surface")
+        .accessibilityIdentifier("surfacePicker.surface.\(surface.testIdentifier)")
     }
 }

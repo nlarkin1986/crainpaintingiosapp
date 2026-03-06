@@ -4,14 +4,20 @@ import { generateReport } from '@/lib/claude';
 import { geocodeAddress } from '@/lib/geocoding';
 import { calculateSunAnalysis, getLightingDescription } from '@/lib/sun-analysis';
 import { calculateColorShifts } from '@/lib/color-shift';
-import { generatePaintVisualization } from '@/lib/gemini';
+import { GeminiGenerationError, generatePaintVisualization } from '@/lib/gemini';
 import { buildPaintPrompt } from '@/lib/prompt';
 import { sendReportEmail } from '@/lib/email';
 import { CONSULTATION_PACKAGES } from '@/types/consultation';
 import type { PackageType } from '@/types/consultation';
 import { randomUUID } from 'crypto';
+import {
+  extensionForMimeType,
+  isSupportedImageMimeType,
+  normalizeImageMimeType,
+} from '@/lib/image-mime';
 
 export const maxDuration = 60;
+const MAX_CONSULTATION_PHOTO_BYTES = 8 * 1024 * 1024;
 
 export async function POST(request: NextRequest) {
   const { orderId } = await request.json();
@@ -99,9 +105,26 @@ export async function POST(request: NextRequest) {
       try {
         // Fetch the photo
         const photoResponse = await fetch(firstPhotoUrl);
+        if (!photoResponse.ok) {
+          throw new Error(`Failed to fetch consultation photo (${photoResponse.status})`);
+        }
+
+        const mimeType = normalizeImageMimeType(photoResponse.headers.get('content-type'));
+        if (!mimeType || !isSupportedImageMimeType(mimeType)) {
+          throw new Error('Unsupported consultation photo format');
+        }
+
+        const contentLength = Number(photoResponse.headers.get('content-length') || 0);
+        if (contentLength > MAX_CONSULTATION_PHOTO_BYTES) {
+          throw new Error('Consultation photo is too large for visualization');
+        }
+
         const photoBuffer = await photoResponse.arrayBuffer();
+        if (photoBuffer.byteLength > MAX_CONSULTATION_PHOTO_BYTES) {
+          throw new Error('Consultation photo exceeds maximum size');
+        }
+
         const photoBase64 = Buffer.from(photoBuffer).toString('base64');
-        const mimeType = photoResponse.headers.get('content-type') || 'image/jpeg';
 
         // Generate visualization for each recommended color (limit to 3 for timeout safety)
         const vizLimit = Math.min(recommendations.length, 3);
@@ -118,13 +141,15 @@ export async function POST(request: NextRequest) {
             const result = await generatePaintVisualization(prompt, photoBase64, mimeType);
 
             // Upload visualization to Supabase Storage
-            const vizFileName = `reports/${orderId}/viz-${i}-${rec.colorNumber.replace(/[^a-zA-Z0-9]/g, '')}.jpg`;
+            const resultMimeType = normalizeImageMimeType(result.mimeType) ?? 'image/png';
+            const resultExtension = extensionForMimeType(resultMimeType);
+            const vizFileName = `reports/${orderId}/viz-${i}-${rec.colorNumber.replace(/[^a-zA-Z0-9]/g, '')}.${resultExtension}`;
             const vizBuffer = Buffer.from(result.data, 'base64');
 
             const { data: uploadData } = await supabase.storage
               .from('consultation-assets')
               .upload(vizFileName, vizBuffer, {
-                contentType: result.mimeType,
+                contentType: resultMimeType,
                 upsert: true,
               });
 
@@ -136,6 +161,13 @@ export async function POST(request: NextRequest) {
               recommendations[i].originalUrl = firstPhotoUrl;
             }
           } catch (vizError) {
+            if (vizError instanceof GeminiGenerationError) {
+              console.error(
+                `Visualization ${i} failed [${vizError.status}/${vizError.code}]:`,
+                vizError.message
+              );
+              continue;
+            }
             console.error(`Visualization ${i} failed:`, vizError);
             // Continue without this visualization
           }

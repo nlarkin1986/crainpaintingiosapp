@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ShareComparison } from "@/components/share/share-comparison";
+import { getBrandLabel } from "@/lib/brands";
 
 interface ShareData {
   originalUrl: string;
@@ -10,13 +11,13 @@ interface ShareData {
   colorName: string;
   colorNumber: string;
   colorHex: string;
+  brand?: string;
   surface: string;
   createdAt: string;
 }
 
 async function getShareData(id: string): Promise<ShareData | null> {
   try {
-    const blobUrl = `${process.env.Crain_READ_WRITE_TOKEN ? "https://" : ""}`;
     // Fetch the share JSON from Vercel Blob using the public URL pattern
     // Vercel Blob stores public files at the blob store URL
     const baseUrl = process.env.BLOB_STORE_URL;
@@ -54,19 +55,21 @@ export async function generateMetadata({
     };
   }
 
+  const brandLabel = getBrandLabel(data.brand);
+
   return {
     title: `${data.colorName} Visualization - Crain Painting`,
-    description: `See this room painted in Benjamin Moore ${data.colorName} (${data.colorNumber}). Visualize your own space with Crain Painting.`,
+    description: `See this room painted in ${brandLabel} ${data.colorName} (${data.colorNumber}). Visualize your own space with Crain Painting.`,
     openGraph: {
       title: `${data.colorName} - Crain Painting Color Visualizer`,
-      description: `Room visualized in Benjamin Moore ${data.colorName} (${data.colorNumber})`,
+      description: `Room visualized in ${brandLabel} ${data.colorName} (${data.colorNumber})`,
       images: [{ url: data.resultUrl, width: 1200, height: 630 }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: `${data.colorName} - Crain Painting Color Visualizer`,
-      description: `Room visualized in Benjamin Moore ${data.colorName}`,
+      description: `Room visualized in ${brandLabel} ${data.colorName}`,
       images: [data.resultUrl],
     },
   };
@@ -105,6 +108,8 @@ export default async function SharePage({
     );
   }
 
+  const brandLabel = getBrandLabel(data.brand);
+
   return (
     <main className="min-h-dvh bg-background">
       <div className="mx-auto max-w-2xl px-4 py-6">
@@ -138,7 +143,7 @@ export default async function SharePage({
                 {data.colorName}
               </span>
               <span className="text-sm text-muted-foreground">
-                Benjamin Moore {data.colorNumber}
+                {brandLabel} {data.colorNumber}
               </span>
             </div>
           </div>
@@ -162,7 +167,7 @@ export default async function SharePage({
             </span>
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Benjamin Moore Color Visualizer
+            {brandLabel} Color Visualizer
           </p>
         </footer>
       </div>

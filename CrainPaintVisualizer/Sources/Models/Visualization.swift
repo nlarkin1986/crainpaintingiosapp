@@ -9,11 +9,16 @@ struct Visualization: Identifiable, Hashable {
     let beforeImageName: String
     let afterImageName: String
     let surface: String
-}
 
-enum VisualizationStatus: Equatable {
-    case pending
-    case generating
-    case complete(originalURL: URL, resultURL: URL, shareId: String)
-    case failed(error: String)
+    var inferredBrand: PaintBrand {
+        colorCode.uppercased().contains("SW") ? .sherwinWilliams : .benjaminMoore
+    }
+
+    var hasReferenceImages: Bool {
+        !beforeImageName.isEmpty && !afterImageName.isEmpty
+    }
+
+    var asPaintColor: PaintColor {
+        PaintColor(number: colorCode, name: colorName, family: "Curated", hex: colorHex, brand: inferredBrand)
+    }
 }

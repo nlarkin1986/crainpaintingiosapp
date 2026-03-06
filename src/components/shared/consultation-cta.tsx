@@ -22,7 +22,7 @@ export function ConsultationCTA() {
         </p>
 
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <Button asChild size="lg" className="gap-2 bg-[#F6653C] text-white hover:bg-[#F6653C]/90">
+          <Button asChild size="lg" className="gap-2 bg-[#F6653C] text-accent-foreground hover:bg-[#F6653C]/90">
             <Link href="/expert">
               Get a Professional Color Report
               <ArrowRight className="size-4" />

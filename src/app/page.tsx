@@ -17,6 +17,7 @@ export default function HomePage() {
   const [customInstruction, setCustomInstruction] = useState("");
   const [results, setResults] = useState<ColorResult[]>([]);
   const [savedProposalId, setSavedProposalId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -136,23 +137,29 @@ export default function HomePage() {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting || isGenerating) return;
     if (!photo || selectedColors.length === 0 || !selectedSurface) return;
+    if (selectedSurface === "custom" && !customInstruction.trim()) return;
 
     const existingCompleted = results
       .filter((r): r is Extract<ColorResult, { status: 'complete' }> => r.status === 'complete');
     const existingNumbers = new Set(existingCompleted.map(r => r.color.number));
     const newColors = selectedColors.filter(c => !existingNumbers.has(c.number));
+    if (newColors.length === 0) return;
 
     const newResults: ColorResult[] = [
       ...existingCompleted,
       ...newColors.map(color => ({ status: 'pending' as const, color })),
     ];
 
-    setResults(newResults);
-    setCurrentStep(4);
-
-    if (newColors.length > 0) {
+    setIsSubmitting(true);
+    setSavedProposalId(null);
+    try {
+      setResults(newResults);
+      setCurrentStep(4);
       await generateResults(newColors);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -194,8 +201,25 @@ export default function HomePage() {
         ? { status: 'pending' as const, color: r.color }
         : r
     ));
+    setSavedProposalId(null);
 
     generateResults([resultToRetry.color]);
+  };
+
+  const handleCancelGeneration = () => {
+    abortControllerRef.current?.abort();
+    setResults(prev =>
+      prev.map((result) => {
+        if (result.status === "generating" || result.status === "pending") {
+          return {
+            status: "failed" as const,
+            color: result.color,
+            error: "Generation cancelled. Tap to retry.",
+          };
+        }
+        return result;
+      })
+    );
   };
 
   return (
@@ -250,6 +274,7 @@ export default function HomePage() {
               photo={photo}
               onSubmit={handleSubmit}
               onBack={() => setCurrentStep(2)}
+              isSubmitting={isSubmitting}
             />
           )}
           {currentStep === 4 && (
@@ -261,6 +286,7 @@ export default function HomePage() {
               onStartOver={handleStartOver}
               surface={selectedSurface}
               onSaved={setSavedProposalId}
+              onCancelGeneration={handleCancelGeneration}
             />
           )}
         </div>

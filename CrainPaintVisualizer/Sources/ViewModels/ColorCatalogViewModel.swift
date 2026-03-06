@@ -3,9 +3,19 @@ import SwiftUI
 @MainActor
 @Observable
 final class ColorCatalogViewModel {
-    var searchText = ""
-    var selectedBrand: PaintBrand = .benjaminMoore
-    var selectedFilter: ColorFilter = .popular
+    static let availableBrands: [PaintBrand] = [.benjaminMoore, .sherwinWilliams, .behr]
+
+    var searchText = "" {
+        didSet { scheduleFilter() }
+    }
+    var selectedBrand: PaintBrand = .benjaminMoore {
+        didSet { updateFilteredColors() }
+    }
+    var selectedFilter: ColorFilter = .popular {
+        didSet { updateFilteredColors() }
+    }
+
+    private(set) var filteredColors: [PaintColor] = []
 
     enum ColorFilter: String, CaseIterable {
         case popular = "Popular"
@@ -13,7 +23,22 @@ final class ColorCatalogViewModel {
         case match = "Match"
     }
 
-    var filteredColors: [PaintColor] {
+    private var filterTask: Task<Void, Never>?
+
+    init() {
+        updateFilteredColors()
+    }
+
+    private func scheduleFilter() {
+        filterTask?.cancel()
+        filterTask = Task {
+            try? await Task.sleep(for: .milliseconds(250))
+            guard !Task.isCancelled else { return }
+            updateFilteredColors()
+        }
+    }
+
+    private func updateFilteredColors() {
         let branded = allColors.filter { $0.brand == selectedBrand }
         let filtered: [PaintColor]
         switch selectedFilter {
@@ -22,8 +47,11 @@ final class ColorCatalogViewModel {
         case .all, .match:
             filtered = branded
         }
-        guard !searchText.isEmpty else { return filtered }
-        return filtered.filter {
+        guard !searchText.isEmpty else {
+            filteredColors = filtered
+            return
+        }
+        filteredColors = filtered.filter {
             $0.name.localizedCaseInsensitiveContains(searchText) ||
             $0.number.localizedCaseInsensitiveContains(searchText)
         }
@@ -71,12 +99,29 @@ final class ColorCatalogViewModel {
             ("SW 7012", "Creamy", "White", "F0E4CE"),
             ("SW 7035", "Aesthetic White", "White", "E8E0D0"),
         ]
+        let behrColors: [(String, String, String, String)] = [
+            ("PPU18-12", "Swiss Coffee", "White", "F0E8DA"),
+            ("PPU7-12", "Blank Canvas", "White", "ECE6D8"),
+            ("PPU24-11", "Silver Drop", "Gray", "D1CCC3"),
+            ("N320-2", "Whisper White", "White", "F2EEE7"),
+            ("S390-5", "Juniper Ash", "Green", "7E8A79"),
+            ("MQ5-32", "Breezeway", "Green", "B7C8C2"),
+            ("PPU15-16", "Cracked Pepper", "Black", "4A4B49"),
+            ("MQ3-28", "Cameo White", "Neutral", "E6D8C2"),
+            ("S470-6", "Blueprint", "Blue", "56708A"),
+            ("PPU5-12", "Almond Wisp", "Neutral", "D6C7B2"),
+            ("PPU25-07", "Ultra Pure White", "White", "F7F5EF"),
+            ("PPU18-17", "Toasty Gray", "Gray", "A79D93"),
+        ]
         var colors: [PaintColor] = []
         for (num, name, family, hex) in bmColors {
             colors.append(PaintColor(number: num, name: name, family: family, hex: hex, brand: .benjaminMoore))
         }
         for (num, name, family, hex) in swColors {
             colors.append(PaintColor(number: num, name: name, family: family, hex: hex, brand: .sherwinWilliams))
+        }
+        for (num, name, family, hex) in behrColors {
+            colors.append(PaintColor(number: num, name: name, family: family, hex: hex, brand: .behr))
         }
         return colors
     }()

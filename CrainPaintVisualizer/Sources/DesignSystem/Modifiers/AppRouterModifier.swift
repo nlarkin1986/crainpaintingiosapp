@@ -11,6 +11,10 @@ extension View {
             case .colorMatcher: ColorMatcherView()
             case .resultsGallery: ResultsGalleryView()
             case .visualizationDetail(let id): VisualizationDetailView(visualizationId: id)
+            case .reportsHome: ReportsHomeView()
+            case .masterReport(let reportId): MasterReportView(reportId: reportId)
+            case .sampleOutput(let reportId, let chapterId): SampleOutputView(reportId: reportId, chapterId: chapterId)
+            case .consultationCheckout(let reportId): ConsultationCheckoutView(reportId: reportId)
             }
         }
     }

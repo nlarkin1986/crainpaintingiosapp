@@ -16,9 +16,9 @@ export function QuizProgress({ currentStep, totalSteps }: QuizProgressProps) {
           className={cn(
             "h-2 rounded-full transition-all duration-300",
             i === currentStep
-              ? "w-8 bg-primary"
+              ? "w-8 bg-primary-fill"
               : i < currentStep
-                ? "w-2 bg-primary/50"
+                ? "w-2 bg-primary-fill/50"
                 : "w-2 bg-muted"
           )}
         />

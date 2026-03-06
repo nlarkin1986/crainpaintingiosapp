@@ -40,7 +40,7 @@ export function StepProgress({ currentStep, totalSteps }: StepProgressProps) {
               <div className="h-full w-full rounded-full bg-muted">
                 <div
                   className={cn(
-                    "h-full rounded-full bg-primary transition-all duration-500 ease-out",
+                    "h-full rounded-full bg-primary-fill transition-all duration-500 ease-out",
                     isFilled ? "w-full" : "w-0"
                   )}
                 />
@@ -62,7 +62,7 @@ export function StepProgress({ currentStep, totalSteps }: StepProgressProps) {
               <div
                 className={cn(
                   "relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300",
-                  isCompleted && "border-primary bg-primary text-primary-foreground",
+                  isCompleted && "border-primary-fill bg-primary-fill text-primary-fill-foreground",
                   isCurrent && "border-primary bg-primary/10 text-primary shadow-sm shadow-primary/20",
                   isFuture && "border-muted bg-muted text-muted-foreground"
                 )}

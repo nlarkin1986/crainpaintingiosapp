@@ -1,7 +1,4 @@
-const BRAND_LABEL: Record<string, string> = {
-  benjamin_moore: "Benjamin Moore",
-  sherwin_williams: "Sherwin-Williams",
-};
+import { getBrandLabel } from "@/lib/brands";
 
 const SURFACE_PROMPT_MAP: Record<string, string> = {
   "Exterior / Siding": `Repaint ONLY the exterior siding, clapboards, or stucco on the house body to {brandLabel} {colorName} ({colorNumber}, hex #{colorHex}). Do NOT paint the trim, windows, doors, shutters, roof, gutters, porch columns, foundation, sky, or landscaping. Apply a smooth, professional exterior paint finish that respects the existing texture of the siding. Preserve the original lighting, shadows, and depth on the house.`,
@@ -19,6 +16,8 @@ const SURFACE_PROMPT_MAP: Record<string, string> = {
   "Shutters": `Repaint ONLY the window shutters to {brandLabel} {colorName} ({colorNumber}, hex #{colorHex}). Do NOT paint the house siding, windows, window frames, trim, doors, or any other surfaces. Apply a smooth, professional finish. Preserve the original lighting and shadows.`,
 };
 
+const MAX_CUSTOM_INSTRUCTION_LENGTH = 80;
+
 function fillTemplate(
   template: string,
   tokens: Record<string, string>
@@ -31,6 +30,25 @@ function fillTemplate(
   );
 }
 
+function sanitizePromptValue(value: string): string {
+  return value.replace(/[\r\n\t]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+export function normalizeCustomInstruction(
+  customInstruction?: string | null
+): string | undefined {
+  if (!customInstruction) return undefined;
+
+  const normalized = customInstruction
+    .replace(/[<>`{}[\]]/g, " ")
+    .replace(/[\r\n\t]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, MAX_CUSTOM_INSTRUCTION_LENGTH);
+
+  return normalized.length > 0 ? normalized : undefined;
+}
+
 export function buildPaintPrompt(params: {
   surface: string;
   colorName: string;
@@ -40,27 +58,29 @@ export function buildPaintPrompt(params: {
   customInstruction?: string;
 }): string {
   // Normalize hex — strip any accidental leading # so prompt reads "hex #C4B5A0" not "hex ##C4B5A0"
-  const colorHex = params.colorHex.replace(/^#/, "");
+  const colorHex = sanitizePromptValue(params.colorHex).replace(/^#/, "");
+  const colorName = sanitizePromptValue(params.colorName);
+  const colorNumber = sanitizePromptValue(params.colorNumber);
 
-  const brandLabel =
-    BRAND_LABEL[params.brand ?? "benjamin_moore"] ?? "Benjamin Moore";
-  const colorDescription = `${brandLabel} ${params.colorName} (${params.colorNumber}, hex #${colorHex})`;
+  const brandLabel = getBrandLabel(params.brand);
+  const colorDescription = `${brandLabel} ${colorName} (${colorNumber}, hex #${colorHex})`;
+  const customInstruction = normalizeCustomInstruction(params.customInstruction);
 
   // Custom instruction overrides surface lookup
-  if (params.customInstruction) {
-    return `Repaint ONLY the ${params.customInstruction} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original lighting, shadows, and textures.`;
+  if (customInstruction) {
+    return `Repaint ONLY the ${customInstruction} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`;
   }
 
   // Guard against surface="custom" with no customInstruction
   // (UI prevents this via disabled button, but be defensive)
   if (params.surface === "custom") {
-    return `Repaint ONLY the selected surface to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original lighting, shadows, and textures.`;
+    return `Repaint ONLY the selected surface to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`;
   }
 
   const tokens = {
     brandLabel,
-    colorName: params.colorName,
-    colorNumber: params.colorNumber,
+    colorName,
+    colorNumber,
     colorHex,
   };
 
@@ -70,5 +90,6 @@ export function buildPaintPrompt(params: {
   }
 
   // Fallback for any unknown surface key
-  return `Repaint ONLY the ${params.surface} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original lighting, shadows, and textures.`;
+  const normalizedSurface = sanitizePromptValue(params.surface);
+  return `Repaint ONLY the ${normalizedSurface} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`;
 }
