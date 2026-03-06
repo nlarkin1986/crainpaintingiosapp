@@ -10,7 +10,7 @@ extension View {
             case .surfacePicker: SurfacePickerView()
             case .colorMatcher: ColorMatcherView()
             case .resultsGallery: ResultsGalleryView()
-            case .visualizationDetail(let id): VisualizationDetailView(visualizationId: id)
+            case .visualizationDetail(let visualization): VisualizationDetailView(visualization: visualization)
             case .reportsHome: ReportsHomeView()
             case .masterReport(let reportId): MasterReportView(reportId: reportId)
             case .sampleOutput(let reportId, let chapterId): SampleOutputView(reportId: reportId, chapterId: chapterId)

@@ -40,7 +40,7 @@ struct ResultsGalleryView: View {
 
                     if let featuredVisualization {
                         Button {
-                            router.navigate(to: .visualizationDetail(id: featuredVisualization.id))
+                            router.navigate(to: .visualizationDetail(visualization: featuredVisualization))
                         } label: {
                             HStack(spacing: theme.spacingSM) {
                                 Circle()
@@ -102,7 +102,7 @@ struct ResultsGalleryView: View {
                                 LazyHStack(spacing: theme.spacingMD) {
                                     ForEach(section.visualizations) { viz in
                                         VisualizationCard(visualization: viz) {
-                                            router.navigate(to: .visualizationDetail(id: viz.id))
+                                            router.navigate(to: .visualizationDetail(visualization: viz))
                                         }
                                     }
                                 }
@@ -120,7 +120,7 @@ struct ResultsGalleryView: View {
             if let featuredVisualization {
                 FloatingActionBar {
                     AppButton("Review Featured Result", variant: .cta, icon: "sparkles") {
-                        router.navigate(to: .visualizationDetail(id: featuredVisualization.id))
+                        router.navigate(to: .visualizationDetail(visualization: featuredVisualization))
                     }
                     .accessibilityIdentifier("gallery.reviewFeatured.primary")
                 }

@@ -36,19 +36,22 @@ final class ColorMatcherViewModel {
 
     var hasSample: Bool { sampleImage != nil }
 
-    func setSample(image: UIImage) {
+    @discardableResult
+    func setSample(image: UIImage) -> Bool {
         analysisTask?.cancel()
-        sampleImage = image
         matches = []
         errorMessage = nil
 
         guard let sampledHex = Self.extractSampleHex(from: image) else {
+            sampleImage = nil
             state = .error("Couldn’t read a clear color from that photo. Try centering the sample and using even light.")
-            return
+            return false
         }
 
+        sampleImage = image
         self.sampledHex = sampledHex
         state = .aligning
+        return true
     }
 
     func analyzeColor() {

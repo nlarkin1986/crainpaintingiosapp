@@ -95,12 +95,9 @@ final class FavoritesViewModel {
     private func loadFavorites() async {
         do {
             let saved = try await store.loadFavorites()
-            favorites = saved.isEmpty ? Self.seedFavorites : saved
-            if saved.isEmpty {
-                schedulePersist()
-            }
+            integrateLoadedFavorites(saved)
         } catch {
-            favorites = Self.seedFavorites
+            integrateLoadedFavorites([])
         }
     }
 
@@ -111,5 +108,24 @@ final class FavoritesViewModel {
             try? await Task.sleep(for: .milliseconds(150))
             try? await store.saveFavorites(snapshot)
         }
+    }
+
+    private func integrateLoadedFavorites(_ loaded: [PaintColor]) {
+        let baseline = loaded.isEmpty ? Self.seedFavorites : loaded
+
+        if favorites.isEmpty {
+            favorites = baseline
+        } else {
+            favorites = mergeFavorites(current: favorites, loaded: baseline)
+        }
+        schedulePersist()
+    }
+
+    private func mergeFavorites(current: [PaintColor], loaded: [PaintColor]) -> [PaintColor] {
+        var merged = current
+        for color in loaded where !merged.contains(color) {
+            merged.append(color)
+        }
+        return merged
     }
 }

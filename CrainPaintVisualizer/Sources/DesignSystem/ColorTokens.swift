@@ -22,6 +22,7 @@ enum ColorTokens {
     static let actionPrimary = teal
     static let actionPrimaryPressed = tealPressed
     static let actionPrimaryText = tealInk
+    static let actionCTAText = Color.white
     static let actionSecondary = Color(hex: "F4F1EB")
     static let actionSecondaryText = Color(hex: "2D2A26")
     static let actionDestructive = Color(hex: "B5332E")

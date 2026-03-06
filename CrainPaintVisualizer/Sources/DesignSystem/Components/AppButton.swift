@@ -68,7 +68,8 @@ struct AppButton: View {
 
     private var foregroundColor: Color {
         switch variant {
-        case .primary, .cta: theme.actionPrimaryText
+        case .primary: theme.actionPrimaryText
+        case .cta: theme.actionCTAText
         case .outline: theme.foreground
         case .ghost: theme.primary
         }

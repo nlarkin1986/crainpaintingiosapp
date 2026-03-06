@@ -6,6 +6,36 @@ final class CrainPaintVisualizerUITests: XCTestCase {
     }
 
     @MainActor
+    func testLearnMoreFlowCanDismissOrEnterVisualizer() throws {
+        let app = XCUIApplication()
+        app.launchArguments += [
+            "UITEST_RESET_STATE",
+            "UITEST_DISABLE_ANIMATIONS",
+        ]
+        app.launch()
+
+        let learnMore = app.buttons["welcome.learnMore"]
+        XCTAssertTrue(learnMore.waitForExistence(timeout: 5))
+        learnMore.tap()
+
+        let howItWorksTitle = app.staticTexts["howItWorks.title"]
+        XCTAssertTrue(howItWorksTitle.waitForExistence(timeout: 5))
+
+        let backButton = app.buttons["howItWorks.back"]
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5))
+        backButton.tap()
+
+        XCTAssertTrue(learnMore.waitForExistence(timeout: 5))
+        learnMore.tap()
+
+        let continueButton = app.buttons["howItWorks.continue"]
+        XCTAssertTrue(continueButton.waitForExistence(timeout: 5))
+        continueButton.tap()
+
+        XCTAssertTrue(app.buttons["brandSelector.continue"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
     func testOnboardingToCheckoutEntryJourney() throws {
         let app = XCUIApplication()
         app.launchArguments += [

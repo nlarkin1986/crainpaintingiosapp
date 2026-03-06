@@ -7,7 +7,7 @@ enum AppRoute: Hashable {
     case surfacePicker
     case colorMatcher
     case resultsGallery
-    case visualizationDetail(id: String)
+    case visualizationDetail(visualization: Visualization)
     case reportsHome
     case masterReport(reportId: String)
     case sampleOutput(reportId: String, chapterId: String?)

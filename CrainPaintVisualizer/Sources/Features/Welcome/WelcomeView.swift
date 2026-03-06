@@ -8,9 +8,20 @@ struct WelcomeView: View {
 
     var body: some View {
         ZStack {
-            // Hero background gradient (no image asset needed)
+            // Hero background image
+            Image("WelcomeHero")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .ignoresSafeArea()
+
+            // Gradient overlay for text legibility
             LinearGradient(
-                colors: [theme.background, theme.accentSubtle.opacity(0.3), theme.background],
+                colors: [
+                    Color.black.opacity(0.15),
+                    Color.black.opacity(0.05),
+                    Color.black.opacity(0.4),
+                    Color.black.opacity(0.7),
+                ],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -26,24 +37,24 @@ struct WelcomeView: View {
                     .foregroundStyle(theme.primary)
                     .padding(.horizontal, theme.spacingLG)
                     .padding(.vertical, theme.spacingSM)
-                    .background(theme.card.opacity(0.9))
+                    .background(.ultraThinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: theme.radiusSM))
 
                 // Tagline
                 Text("Trusted Craftsmanship Since 1952")
                     .font(theme.caption)
-                    .foregroundStyle(theme.mutedForeground)
+                    .foregroundStyle(.white.opacity(0.85))
 
                 // Headline
                 Text("Visualize your\nperfect space")
                     .font(theme.largeTitle)
-                    .foregroundStyle(theme.foreground)
+                    .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
 
                 // Subheading
                 Text("See exactly how your room will look with professional paint colors, powered by AI visualization.")
                     .font(theme.body)
-                    .foregroundStyle(theme.mutedForeground)
+                    .foregroundStyle(.white.opacity(0.85))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, theme.spacingXL)
 
@@ -55,6 +66,7 @@ struct WelcomeView: View {
                     AppButton("Learn More", variant: .outline, icon: "info.circle") {
                         showLearnMore = true
                     }
+                    .accessibilityIdentifier("welcome.learnMore")
                 }
                 .padding(.horizontal, theme.spacingLG)
 
@@ -62,10 +74,10 @@ struct WelcomeView: View {
                 HStack(spacing: theme.spacingXS) {
                     Image(systemName: "shield.checkered")
                         .font(.system(size: 12))
-                        .foregroundStyle(theme.primary)
+                        .foregroundStyle(.white.opacity(0.7))
                     Text("Secure & Trusted Family Business")
                         .font(theme.micro)
-                        .foregroundStyle(theme.mutedForeground)
+                        .foregroundStyle(.white.opacity(0.7))
                 }
                 .padding(.bottom, theme.spacingXL)
             }
@@ -77,69 +89,18 @@ struct WelcomeView: View {
                 isVisible = true
             }
         }
-        .sheet(isPresented: $showLearnMore) {
-            WelcomeDetailsSheet {
-                showLearnMore = false
-                withAnimation { appState.onboardingComplete = true }
-            }
-            .presentationDetents([.medium])
-        }
-    }
-}
-
-private struct WelcomeDetailsSheet: View {
-    @Environment(Theme.self) private var theme
-    @Environment(\.dismiss) private var dismiss
-
-    let continueAction: () -> Void
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: theme.spacingMD) {
-                    Text("How It Works")
-                        .font(theme.title)
-                        .foregroundStyle(theme.foreground)
-
-                    detailRow(icon: "paintpalette.fill", title: "Choose real paint colors", subtitle: "Browse Benjamin Moore, Sherwin-Williams, and Behr selections.")
-                    detailRow(icon: "camera.fill", title: "Upload your room", subtitle: "Start with a live photo so the preview matches your actual space.")
-                    detailRow(icon: "person.crop.circle.fill", title: "Request Curt's report", subtitle: "Turn a favorite result into an expert recommendation and consultation.")
+        .fullScreenCover(isPresented: $showLearnMore) {
+            HowItWorksView(
+                onBack: {
+                    showLearnMore = false
+                },
+                onContinue: {
+                    showLearnMore = false
+                    withAnimation { appState.onboardingComplete = true }
                 }
-                .padding(theme.spacingLG)
-            }
-            .background(theme.background)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") { dismiss() }
-                }
-                ToolbarItem(placement: .bottomBar) {
-                    AppButton("Continue", variant: .cta) {
-                        continueAction()
-                    }
-                }
-            }
-        }
-    }
-
-    private func detailRow(icon: String, title: String, subtitle: String) -> some View {
-        HStack(alignment: .top, spacing: theme.spacingSM) {
-            ZStack {
-                Circle()
-                    .fill(theme.primary.opacity(0.12))
-                    .frame(width: 42, height: 42)
-                Image(systemName: icon)
-                    .foregroundStyle(theme.primary)
-            }
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(theme.subhead)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(theme.foreground)
-                Text(subtitle)
-                    .font(theme.caption)
-                    .foregroundStyle(theme.mutedForeground)
-            }
+            )
+            .environment(theme)
+            .environment(appState)
         }
     }
 }

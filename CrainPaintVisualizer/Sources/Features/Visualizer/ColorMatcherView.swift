@@ -47,8 +47,9 @@ struct ColorMatcherView: View {
         .ignoresSafeArea(edges: .top)
         .fullScreenCover(isPresented: $showCamera) {
             CameraView { image in
-                viewModel.setSample(image: image)
-                viewModel.analyzeColor()
+                if viewModel.setSample(image: image) {
+                    viewModel.analyzeColor()
+                }
             }
         }
         .alert("Camera Access Required", isPresented: $showCameraAlert) {
@@ -65,8 +66,9 @@ struct ColorMatcherView: View {
             guard let selectedPhoto else { return }
             if let data = try? await selectedPhoto.loadTransferable(type: Data.self),
                let image = UIImage(data: data) {
-                viewModel.setSample(image: image)
-                viewModel.analyzeColor()
+                if viewModel.setSample(image: image) {
+                    viewModel.analyzeColor()
+                }
             }
         }
         .toast(isPresented: $showToast, message: toastMessage, icon: "checkmark.circle.fill")

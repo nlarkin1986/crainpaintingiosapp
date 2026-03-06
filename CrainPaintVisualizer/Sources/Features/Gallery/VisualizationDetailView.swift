@@ -6,182 +6,177 @@ struct VisualizationDetailView: View {
     @Environment(FavoritesViewModel.self) private var favoritesVM
     @Environment(ReportsViewModel.self) private var reportsVM
     @Environment(VisualizerViewModel.self) private var visualizerVM
-    let visualizationId: String
+    let visualization: Visualization
 
     @State private var showBeforeAfter = true
     @State private var showToast = false
     @State private var toastMessage = "Saved to favorites"
     @State private var showFullscreen = false
-
-    private let galleryViewModel = GalleryViewModel()
-
-    private var visualization: Visualization? {
-        galleryViewModel.visualization(for: visualizationId, using: visualizerVM)
-    }
+    @State private var referencePhoto: UIImage?
 
     var body: some View {
-        Group {
-            if let visualization {
-                VStack(spacing: 0) {
-                    ScrollView {
-                        VStack(spacing: theme.spacingMD) {
-                            HStack(spacing: 0) {
-                                toggleButton("After Only", isActive: !showBeforeAfter) { showBeforeAfter = false }
-                                toggleButton("Before & After", isActive: showBeforeAfter) { showBeforeAfter = true }
-                            }
-                            .padding(4)
-                            .background(theme.muted)
-                            .clipShape(RoundedRectangle(cornerRadius: theme.radiusMD))
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(spacing: theme.spacingMD) {
+                    HStack(spacing: 0) {
+                        toggleButton("After Only", isActive: !showBeforeAfter) { showBeforeAfter = false }
+                        toggleButton("Before & After", isActive: showBeforeAfter) { showBeforeAfter = true }
+                    }
+                    .padding(4)
+                    .background(theme.muted)
+                    .clipShape(RoundedRectangle(cornerRadius: theme.radiusMD))
+                    .padding(.horizontal, theme.spacingMD)
+
+                    if showBeforeAfter {
+                        ComparisonSliderView(
+                            beforeImage: beforeImage(for: visualization),
+                            afterImage: afterImage(for: visualization)
+                        )
+                        .aspectRatio(3/4, contentMode: .fit)
+                        .padding(.horizontal, theme.spacingMD)
+                        .onTapGesture { showFullscreen = true }
+                    } else {
+                        afterOnlyPreview(for: visualization)
                             .padding(.horizontal, theme.spacingMD)
+                            .onTapGesture { showFullscreen = true }
+                    }
 
-                            if showBeforeAfter {
-                                ComparisonSliderView(
-                                    beforeImage: beforeImage(for: visualization),
-                                    afterImage: afterImage(for: visualization)
-                                )
-                                .aspectRatio(3/4, contentMode: .fit)
-                                .padding(.horizontal, theme.spacingMD)
-                                .onTapGesture { showFullscreen = true }
-                            } else {
-                                afterOnlyPreview(for: visualization)
-                                    .padding(.horizontal, theme.spacingMD)
-                                    .onTapGesture { showFullscreen = true }
-                            }
-
-                            VStack(spacing: theme.spacingMD) {
-                                HStack(alignment: .top) {
+                    VStack(spacing: theme.spacingMD) {
+                        HStack(alignment: .top) {
+                            RoundedRectangle(cornerRadius: theme.radiusMD)
+                                .fill(Color(hex: visualization.colorHex))
+                                .frame(width: 56, height: 56)
+                                .overlay(
                                     RoundedRectangle(cornerRadius: theme.radiusMD)
-                                        .fill(Color(hex: visualization.colorHex))
-                                        .frame(width: 56, height: 56)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: theme.radiusMD)
-                                                .stroke(theme.border, lineWidth: 1)
-                                        )
+                                        .stroke(theme.border, lineWidth: 1)
+                                )
 
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text("Selected Color")
-                                            .font(theme.micro)
-                                            .textCase(.uppercase)
-                                            .tracking(0.5)
-                                            .foregroundStyle(theme.mutedForeground)
-                                        Text(visualization.colorName)
-                                            .font(theme.headline)
-                                        Text("\(visualization.inferredBrand.displayName) \u{00B7} \(visualization.colorCode)")
-                                            .font(theme.caption)
-                                            .foregroundStyle(theme.mutedForeground)
-                                    }
-
-                                    Spacer()
-
-                                    Button {
-                                        saveColor(visualization.asPaintColor)
-                                    } label: {
-                                        Image(systemName: favoritesVM.isFavorite(visualization.asPaintColor) ? "heart.fill" : "heart")
-                                            .font(.system(size: 24))
-                                            .foregroundStyle(favoritesVM.isFavorite(visualization.asPaintColor) ? .red : theme.primary)
-                                            .frame(width: 44, height: 44)
-                                            .background(theme.primary.opacity(0.1))
-                                            .clipShape(Circle())
-                                    }
-                                }
-
-                                Divider()
-
-                                HStack {
-                                    Label("Target: \(visualization.surface)", systemImage: "square.split.diagonal")
-                                        .font(theme.caption)
-                                        .foregroundStyle(theme.mutedForeground)
-                                    Spacer()
-                                    Label(previewLightingLabel(for: visualization), systemImage: "sun.max")
-                                        .font(theme.caption)
-                                        .foregroundStyle(theme.mutedForeground)
-                                }
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Selected Color")
+                                    .font(theme.micro)
+                                    .textCase(.uppercase)
+                                    .tracking(0.5)
+                                    .foregroundStyle(theme.mutedForeground)
+                                Text(visualization.colorName)
+                                    .font(theme.headline)
+                                Text("\(visualization.inferredBrand.displayName) \u{00B7} \(visualization.colorCode)")
+                                    .font(theme.caption)
+                                    .foregroundStyle(theme.mutedForeground)
                             }
-                            .padding(20)
-                            .background(theme.card)
-                            .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: theme.radiusLG)
-                                    .stroke(theme.border, lineWidth: 1)
-                            )
-                            .padding(.horizontal, theme.spacingMD)
 
-                            HStack(spacing: theme.spacingSM) {
-                                ActionTile(icon: "heart.fill", label: "Save Color") {
-                                    saveColor(visualization.asPaintColor)
-                                }
-                                ActionTile(icon: "doc.on.doc", label: "Copy Color") {
-                                    UIPasteboard.general.string = "\(visualization.colorName) (\(visualization.colorCode)) #\(visualization.colorHex)"
-                                    toastMessage = "Color copied"
-                                    showToast = true
-                                }
-                            }
-                            .padding(.horizontal, theme.spacingMD)
+                            Spacer()
 
                             Button {
-                                let report = reportsVM.createReport(from: visualization)
-                                router.navigate(to: .masterReport(reportId: report.id))
+                                toggleFavorite(visualization.asPaintColor)
                             } label: {
-                                HStack(spacing: theme.spacingSM) {
-                                    Circle()
-                                        .fill(theme.primary.opacity(0.1))
-                                        .frame(width: 44, height: 44)
-                                        .overlay(
-                                            Image(systemName: "person.crop.circle.fill")
-                                                .font(.system(size: 20))
-                                                .foregroundStyle(theme.primary)
-                                        )
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text("What Would Curt Say?")
-                                            .font(theme.subhead)
-                                            .fontWeight(.bold)
-                                            .foregroundStyle(theme.foreground)
-                                        Text("Get Curt's take on \(visualization.colorName) — From $49")
-                                            .font(theme.caption)
-                                            .foregroundStyle(theme.mutedForeground)
-                                    }
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .font(.system(size: 12))
-                                        .foregroundStyle(theme.mutedForeground)
-                                }
-                                .padding(theme.spacingMD)
-                                .background(theme.primary.opacity(0.05))
-                                .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: theme.radiusLG)
-                                        .stroke(theme.primary.opacity(0.2), lineWidth: 1)
-                                )
+                                Image(systemName: favoritesVM.isFavorite(visualization.asPaintColor) ? "heart.fill" : "heart")
+                                    .font(.system(size: 24))
+                                    .foregroundStyle(favoritesVM.isFavorite(visualization.asPaintColor) ? .red : theme.primary)
+                                    .frame(width: 44, height: 44)
+                                    .background(theme.primary.opacity(0.1))
+                                    .clipShape(Circle())
                             }
-                            .buttonStyle(ScaleButtonStyle())
-                            .padding(.horizontal, theme.spacingMD)
-                            .padding(.bottom, theme.spacingLG)
                         }
-                    }
 
-                    FloatingActionBar {
-                        AppButton("Get Curt's Expert Take — From $49", variant: .cta, icon: "person.crop.circle") {
-                            let report = reportsVM.createReport(from: visualization)
-                            router.navigate(to: .masterReport(reportId: report.id))
+                        Divider()
+
+                        HStack {
+                            Label("Target: \(visualization.surface)", systemImage: "square.split.diagonal")
+                                .font(theme.caption)
+                                .foregroundStyle(theme.mutedForeground)
+                            Spacer()
+                            Label(previewLightingLabel(for: visualization), systemImage: "sun.max")
+                                .font(theme.caption)
+                                .foregroundStyle(theme.mutedForeground)
                         }
-                        .accessibilityIdentifier("visualizationDetail.expertTake")
                     }
+                    .padding(20)
+                    .background(theme.card)
+                    .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: theme.radiusLG)
+                            .stroke(theme.border, lineWidth: 1)
+                    )
+                    .padding(.horizontal, theme.spacingMD)
+
+                    HStack(spacing: theme.spacingSM) {
+                        ActionTile(
+                            icon: favoritesVM.isFavorite(visualization.asPaintColor) ? "heart.slash.fill" : "heart.fill",
+                            label: favoritesVM.isFavorite(visualization.asPaintColor) ? "Remove Saved" : "Save Color"
+                        ) {
+                            toggleFavorite(visualization.asPaintColor)
+                        }
+                        ActionTile(icon: "doc.on.doc", label: "Copy Color") {
+                            UIPasteboard.general.string = "\(visualization.colorName) (\(visualization.colorCode)) #\(visualization.colorHex)"
+                            toastMessage = "Color copied"
+                            showToast = true
+                        }
+                    }
+                    .padding(.horizontal, theme.spacingMD)
+
+                    Button {
+                        let report = reportsVM.createReport(from: visualization)
+                        router.navigate(to: .masterReport(reportId: report.id))
+                    } label: {
+                        HStack(spacing: theme.spacingSM) {
+                            Circle()
+                                .fill(theme.primary.opacity(0.1))
+                                .frame(width: 44, height: 44)
+                                .overlay(
+                                    Image(systemName: "person.crop.circle.fill")
+                                        .font(.system(size: 20))
+                                        .foregroundStyle(theme.primary)
+                                )
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("What Would Curt Say?")
+                                    .font(theme.subhead)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(theme.foreground)
+                                Text("Get Curt's take on \(visualization.colorName) — From $49")
+                                    .font(theme.caption)
+                                    .foregroundStyle(theme.mutedForeground)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12))
+                                .foregroundStyle(theme.mutedForeground)
+                        }
+                        .padding(theme.spacingMD)
+                        .background(theme.primary.opacity(0.05))
+                        .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: theme.radiusLG)
+                                .stroke(theme.primary.opacity(0.2), lineWidth: 1)
+                        )
+                    }
+                    .buttonStyle(ScaleButtonStyle())
+                    .padding(.horizontal, theme.spacingMD)
+                    .padding(.bottom, theme.spacingLG)
                 }
-            } else {
-                ContentUnavailableView("Visualization unavailable", systemImage: "photo.on.rectangle.angled")
+            }
+
+            FloatingActionBar {
+                AppButton("Get Curt's Expert Take — From $49", variant: .cta, icon: "person.crop.circle") {
+                    let report = reportsVM.createReport(from: visualization)
+                    router.navigate(to: .masterReport(reportId: report.id))
+                }
+                .accessibilityIdentifier("visualizationDetail.expertTake")
             }
         }
-        .navigationTitle(visualization?.roomName ?? "Visualization")
+        .navigationTitle(visualization.roomName)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            if referencePhoto == nil {
+                referencePhoto = visualizerVM.photo
+            }
+        }
         .sensoryFeedback(.success, trigger: showToast)
         .toast(isPresented: $showToast, message: toastMessage, icon: "checkmark.circle.fill")
         .fullScreenCover(isPresented: $showFullscreen) {
-            if let visualization {
-                FullscreenImageViewer(
-                    image: afterImage(for: visualization),
-                    colorName: visualization.colorName
-                )
-            }
+            FullscreenImageViewer(
+                image: afterImage(for: visualization),
+                colorName: visualization.colorName
+            )
         }
     }
 }
@@ -200,9 +195,14 @@ extension VisualizationDetailView {
         .sensoryFeedback(.selection, trigger: isActive)
     }
 
-    private func saveColor(_ color: PaintColor) {
-        let added = favoritesVM.addFavorite(color)
-        toastMessage = added ? "Saved to favorites" : "Already in favorites"
+    private func toggleFavorite(_ color: PaintColor) {
+        if favoritesVM.isFavorite(color) {
+            _ = favoritesVM.removeFavorite(color)
+            toastMessage = "Removed from favorites"
+        } else {
+            _ = favoritesVM.addFavorite(color)
+            toastMessage = "Saved to favorites"
+        }
         showToast = true
     }
 
@@ -211,7 +211,7 @@ extension VisualizationDetailView {
     }
 
     private func beforeImage(for visualization: Visualization) -> Image {
-        if let photo = visualizerVM.photo {
+        if let photo = referencePhoto ?? visualizerVM.photo {
             return Image(uiImage: photo)
         }
         if !visualization.beforeImageName.isEmpty {
@@ -221,7 +221,7 @@ extension VisualizationDetailView {
     }
 
     private func afterImage(for visualization: Visualization) -> Image {
-        if let photo = visualizerVM.photo {
+        if let photo = referencePhoto ?? visualizerVM.photo {
             return Image(uiImage: tintedPreviewImage(from: photo, hex: visualization.colorHex))
         }
         if !visualization.afterImageName.isEmpty {
@@ -232,7 +232,7 @@ extension VisualizationDetailView {
 
     private func afterOnlyPreview(for visualization: Visualization) -> some View {
         Group {
-            if let photo = visualizerVM.photo {
+            if let photo = referencePhoto ?? visualizerVM.photo {
                 Image(uiImage: tintedPreviewImage(from: photo, hex: visualization.colorHex))
                     .resizable()
                     .scaledToFill()

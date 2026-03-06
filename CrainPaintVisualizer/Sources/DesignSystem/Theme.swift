@@ -15,6 +15,7 @@ final class Theme {
     var actionPrimary: Color = ColorTokens.actionPrimary
     var actionPrimaryPressed: Color = ColorTokens.actionPrimaryPressed
     var actionPrimaryText: Color = ColorTokens.actionPrimaryText
+    var actionCTAText: Color = ColorTokens.actionCTAText
     var actionSecondary: Color = ColorTokens.actionSecondary
     var actionSecondaryText: Color = ColorTokens.actionSecondaryText
     var destructive: Color = ColorTokens.actionDestructive
@@ -107,6 +108,7 @@ final class Theme {
     let space20: CGFloat = 20
     let space24: CGFloat = 24
     let space32: CGFloat = 32
+    let space40: CGFloat = 40
     let space48: CGFloat = 48
     let space64: CGFloat = 64
 

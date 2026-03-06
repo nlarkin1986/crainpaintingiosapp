@@ -73,18 +73,24 @@ final class ReportsViewModel {
 
         do {
             let saved = try await store.loadReports()
-            if saved.isEmpty {
-                seedReports()
-                schedulePersist()
-            } else {
-                reports = saved.sorted(by: { $0.createdAt > $1.createdAt })
-            }
+            integrateLoadedReports(saved)
         } catch {
-            seedReports()
+            integrateLoadedReports([])
         }
     }
 
-    private func seedReports() {
+    private func integrateLoadedReports(_ loaded: [MasterReport]) {
+        let baseline = loaded.isEmpty ? makeSeedReports() : loaded.sorted(by: { $0.createdAt > $1.createdAt })
+
+        if reports.isEmpty {
+            reports = baseline
+        } else {
+            reports = mergeReports(current: reports, loaded: baseline)
+        }
+        schedulePersist()
+    }
+
+    private func makeSeedReports() -> [MasterReport] {
         let fallbackColor = PaintColor(number: "HC-114", name: "Saybrook Sage", family: "Green", hex: "A4AE9F", brand: .benjaminMoore)
         let report = MasterReport(
             id: "report_demo_1",
@@ -107,7 +113,7 @@ final class ReportsViewModel {
             ]
         )
 
-        reports = [report]
+        return [report]
     }
 
     private func schedulePersist() {
@@ -117,5 +123,13 @@ final class ReportsViewModel {
             try? await Task.sleep(for: .milliseconds(150))
             try? await store.saveReports(snapshot)
         }
+    }
+
+    private func mergeReports(current: [MasterReport], loaded: [MasterReport]) -> [MasterReport] {
+        var mergedByID = Dictionary(uniqueKeysWithValues: loaded.map { ($0.id, $0) })
+        for report in current {
+            mergedByID[report.id] = report
+        }
+        return mergedByID.values.sorted(by: { $0.createdAt > $1.createdAt })
     }
 }
