@@ -37,9 +37,10 @@ targets:
     sources:
       - path: Sources
         type: group
-    resources:
-      - path: Sources/Resources
-        type: group
+        excludes:
+          - DesignSystem/Components/*.md
+          - Features/Welcome/*.md
+          - Features/Reports/*.md
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.crainpainting.visualizer

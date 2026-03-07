@@ -6,24 +6,43 @@ struct CustomTabBar: View {
     let onDoubleTap: (AppTab) -> Void
 
     @Namespace private var pillNamespace
+    @State private var hoverTab: AppTab?
 
     var body: some View {
         VStack(spacing: 0) {
+            // Subtle top divider
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            theme.border.opacity(0.3),
+                            theme.border.opacity(0.1)
+                        ],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .frame(height: 0.5)
+            
             HStack(spacing: 0) {
                 ForEach(AppTab.allCases) { tab in
                     tabButton(tab)
                 }
             }
-            .padding(.horizontal, theme.space8)
-            .padding(.top, theme.space8)
-            .padding(.bottom, theme.space4)
+            .padding(.horizontal, theme.space12)
+            .padding(.top, theme.space12)
+            .padding(.bottom, theme.space8)
         }
         .padding(.bottom, safeAreaBottom)
         .background {
-            // Frosted glass material with a subtle top shadow
-            Rectangle()
-                .fill(.ultraThinMaterial)
-                .shadow(color: .black.opacity(0.06), radius: 8, y: -2)
+            // Premium frosted glass with clean white base
+            ZStack {
+                Color.white.opacity(0.95)
+                Rectangle()
+                    .fill(.ultraThinMaterial)
+            }
+            .shadow(color: .black.opacity(0.04), radius: 1, y: -1)
+            .shadow(color: .black.opacity(0.08), radius: 12, y: -4)
         }
     }
 
@@ -34,37 +53,64 @@ struct CustomTabBar: View {
             if selectedTab == tab {
                 onDoubleTap(tab)
             } else {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
                     selectedTab = tab
                 }
             }
         } label: {
-            VStack(spacing: 3) {
+            VStack(spacing: 4) {
                 ZStack {
-                    // Sliding pill indicator using matchedGeometryEffect
+                    // Premium animated pill indicator
                     if isSelected {
-                        Capsule()
-                            .fill(theme.accentSubtle)
-                            .frame(width: 64, height: 32)
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        ColorTokens.aquaSubtle,
+                                        ColorTokens.aquaSubtle.opacity(0.7)
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                            .frame(width: 68, height: 36)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(
+                                        ColorTokens.aqua.opacity(0.2),
+                                        lineWidth: 1.5
+                                    )
+                            )
                             .matchedGeometryEffect(id: "activeTabPill", in: pillNamespace)
+                            .shadow(color: ColorTokens.aqua.opacity(0.1), radius: 6, y: 2)
                     } else {
                         Color.clear
-                            .frame(width: 64, height: 32)
+                            .frame(width: 68, height: 36)
                     }
 
+                    // Icon with enhanced visuals
                     Image(systemName: isSelected ? tab.iconFilled : tab.iconOutlined)
-                        .font(.system(size: 20, weight: isSelected ? .semibold : .regular))
-                        .foregroundStyle(isSelected ? theme.actionPrimaryPressed : theme.textTertiary)
-                        .symbolEffect(.bounce.byLayer, value: isSelected)
-                        .frame(width: 64, height: 32)
+                        .font(.system(size: 22, weight: isSelected ? .semibold : .regular))
+                        .foregroundStyle(
+                            isSelected 
+                                ? ColorTokens.aqua
+                                : theme.textTertiary
+                        )
+                        .symbolEffect(.bounce.up.byLayer, value: isSelected)
+                        .frame(width: 68, height: 36)
                 }
 
+                // Tab label with improved typography
                 Text(tab.title)
-                    .font(.caption2.weight(isSelected ? .semibold : .medium))
-                    .foregroundStyle(isSelected ? theme.actionPrimaryPressed : theme.textTertiary)
+                    .font(.system(size: 11, weight: isSelected ? .semibold : .medium))
+                    .foregroundStyle(
+                        isSelected 
+                            ? ColorTokens.aquaDark
+                            : theme.textTertiary
+                    )
             }
             .frame(maxWidth: .infinity)
-            .frame(minHeight: 48)
+            .frame(minHeight: 52)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

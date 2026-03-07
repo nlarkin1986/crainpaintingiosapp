@@ -17,6 +17,12 @@ const SURFACE_PROMPT_MAP: Record<string, string> = {
 };
 
 const MAX_CUSTOM_INSTRUCTION_LENGTH = 80;
+const IMAGE_EDIT_GUARDRAILS =
+  "Edit the provided photo only. Keep the original camera angle, framing, depth, and lighting unchanged. Do not add, remove, or reshape objects, architecture, furniture, decor, people, sky, or landscaping. Preserve all surface textures and shadows; only change paint color on the requested surface.";
+
+function withImageEditGuardrails(surfaceInstruction: string): string {
+  return `${IMAGE_EDIT_GUARDRAILS} ${surfaceInstruction}`;
+}
 
 function fillTemplate(
   template: string,
@@ -68,13 +74,17 @@ export function buildPaintPrompt(params: {
 
   // Custom instruction overrides surface lookup
   if (customInstruction) {
-    return `Repaint ONLY the ${customInstruction} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`;
+    return withImageEditGuardrails(
+      `Repaint ONLY the ${customInstruction} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`
+    );
   }
 
   // Guard against surface="custom" with no customInstruction
   // (UI prevents this via disabled button, but be defensive)
   if (params.surface === "custom") {
-    return `Repaint ONLY the selected surface to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`;
+    return withImageEditGuardrails(
+      `Repaint ONLY the selected surface to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`
+    );
   }
 
   const tokens = {
@@ -86,10 +96,12 @@ export function buildPaintPrompt(params: {
 
   const template = SURFACE_PROMPT_MAP[params.surface];
   if (template) {
-    return fillTemplate(template, tokens);
+    return withImageEditGuardrails(fillTemplate(template, tokens));
   }
 
   // Fallback for any unknown surface key
   const normalizedSurface = sanitizePromptValue(params.surface);
-  return `Repaint ONLY the ${normalizedSurface} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`;
+  return withImageEditGuardrails(
+    `Repaint ONLY the ${normalizedSurface} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`
+  );
 }

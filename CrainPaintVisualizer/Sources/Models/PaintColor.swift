@@ -53,11 +53,13 @@ struct PaintColor: Codable, Hashable, Identifiable, Sendable {
     }
 }
 
-enum PaintBrand: String, Codable, CaseIterable, Hashable, Sendable {
+enum PaintBrand: String, Codable, CaseIterable, Hashable, Sendable, Identifiable {
     case benjaminMoore = "benjamin_moore"
     case sherwinWilliams = "sherwin_williams"
     case behr = "behr"
 
+    var id: String { rawValue }
+    
     var displayName: String {
         switch self {
         case .benjaminMoore: "Benjamin Moore"

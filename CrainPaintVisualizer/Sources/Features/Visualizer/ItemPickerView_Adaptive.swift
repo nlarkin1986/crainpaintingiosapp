@@ -1,44 +1,49 @@
 import SwiftUI
 
-struct ItemPickerView: View {
+/// Updated ItemPickerView that integrates with the new adaptive navigation system
+/// 
+/// Key changes from original:
+/// 1. Removed redundant bottom toolbar (now handled by AdaptiveNavigationBar)
+/// 2. Added NavigationState environment
+/// 3. Updates visualization step on appear/changes
+/// 4. Gains ~80pt of vertical space for content
+struct ItemPickerView_Adaptive: View {
     @Environment(Theme.self) private var theme
     @Environment(RouterPath.self) private var router
     @Environment(VisualizerViewModel.self) private var visualizerVM
+    @Environment(NavigationState.self) private var navState
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    
     @State private var viewModel = ColorCatalogViewModel()
     @State private var showLimitToast = false
 
-    // ✅ Phase 2: Increased grid spacing from 12pt to 16pt
     private let columns = [
         GridItem(.adaptive(minimum: 150, maximum: 200), spacing: 16)
     ]
 
     var body: some View {
         VStack(spacing: 0) {
+            // Modern step header
+            modernStepHeader
+            
             ScrollView {
-                // ✅ Phase 2: Consistent 24pt spacing between sections
                 VStack(spacing: 24) {
-                    
-                    // ✅ NEW: Step indicator badge (replaces fixed header)
-                    stepIndicatorBadge
-                    
-                    // ✅ Phase 1: Search moved to prominent position
+                    // Search bar
                     refinedSearchBar
                     
-                    // ✅ Phase 1: Native segmented control (cleaner than old toggle)
+                    // Brand selector
                     refinedBrandSelector
                     
-                    // ✅ Phase 1: Filter chips replace underline tabs
+                    // Filter chips
                     refinedFilterChips
                     
-                    // ✅ Phase 1: Proactive selection counter
+                    // Selection counter (only show if colors selected)
                     selectionCounter
                     
-                    // Empty state for search results
+                    // Empty state or color grid
                     if viewModel.filteredColors.isEmpty {
                         emptyStateView
                     } else {
-                        // ✅ Phase 2: Grid spacing increased to 16pt
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(viewModel.filteredColors) { color in
                                 RefinedColorSwatchCard(
@@ -50,22 +55,26 @@ struct ItemPickerView: View {
                             }
                         }
                         .padding(.horizontal, theme.spacingLG)
-                        .padding(.bottom, 120) // Extra space for native toolbar
+                        // NOTE: Reduced bottom padding since tab bar is gone!
+                        // Was: 120pt for tab bar + toolbar
+                        // Now: 80pt for just the compact footer
+                        .padding(.bottom, 80)
                     }
                 }
             }
             .scrollDismissesKeyboard(.interactively)
             .sensoryFeedback(.error, trigger: showLimitToast)
-            .toast(isPresented: $showLimitToast, message: "Maximum 5 colors. Deselect one to add another.", icon: "exclamationmark.triangle.fill")
+            .toast(
+                isPresented: $showLimitToast, 
+                message: "Maximum 5 colors. Deselect one to add another.", 
+                icon: "exclamationmark.triangle.fill"
+            )
             
-            // ✅ Phase 2: Native toolbar replaces FloatingActionBar
-            if !visualizerVM.selectedColors.isEmpty {
-                refinedSelectionToolbar
-            }
+            // ✅ NO MORE BOTTOM TOOLBAR HERE!
+            // AdaptiveNavigationBar handles it contextually
         }
-        .navigationTitle("Pick Your Colors")
-        .navigationBarTitleDisplayMode(.large)
-        // ✅ Phase 1: Match moved to toolbar
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -77,26 +86,33 @@ struct ItemPickerView: View {
         }
         .onAppear {
             viewModel.selectedBrand = visualizerVM.selectedBrand
+            // Update navigation state to reflect current step
+            navState.updateVisualizationStep(.colorPicking(selectedCount: visualizerVM.selectedColors.count))
         }
         .onChange(of: visualizerVM.selectedBrand) { _, newValue in
             viewModel.selectedBrand = newValue
+        }
+        // Update footer when selection changes
+        .onChange(of: visualizerVM.selectedColors.count) { _, newCount in
+            navState.updateVisualizationStep(.colorPicking(selectedCount: newCount))
         }
     }
     
     // MARK: - Helper Views
     
-    private var stepIndicatorBadge: some View {
-        HStack {
-            HStack(spacing: 8) {
+    private var modernStepHeader: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: theme.spacingSM) {
                 StepIndicator(number: 1, isActive: true, isComplete: false)
-                Text("Step 1 of 3")
-                    .font(theme.caption)
-                    .foregroundStyle(theme.mutedForeground)
+                Text("Pick Your Colors")
+                    .font(theme.heading2)
+                Spacer()
             }
-            Spacer()
+            .padding(.horizontal, theme.spacingLG)
+            .padding(.vertical, theme.spacingMD)
+            
+            Divider()
         }
-        .padding(.horizontal, theme.spacingLG)
-        .padding(.top, 8) // Small top padding for breathing room
     }
     
     private var refinedSearchBar: some View {
@@ -182,50 +198,6 @@ struct ItemPickerView: View {
         .padding(.top, 60)
     }
     
-    private var refinedSelectionToolbar: some View {
-        VStack(spacing: 0) {
-            Divider()
-            
-            HStack {
-                HStack(spacing: -8) {
-                    ForEach(visualizerVM.selectedColors.prefix(5)) { color in
-                        Circle()
-                            .fill(color.color)
-                            .frame(width: 28, height: 28)
-                            .overlay(Circle().stroke(.white, lineWidth: 2))
-                    }
-                }
-                
-                Text("\(visualizerVM.selectedColors.count) Selected")
-                    .font(theme.subhead)
-                    .foregroundStyle(theme.foreground)
-                
-                Spacer()
-                
-                Button {
-                    router.navigate(to: .photoUpload)
-                } label: {
-                    HStack(spacing: 6) {
-                        Text("Next Step")
-                            .font(theme.subhead)
-                            .fontWeight(.semibold)
-                        Image(systemName: "arrow.right")
-                            .font(.system(size: 14, weight: .semibold))
-                    }
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, theme.spacingLG)
-                    .padding(.vertical, 12)
-                    .background(theme.actionPrimary)
-                    .clipShape(RoundedRectangle(cornerRadius: theme.radiusMD))
-                }
-                .accessibilityIdentifier("itemPicker.nextStep")
-            }
-            .padding(.horizontal, theme.spacingLG)
-            .padding(.vertical, theme.spacingMD)
-            .background(theme.card)
-        }
-    }
-    
     // MARK: - Helper Methods
     
     private func handleColorSelection(_ color: PaintColor) {
@@ -241,6 +213,176 @@ struct ItemPickerView: View {
     }
 }
 
+// MARK: - Migration Guide Comment Block
+/*
+ 
+ MIGRATION GUIDE: Converting Your Views to Adaptive Navigation
+ ==============================================================
+ 
+ Step 1: Add NavigationState Environment
+ ----------------------------------------
+ @Environment(NavigationState.self) private var navState
+ 
+ 
+ Step 2: Remove Bottom Toolbars
+ -------------------------------
+ Delete any custom bottom navigation UI from your view.
+ AdaptiveNavigationBar will handle it automatically.
+ 
+ Before:
+ ```
+ var body: some View {
+     VStack {
+         // Content
+         if !selectedItems.isEmpty {
+             MyCustomBottomBar()  // ❌ Remove this
+         }
+     }
+ }
+ ```
+ 
+ After:
+ ```
+ var body: some View {
+     VStack {
+         // Content
+         // ✅ That's it! AdaptiveNavigationBar shows appropriate footer
+     }
+ }
+ ```
+ 
+ 
+ Step 3: Update Navigation State on Changes
+ -------------------------------------------
+ Call navState.updateVisualizationStep() when your view's state changes.
+ 
+ ```
+ .onChange(of: selectedColors.count) { _, newCount in
+     navState.updateVisualizationStep(.colorPicking(selectedCount: newCount))
+ }
+ ```
+ 
+ 
+ Step 4: Set Initial State on Appear
+ ------------------------------------
+ ```
+ .onAppear {
+     navState.updateVisualizationStep(.colorPicking(selectedCount: selectedColors.count))
+ }
+ ```
+ 
+ 
+ Step 5: Adjust Bottom Padding
+ ------------------------------
+ Reduce bottom padding since tab bar is gone.
+ 
+ Before: .padding(.bottom, 120)  // 80pt tab bar + 40pt buffer
+ After:  .padding(.bottom, 80)   // 52pt footer + 28pt buffer
+ 
+ 
+ Step 6: Test Navigation Flow
+ -----------------------------
+ - Verify footer appears/disappears correctly
+ - Check smooth transitions between steps
+ - Ensure back button behavior is correct
+ 
+ 
+ EXAMPLE: Full Before/After
+ ===========================
+ 
+ BEFORE:
+ -------
+ struct MyView: View {
+     @Environment(RouterPath.self) private var router
+     @State private var items: [Item] = []
+     
+     var body: some View {
+         VStack {
+             ScrollView {
+                 // Content
+             }
+             
+             if !items.isEmpty {
+                 MyCustomFooter {
+                     Button("Continue") {
+                         router.navigate(to: .next)
+                     }
+                 }
+             }
+         }
+     }
+ }
+ 
+ AFTER:
+ ------
+ struct MyView: View {
+     @Environment(RouterPath.self) private var router
+     @Environment(NavigationState.self) private var navState  // ✅ Add
+     @State private var items: [Item] = []
+     
+     var body: some View {
+         VStack {
+             ScrollView {
+                 // Content
+             }
+             // ✅ Remove custom footer - AdaptiveNavigationBar handles it
+         }
+         .onAppear {
+             navState.updateVisualizationStep(.myStep)  // ✅ Set state
+         }
+         .onChange(of: items.count) { _, count in
+             navState.updateVisualizationStep(.myStep(count: count))  // ✅ Update
+         }
+     }
+ }
+ 
+ */
+
+// MARK: - Side-by-Side Comparison
+
+/*
+ 
+ SPACE COMPARISON
+ ================
+ 
+ OLD DESIGN:
+ ┌─────────────────────────┐
+ │ Nav Bar         44pt    │
+ ├─────────────────────────┤
+ │                         │
+ │                         │
+ │   Content Area          │
+ │                         │  ~600pt
+ │                         │
+ ├─────────────────────────┤
+ │ Custom Footer   76pt    │
+ ├─────────────────────────┤
+ │ Tab Bar         80pt    │
+ └─────────────────────────┘
+   Navigation UI: 156pt (20.6% of screen)
+   Content: 600pt (79.4%)
+ 
+ 
+ NEW DESIGN:
+ ┌─────────────────────────┐
+ │ Nav Bar         44pt    │
+ ├─────────────────────────┤
+ │                         │
+ │                         │
+ │                         │
+ │   Content Area          │  ~704pt
+ │                         │
+ │                         │
+ ├─────────────────────────┤
+ │ Adaptive Footer 52pt    │
+ └─────────────────────────┘
+   Navigation UI: 52pt (6.9% of screen)
+   Content: 704pt (93.1%)
+ 
+ RESULT: +104pt content space (17.3% more!)
+ 
+ */
+
 // MARK: - Supporting Views
 
 private struct StepIndicator: View {
@@ -248,13 +390,13 @@ private struct StepIndicator: View {
     let number: Int
     let isActive: Bool
     let isComplete: Bool
-    
+
     var body: some View {
         ZStack {
             Circle()
                 .fill(isActive ? theme.actionPrimary : theme.muted)
                 .frame(width: 32, height: 32)
-            
+
             if isComplete {
                 Image(systemName: "checkmark")
                     .font(.system(size: 14, weight: .bold))
@@ -273,7 +415,7 @@ private struct FilterChip: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             Text(title)
@@ -347,3 +489,28 @@ private struct RefinedColorSwatchCard: View {
     }
 }
 
+#Preview("Color Picking - Empty") {
+    NavigationStack {
+        ItemPickerView_Adaptive()
+    }
+    .environment(Theme())
+    .environment(RouterPath())
+    .environment(VisualizerViewModel())
+    .environment(NavigationState())
+}
+
+#Preview("Color Picking - With Selection") {
+    @Previewable @State var vm = VisualizerViewModel()
+    
+    NavigationStack {
+        ItemPickerView_Adaptive()
+    }
+    .environment(Theme())
+    .environment(RouterPath())
+    .environment(vm)
+    .environment(NavigationState())
+    .onAppear {
+        // Add some mock colors for preview
+        // vm.selectedColors = [mockColor1, mockColor2, mockColor3]
+    }
+}

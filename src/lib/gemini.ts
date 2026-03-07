@@ -1,7 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 
-const DEFAULT_PRIMARY_MODEL = "gemini-3.1-flash-image-preview";
-const DEFAULT_FALLBACK_MODEL = "gemini-2.5-flash-image";
+const DEFAULT_PRIMARY_MODEL = "nano-banana-pro-preview";
+const DEFAULT_FALLBACK_MODEL = "gemini-3.1-flash-image-preview";
+const DEFAULT_SECONDARY_FALLBACK_MODEL = "gemini-2.5-flash-image";
 const REQUEST_TIMEOUT_MS = 45_000;
 const MAX_RETRIES = 2;
 
@@ -35,9 +36,14 @@ function getClient(): GoogleGenAI {
 }
 
 function configuredModelIds(): string[] {
-  const primary = process.env.GEMINI_IMAGE_MODEL?.trim() || DEFAULT_PRIMARY_MODEL;
-  const fallback = process.env.GEMINI_IMAGE_FALLBACK_MODEL?.trim() || DEFAULT_FALLBACK_MODEL;
-  return [...new Set([primary, fallback])];
+  const modelCandidates = [
+    process.env.GEMINI_IMAGE_MODEL?.trim() || DEFAULT_PRIMARY_MODEL,
+    process.env.GEMINI_IMAGE_FALLBACK_MODEL?.trim() || DEFAULT_FALLBACK_MODEL,
+    process.env.GEMINI_IMAGE_SECONDARY_FALLBACK_MODEL?.trim() ||
+      DEFAULT_SECONDARY_FALLBACK_MODEL,
+  ];
+
+  return [...new Set(modelCandidates.filter(Boolean))];
 }
 
 function getErrorStatus(error: unknown): number | undefined {
@@ -105,16 +111,20 @@ function toGeminiGenerationError(
 
 function isRetryableError(error: unknown): boolean {
   const status = getErrorStatus(error);
-  if (!status) return false;
+  if (!status) {
+    return getErrorMessage(error).toLowerCase().includes("timed out");
+  }
   return [408, 429, 500, 502, 503, 504].includes(status);
 }
 
 function shouldTryFallbackModel(error: unknown): boolean {
   const status = getErrorStatus(error);
+  if (status && [408, 429, 500, 502, 503, 504].includes(status)) return true;
   if (status === 404) return true;
 
   const message = getErrorMessage(error).toLowerCase();
   return (
+    message.includes("timed out") ||
     message.includes("not found") ||
     message.includes("unsupported model") ||
     message.includes("not available") ||
@@ -149,6 +159,7 @@ function extractImageFromResponse(
       content?: {
         parts?: Array<{
           inlineData?: { data?: string; mimeType?: string };
+          inline_data?: { data?: string; mime_type?: string };
         }>;
       };
     }>;
@@ -158,7 +169,14 @@ function extractImageFromResponse(
   for (const candidate of candidates) {
     const parts = candidate.content?.parts ?? [];
     for (const part of parts) {
-      const inlineData = part.inlineData;
+      const inlineData =
+        part.inlineData ??
+        (part.inline_data
+          ? {
+              data: part.inline_data.data,
+              mimeType: part.inline_data.mime_type,
+            }
+          : undefined);
       if (
         inlineData?.data &&
         inlineData?.mimeType &&
@@ -237,7 +255,16 @@ export async function generatePaintVisualization(
   imageBase64: string,
   imageMimeType: string
 ): Promise<{ data: string; mimeType: string }> {
-  const ai = getClient();
+  let ai: GoogleGenAI;
+  try {
+    ai = getClient();
+  } catch (error) {
+    throw new GeminiGenerationError(
+      "Gemini is not configured. Missing API credentials.",
+      { status: 500, code: "AUTH_ERROR", cause: error }
+    );
+  }
+
   const modelIds = configuredModelIds();
   let lastError: unknown = null;
 
@@ -258,7 +285,7 @@ export async function generatePaintVisualization(
       const shouldFallback = hasFallback && shouldTryFallbackModel(error);
       if (!shouldFallback) break;
       console.warn(
-        `Gemini model "${modelId}" is unavailable, trying fallback model "${modelIds[i + 1]}".`
+        `Gemini model "${modelId}" failed; trying fallback model "${modelIds[i + 1]}".`
       );
     }
   }

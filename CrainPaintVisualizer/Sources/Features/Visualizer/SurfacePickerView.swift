@@ -12,12 +12,9 @@ struct SurfacePickerView: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(spacing: theme.spacingMD) {
-                    BrandedHeader(
-                        title: "Select Surface",
-                        subtitle: "Where do you want to apply the color?"
-                    )
-
-                    StepProgressView(steps: ["Color", "Photo", "Surface"], currentStep: 2, icons: ["paintpalette", "camera", "sofa"])
+                    
+                    // ✅ Step indicator badge
+                    stepIndicatorBadge
 
                     // Surface grid
                     LazyVGrid(columns: columns, spacing: 12) {
@@ -92,8 +89,59 @@ struct SurfacePickerView: View {
                 .accessibilityIdentifier("surfacePicker.visualizeNow")
             }
         }
-        .navigationTitle("")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Select Surface")
+        .navigationBarTitleDisplayMode(.large)
+    }
+    
+    // MARK: - Helper Views
+    
+    private var stepIndicatorBadge: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                HStack(spacing: 8) {
+                    // Step 3 indicator with completed steps 1 & 2
+                    HStack(spacing: 6) {
+                        stepIndicatorDot(number: 1, isActive: false, isComplete: true)
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(theme.mutedForeground)
+                        stepIndicatorDot(number: 2, isActive: false, isComplete: true)
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(theme.mutedForeground)
+                        stepIndicatorDot(number: 3, isActive: true, isComplete: false)
+                    }
+                    Text("Step 3 of 3")
+                        .font(theme.caption)
+                        .foregroundStyle(theme.mutedForeground)
+                }
+                Spacer()
+            }
+            
+            Text("Where do you want to apply the color?")
+                .font(theme.caption)
+                .foregroundStyle(theme.mutedForeground)
+        }
+        .padding(.horizontal, theme.spacingLG)
+        .padding(.top, 8)
+    }
+    
+    private func stepIndicatorDot(number: Int, isActive: Bool, isComplete: Bool) -> some View {
+        ZStack {
+            Circle()
+                .fill(isActive ? theme.actionPrimary : isComplete ? ColorTokens.feedbackSuccess : theme.muted)
+                .frame(width: 24, height: 24)
+            
+            if isComplete {
+                Image(systemName: "checkmark")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(.white)
+            } else {
+                Text("\(number)")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(isActive ? .white : theme.mutedForeground)
+            }
+        }
     }
 }
 

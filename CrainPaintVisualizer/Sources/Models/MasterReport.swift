@@ -11,7 +11,7 @@ struct MasterReport: Identifiable, Hashable, Codable {
     let videoDuration: TimeInterval
     let createdAt: Date
     let status: ReportStatus
-    let recommendations: [RoomRecommendation]
+    var recommendations: [RoomRecommendation]
 }
 
 enum ReportStatus: String, Hashable, Codable {
@@ -31,6 +31,7 @@ struct RoomRecommendation: Identifiable, Hashable, Codable {
     var afterImageName: String? = nil
     let suggestedColor: PaintColor
     let rationale: String
+    var targetSurface: String? = nil
 }
 
 struct ConsultationPackage: Identifiable, Hashable, Codable {
