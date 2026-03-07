@@ -235,11 +235,13 @@ extension VisualizationDetailView {
             if let photo = referencePhoto ?? visualizerVM.photo {
                 Image(uiImage: tintedPreviewImage(from: photo, hex: visualization.colorHex))
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
+                    .background(theme.muted.opacity(0.25))
             } else if !visualization.afterImageName.isEmpty {
                 Image(visualization.afterImageName)
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
+                    .background(theme.muted.opacity(0.25))
             } else {
                 RoundedRectangle(cornerRadius: theme.radiusXL)
                     .fill(Color(hex: visualization.colorHex).opacity(0.3))

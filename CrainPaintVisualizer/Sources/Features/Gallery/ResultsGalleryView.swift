@@ -204,7 +204,8 @@ private struct VisualizationCard: View {
         } else if let photo = visualizerVM.photo {
             Image(uiImage: photo)
                 .resizable()
-                .scaledToFill()
+                .scaledToFit()
+                .background(theme.muted.opacity(0.25))
                 .overlay(Color(hex: visualization.colorHex).opacity(0.28))
                 .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
         } else {

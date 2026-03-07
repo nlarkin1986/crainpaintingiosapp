@@ -18,16 +18,16 @@ struct ComparisonSliderView: View {
                 // After image (full)
                 afterImage
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: width, height: geo.size.height)
-                    .clipped()
+                    .background(theme.muted.opacity(0.25))
 
                 // Before image (clipped to left of slider)
                 beforeImage
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: width, height: geo.size.height)
-                    .clipped()
+                    .background(theme.muted.opacity(0.25))
                     .mask(
                         HStack(spacing: 0) {
                             Rectangle()
