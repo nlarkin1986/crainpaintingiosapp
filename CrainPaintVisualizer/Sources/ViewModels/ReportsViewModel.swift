@@ -7,15 +7,25 @@ final class ReportsViewModel {
     var isLoading = false
 
     private let store: ReportStore
+    private let reportsService: ReportsService
     private var persistTask: Task<Void, Never>?
+    private var pollingTasks: [String: Task<Void, Never>] = [:]
+    private var lastRefreshAt: Date?
+    private let refreshThrottleInterval: TimeInterval
 
     var readyReports: [MasterReport] {
         reports.filter { $0.status.isReady }
     }
 
-    init(store: ReportStore = FileReportStore()) {
+    init(
+        store: ReportStore = FileReportStore(),
+        reportsService: ReportsService = RemoteReportsService(),
+        refreshThrottleInterval: TimeInterval = 20
+    ) {
         self.store = store
-        Task { await loadReports() }
+        self.reportsService = reportsService
+        self.refreshThrottleInterval = refreshThrottleInterval
+        Task { await bootstrap() }
     }
 
     func report(for id: String) -> MasterReport? {
@@ -23,48 +33,84 @@ final class ReportsViewModel {
     }
 
     @discardableResult
-    func createReport(from visualization: Visualization?) -> MasterReport {
-        let baseColor = visualization?.asPaintColor ?? PaintColor(
-            number: "HC-114",
-            name: "Saybrook Sage",
-            family: "Green",
-            hex: "A4AE9F",
-            brand: .benjaminMoore
-        )
+    func trackPendingReport(
+        orderID: String,
+        consultationFlow: ConsultationFlowState,
+        sourceVisualization: Visualization? = nil,
+        packageType: ConsultationPackageType? = nil
+    ) -> MasterReport {
+        let resolvedPackageType = packageType ?? consultationFlow.packageType
+        let roomName = consultationFlow.sourceRoomName ?? sourceVisualization?.roomName
+        let title = roomName.map { "\($0) Consultation" } ?? "Consultation in Progress"
 
-        let id = "report_\(UUID().uuidString.prefix(8))"
-        let recommendation1 = RoomRecommendation(
-            id: "\(id)_room1",
-            roomName: visualization?.roomName ?? "Living Room",
-            beforeTitle: "Before",
-            afterTitle: "After",
-            suggestedColor: baseColor,
-            rationale: "The soft undertones in this shade balance changing daylight while still keeping the room warm and inviting."
-        )
-        let recommendation2 = RoomRecommendation(
-            id: "\(id)_room2",
-            roomName: "Primary Bedroom",
-            beforeTitle: "Before",
-            afterTitle: "After",
-            suggestedColor: PaintColor(number: "OC-45", name: "Swiss Coffee", family: "White", hex: "E9E1D1", brand: .benjaminMoore),
-            rationale: "Use this lighter neutral in adjacent spaces to make transitions feel intentional and cohesive."
-        )
-
-        let report = MasterReport(
-            id: id,
-            title: "Master Report",
+        let draft = MasterReport(
+            id: orderID,
+            projectID: consultationFlow.sourceProjectID ?? sourceVisualization?.projectID,
+            orderID: orderID,
+            title: title,
             curatorName: "Curt Crain",
-            curatorSubtitle: "Curated by Curt Crain",
-            videoTitle: "Watch Curt's Analysis",
-            videoDuration: 12 * 60 + 40,
+            curatorSubtitle: "Expert review in progress",
+            videoThumbnailName: sourceVisualization?.afterImageName ?? "HowItWorksHero",
+            videoTitle: "Curt's Video Walkthrough",
+            videoDuration: 0,
             createdAt: .now,
-            status: .ready,
-            recommendations: [recommendation1, recommendation2]
+            updatedAt: .now,
+            status: .generating,
+            statusMessage: "Your consultation is confirmed. We'll keep the report status updated here.",
+            packageType: resolvedPackageType,
+            recommendations: []
         )
 
-        reports.insert(report, at: 0)
+        upsertReport(draft)
         schedulePersist()
-        return report
+        startPolling(orderID: orderID)
+        return draft
+    }
+
+    func refreshReports(force: Bool = false) async {
+        guard shouldRefreshReports(force: force) else { return }
+
+        isLoading = true
+        defer {
+            isLoading = false
+            lastRefreshAt = .now
+        }
+
+        let pendingOrderIDs = reports.compactMap(pendingOrderID(for:))
+        guard !pendingOrderIDs.isEmpty else { return }
+
+        for orderID in pendingOrderIDs {
+            await refreshReport(orderID: orderID)
+        }
+    }
+
+    func refreshReport(orderID: String) async {
+        do {
+            guard let remote = try await reportsService.fetchReport(orderID: orderID) else { return }
+            upsertReport(remote)
+            schedulePersist()
+
+            if remote.status.isReady || remote.status == .failed {
+                pollingTasks[orderID]?.cancel()
+                pollingTasks.removeValue(forKey: orderID)
+            }
+        } catch {
+            guard var existing = report(for: orderID) else { return }
+            existing.statusMessage = "We couldn't refresh the report right now. Pull to retry or check again shortly."
+            upsertReport(existing)
+            schedulePersist()
+        }
+    }
+
+    private func bootstrap() async {
+        await loadReports()
+        await refreshReports(force: true)
+
+        for report in reports where report.status.isGenerating {
+            if let orderID = pendingOrderID(for: report) {
+                startPolling(orderID: orderID)
+            }
+        }
     }
 
     private func loadReports() async {
@@ -72,48 +118,46 @@ final class ReportsViewModel {
         defer { isLoading = false }
 
         do {
-            let saved = try await store.loadReports()
-            integrateLoadedReports(saved)
+            let loadedReports = try await store.loadReports()
+
+            if reports.isEmpty {
+                reports = loadedReports.sorted(by: { self.sortReports($0, $1) })
+            } else {
+                for report in loadedReports {
+                    upsertReport(report)
+                }
+            }
         } catch {
-            integrateLoadedReports([])
+            reports = []
         }
     }
 
-    private func integrateLoadedReports(_ loaded: [MasterReport]) {
-        let baseline = loaded.isEmpty ? makeSeedReports() : loaded.sorted(by: { $0.createdAt > $1.createdAt })
+    private func startPolling(orderID: String) {
+        pollingTasks[orderID]?.cancel()
+        pollingTasks[orderID] = Task {
+            for _ in 0..<24 {
+                guard !Task.isCancelled else { return }
+                await refreshReport(orderID: orderID)
 
-        if reports.isEmpty {
-            reports = baseline
+                if let report = report(for: orderID), report.status.isReady || report.status == .failed {
+                    return
+                }
+
+                try? await Task.sleep(for: .seconds(5))
+            }
+        }
+    }
+
+    private func upsertReport(_ report: MasterReport) {
+        if let index = reports.firstIndex(where: { $0.id == report.id }) {
+            reports[index] = report
+        } else if let orderID = report.orderID, let index = reports.firstIndex(where: { $0.orderID == orderID || $0.id == orderID }) {
+            reports[index] = report
         } else {
-            reports = mergeReports(current: reports, loaded: baseline)
+            reports.insert(report, at: 0)
         }
-        schedulePersist()
-    }
 
-    private func makeSeedReports() -> [MasterReport] {
-        let fallbackColor = PaintColor(number: "HC-114", name: "Saybrook Sage", family: "Green", hex: "A4AE9F", brand: .benjaminMoore)
-        let report = MasterReport(
-            id: "report_demo_1",
-            title: "Master Report",
-            curatorName: "Curt Crain",
-            curatorSubtitle: "Curated by Curt Crain",
-            videoTitle: "Watch Curt's Analysis",
-            videoDuration: 12 * 60 + 40,
-            createdAt: .now.addingTimeInterval(-86_400),
-            status: .ready,
-            recommendations: [
-                RoomRecommendation(
-                    id: "report_demo_1_room1",
-                    roomName: "Living Room",
-                    beforeTitle: "Before",
-                    afterTitle: "After",
-                    suggestedColor: fallbackColor,
-                    rationale: "This balanced sage offsets warm afternoon light and tones down high-contrast furniture finishes."
-                )
-            ]
-        )
-
-        return [report]
+        reports.sort(by: { self.sortReports($0, $1) })
     }
 
     private func schedulePersist() {
@@ -125,11 +169,29 @@ final class ReportsViewModel {
         }
     }
 
-    private func mergeReports(current: [MasterReport], loaded: [MasterReport]) -> [MasterReport] {
-        var mergedByID = Dictionary(uniqueKeysWithValues: loaded.map { ($0.id, $0) })
-        for report in current {
-            mergedByID[report.id] = report
+    private func sortReports(_ lhs: MasterReport, _ rhs: MasterReport) -> Bool {
+        let lhsDate = lhs.updatedAt ?? lhs.createdAt
+        let rhsDate = rhs.updatedAt ?? rhs.createdAt
+        return lhsDate > rhsDate
+    }
+
+    private func pendingOrderID(for report: MasterReport) -> String? {
+        guard report.status.isGenerating else { return nil }
+        if let orderID = report.orderID, !orderID.isEmpty {
+            return orderID
         }
-        return mergedByID.values.sorted(by: { $0.createdAt > $1.createdAt })
+        return report.id.isEmpty ? nil : report.id
+    }
+
+    private func shouldRefreshReports(force: Bool) -> Bool {
+        guard !force else { return !isLoading }
+        guard !isLoading else { return false }
+        guard !reports.isEmpty else { return false }
+
+        if let lastRefreshAt, Date().timeIntervalSince(lastRefreshAt) < refreshThrottleInterval {
+            return false
+        }
+
+        return reports.contains(where: \.status.isGenerating)
     }
 }

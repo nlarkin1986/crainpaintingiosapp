@@ -141,7 +141,7 @@ export function ResultGallery({
             disabled={isGenerating}
           >
             <Download className="h-4 w-4" />
-            Download All
+            Download All Images
           </Button>
         )}
         {isGenerating && (
@@ -163,6 +163,7 @@ export function ResultGallery({
           <ResultCard
             key={result.color.number}
             result={result}
+            surface={surface}
             onRemove={() => onRemove(result.color.number)}
             onRetry={() => onRetry(result.color.number)}
             isGenerating={isGenerating}

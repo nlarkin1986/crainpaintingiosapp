@@ -17,35 +17,13 @@ struct FavoritesView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: theme.spacingMD) {
-                Text("Your curated collection of inspiration")
-                    .font(theme.body)
-                    .foregroundStyle(theme.mutedForeground)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, theme.spacingMD)
+            VStack(spacing: theme.space24) {
+                header
 
-                AppInput(placeholder: "Search your favorites...", text: Bindable(viewModel).searchText, icon: "magnifyingglass")
-                    .padding(.horizontal, theme.spacingMD)
-
-                HStack {
-                    Text("\(viewModel.filteredFavorites.count) Colors Saved")
-                        .font(theme.caption)
-                        .foregroundStyle(theme.mutedForeground)
-                    Spacer()
-                    HStack(spacing: theme.spacingSM) {
-                        BrandMenuChip(selectedBrand: viewModel.selectedBrandFilter) { brand in
-                            viewModel.selectedBrandFilter = brand
-                        }
-                        SortMenuChip(selectedSort: viewModel.sort) { sort in
-                            viewModel.sort = sort
-                        }
-                    }
-                }
-                .padding(.horizontal, theme.spacingMD)
+                searchPanel
 
                 if viewModel.filteredFavorites.isEmpty {
                     emptyState
-                        .padding(.horizontal, theme.spacingMD)
                 } else {
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(viewModel.filteredFavorites) { color in
@@ -53,7 +31,7 @@ struct FavoritesView: View {
                                 color: color,
                                 onTap: {
                                     visualizerVM.startFlow(with: color)
-                                    tabRouter.openVisualizer(appState: appState, route: .itemPicker)
+                                    tabRouter.openVisualizer(appState: appState, route: .photoUpload)
                                     showVisualizeToast = true
                                 },
                                 onUnfavorite: {
@@ -64,7 +42,7 @@ struct FavoritesView: View {
                             .contextMenu {
                                 Button {
                                     visualizerVM.startFlow(with: color)
-                                    tabRouter.openVisualizer(appState: appState, route: .itemPicker)
+                                    tabRouter.openVisualizer(appState: appState, route: .photoUpload)
                                     showVisualizeToast = true
                                 } label: {
                                     Label("Visualize", systemImage: "wand.and.stars")
@@ -83,37 +61,134 @@ struct FavoritesView: View {
                             }
                         }
                     }
-                    .padding(.horizontal, theme.spacingMD)
-                    .padding(.bottom, theme.spacingLG)
                 }
             }
-            .padding(.top, theme.spacingSM)
+            .padding(.horizontal, theme.spacingMD)
+            .padding(.top, theme.space16)
+            .padding(.bottom, theme.spacingXL)
         }
+        .background(theme.background.ignoresSafeArea())
         .scrollDismissesKeyboard(.interactively)
-        .navigationTitle("Favorite Colors")
-        .navigationBarTitleDisplayMode(.large)
+        .toolbar(.hidden, for: .navigationBar)
         .sensoryFeedback(.success, trigger: showVisualizeToast)
         .toast(isPresented: $showVisualizeToast, message: "Opened in Visualize", icon: "paintbrush")
         .toast(isPresented: $showRemovedToast, message: "Color removed", icon: "trash")
     }
 
-    private var emptyState: some View {
-        VStack(spacing: theme.spacingSM) {
-            Image(systemName: "heart.slash")
-                .font(.system(size: 34, weight: .semibold))
-                .foregroundStyle(theme.mutedForeground)
-            Text("No favorites match your filters")
-                .font(theme.subhead)
+    private var header: some View {
+        VStack(alignment: .leading, spacing: theme.space12) {
+            Text("Favorite Colors")
+                .font(theme.displayMedium)
                 .foregroundStyle(theme.foreground)
-            Text("Save colors from the matcher, reports, or detail screens to build your palette.")
-                .font(theme.caption)
+
+            Text("Your curated collection of inspiration, organized for quick comparison and one-tap visualization.")
+                .font(theme.bodyDefault)
                 .foregroundStyle(theme.mutedForeground)
-                .multilineTextAlignment(.center)
+
+            HStack(spacing: theme.space8) {
+                statPill(
+                    icon: "heart.fill",
+                    text: "\(viewModel.filteredFavorites.count) Colors Saved",
+                    foreground: theme.primary,
+                    background: theme.primary.opacity(0.12)
+                )
+
+                if let selectedBrand = viewModel.selectedBrandFilter {
+                    statPill(
+                        icon: "paintpalette.fill",
+                        text: selectedBrand.displayName,
+                        foreground: theme.foreground,
+                        background: theme.secondary
+                    )
+                }
+            }
         }
-        .padding(theme.spacingLG)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var searchPanel: some View {
+        VStack(alignment: .leading, spacing: theme.space16) {
+            AppInput(
+                placeholder: "Search your favorites...",
+                text: Bindable(viewModel).searchText,
+                icon: "magnifyingglass"
+            )
+
+            HStack(alignment: .center) {
+                Text(viewModel.filteredFavorites.isEmpty ? "No matching colors" : "Quick filters")
+                    .font(theme.caption)
+                    .foregroundStyle(theme.mutedForeground)
+
+                Spacer()
+
+                HStack(spacing: theme.space8) {
+                    BrandMenuChip(selectedBrand: viewModel.selectedBrandFilter) { brand in
+                        viewModel.selectedBrandFilter = brand
+                    }
+                    SortMenuChip(selectedSort: viewModel.sort) { sort in
+                        viewModel.sort = sort
+                    }
+                }
+            }
+        }
+        .padding(theme.space16)
+        .background(theme.card)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radiusXL))
+        .overlay(
+            RoundedRectangle(cornerRadius: theme.radiusXL)
+                .stroke(theme.borderSubtle, lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(0.05), radius: 16, y: 6)
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: theme.space16) {
+            Circle()
+                .fill(theme.primary.opacity(0.08))
+                .frame(width: 72, height: 72)
+                .overlay(
+                    Image(systemName: "heart.slash")
+                        .font(.system(size: 28, weight: .semibold))
+                        .foregroundStyle(theme.primary)
+                )
+
+            VStack(spacing: theme.space8) {
+                Text("No favorites match your filters")
+                    .font(theme.heading2)
+                    .foregroundStyle(theme.foreground)
+                Text("Save colors from the matcher, reports, or detail screens to build a palette you can compare in seconds.")
+                    .font(theme.bodySmall)
+                    .foregroundStyle(theme.mutedForeground)
+                    .multilineTextAlignment(.center)
+            }
+
+            AppButton("Start Visualizing", variant: .outline, icon: "wand.and.stars") {
+                tabRouter.openVisualizer(appState: appState, route: .photoUpload)
+            }
+        }
+        .padding(theme.space24)
         .frame(maxWidth: .infinity)
-        .background(theme.muted)
-        .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
+        .background(theme.card)
+        .clipShape(RoundedRectangle(cornerRadius: theme.radiusXL))
+        .overlay(
+            RoundedRectangle(cornerRadius: theme.radiusXL)
+                .stroke(theme.borderSubtle, lineWidth: 1)
+        )
+    }
+
+    private func statPill(icon: String, text: String, foreground: Color, background: Color) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 11, weight: .semibold))
+            Text(text)
+                .font(theme.captionSmall)
+                .fontWeight(.semibold)
+        }
+        .foregroundStyle(foreground)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(background)
+        .clipShape(Capsule())
     }
 }
 
@@ -125,52 +200,63 @@ private struct FavoriteColorCard: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            VStack(alignment: .leading, spacing: 0) {
-                Rectangle()
-                    .fill(color.color)
-                    .frame(height: 140)
+            Button(action: onTap) {
+                VStack(alignment: .leading, spacing: 0) {
+                    RoundedRectangle(cornerRadius: theme.radiusLG)
+                        .fill(color.color)
+                        .frame(height: 150)
+                        .overlay(alignment: .bottomLeading) {
+                            Text(color.family.uppercased())
+                                .font(theme.micro)
+                                .fontWeight(.bold)
+                                .tracking(1)
+                                .foregroundStyle(.white.opacity(0.92))
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                                .background(.black.opacity(0.18))
+                                .clipShape(Capsule())
+                                .padding(12)
+                        }
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(color.brand.displayName)
-                        .font(theme.micro)
-                        .textCase(.uppercase)
-                        .tracking(0.8)
-                        .foregroundStyle(theme.mutedForeground)
-                    Text(color.name)
-                        .font(theme.subhead)
-                        .fontWeight(.bold)
-                        .foregroundStyle(theme.foreground)
-                        .lineLimit(1)
-                    Text(color.number)
-                        .font(theme.micro)
-                        .foregroundStyle(theme.mutedForeground)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(color.brand.displayName.uppercased())
+                            .font(theme.micro)
+                            .tracking(0.9)
+                            .foregroundStyle(theme.mutedForeground)
+                        Text(color.name)
+                            .font(theme.heading3)
+                            .foregroundStyle(theme.foreground)
+                            .lineLimit(2)
+                        Text(color.number)
+                            .font(theme.caption)
+                            .foregroundStyle(theme.mutedForeground)
+                    }
+                    .padding(theme.space12)
                 }
-                .padding(theme.spacingSM)
+                .background(theme.card)
+                .clipShape(RoundedRectangle(cornerRadius: theme.radiusXL))
+                .overlay(
+                    RoundedRectangle(cornerRadius: theme.radiusXL)
+                        .stroke(theme.borderSubtle, lineWidth: 1)
+                )
+                .shadow(color: color.color.opacity(0.22), radius: 14, y: 6)
             }
-            .background(theme.card)
-            .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
-            .overlay(
-                RoundedRectangle(cornerRadius: theme.radiusLG)
-                    .stroke(theme.border, lineWidth: 1)
-            )
-            .shadow(color: color.color.opacity(0.3), radius: 6, y: 3)
+            .buttonStyle(.plain)
+            .accessibilityLabel("\(color.name), \(color.brand.displayName) \(color.number)")
 
             Button(action: onUnfavorite) {
                 Image(systemName: "heart.fill")
-                    .font(.system(size: 18))
+                    .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(.red)
                     .frame(width: 44, height: 44)
-                    .background(Color.cBackgroundElevated.opacity(0.92))
+                    .background(Color.cBackgroundElevated.opacity(0.96))
                     .clipShape(Circle())
-                    .shadow(color: .black.opacity(0.05), radius: 2)
+                    .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
             }
-            .padding(8)
+            .padding(10)
+            .buttonStyle(.plain)
+            .accessibilityLabel("Remove \(color.name) from favorites")
         }
-        .contentShape(RoundedRectangle(cornerRadius: theme.radiusLG))
-        .onTapGesture(perform: onTap)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(color.name), \(color.brand.displayName) \(color.number)")
-        .accessibilityAddTraits(.isButton)
     }
 }
 
@@ -182,7 +268,7 @@ private struct BrandMenuChip: View {
     var body: some View {
         Menu {
             Button("All Brands") { onSelect(nil) }
-            ForEach(PaintBrand.allCases, id: \.self) { brand in
+            ForEach(PaintBrand.supportedCases, id: \.self) { brand in
                 Button(brand.displayName) { onSelect(brand) }
             }
         } label: {
@@ -194,8 +280,8 @@ private struct BrandMenuChip: View {
             }
             .foregroundStyle(theme.foreground)
             .padding(.horizontal, theme.space12)
-            .padding(.vertical, 6)
-            .background(theme.muted)
+            .padding(.vertical, 8)
+            .background(theme.secondary)
             .clipShape(RoundedRectangle(cornerRadius: theme.radiusMedium))
         }
     }
@@ -220,8 +306,8 @@ private struct SortMenuChip: View {
             }
             .foregroundStyle(theme.foreground)
             .padding(.horizontal, theme.space12)
-            .padding(.vertical, 6)
-            .background(theme.muted)
+            .padding(.vertical, 8)
+            .background(theme.secondary)
             .clipShape(RoundedRectangle(cornerRadius: theme.radiusMedium))
         }
     }

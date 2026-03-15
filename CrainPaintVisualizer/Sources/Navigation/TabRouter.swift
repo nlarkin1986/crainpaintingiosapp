@@ -3,17 +3,23 @@ import SwiftUI
 @MainActor
 @Observable
 final class TabRouter {
-    private var routers: [AppTab: RouterPath] = [:]
+    private let previewRouter = RouterPath()
+    private let libraryRouter = RouterPath()
+    private let moreRouter = RouterPath()
 
     func router(for tab: AppTab) -> RouterPath {
-        if let router = routers[tab] { return router }
-        let router = RouterPath()
-        routers[tab] = router
-        return router
+        switch tab {
+        case .preview:
+            previewRouter
+        case .library:
+            libraryRouter
+        case .more:
+            moreRouter
+        }
     }
 
     func binding(for tab: AppTab) -> Binding<[AppRoute]> {
-        let r = router(for: tab)
-        return Binding(get: { r.path }, set: { r.path = $0 })
+        let routePath = router(for: tab)
+        return Binding(get: { routePath.path }, set: { routePath.path = $0 })
     }
 }

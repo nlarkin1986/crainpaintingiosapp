@@ -1,4 +1,4 @@
-import type { BMColor } from "@/types/colors";
+import type { PaintBrand, PaintColor } from "@/types/colors";
 import rawBMColors from "@/data/bm-colors.json";
 import rawSWColors from "@/data/sw-colors.json";
 
@@ -10,10 +10,10 @@ interface RawBMColor {
   [key: string]: unknown;
 }
 
-export type Brand = 'benjamin_moore' | 'sherwin_williams';
+export type Brand = PaintBrand;
 
-/** Map raw JSON entries to the slim BMColor shape once at module load. */
-const bmCatalog: BMColor[] = (rawBMColors as RawBMColor[]).map((c) => ({
+/** Map raw JSON entries to the slim PaintColor shape once at module load. */
+const bmCatalog: PaintColor[] = (rawBMColors as RawBMColor[]).map((c) => ({
   number: c.number,
   name: c.name,
   family: c.family,
@@ -21,7 +21,7 @@ const bmCatalog: BMColor[] = (rawBMColors as RawBMColor[]).map((c) => ({
   brand: 'benjamin_moore' as const,
 }));
 
-const swCatalog: BMColor[] = (rawSWColors as RawBMColor[]).map((c) => ({
+const swCatalog: PaintColor[] = (rawSWColors as RawBMColor[]).map((c) => ({
   number: c.number,
   name: c.name,
   family: c.family,
@@ -29,8 +29,19 @@ const swCatalog: BMColor[] = (rawSWColors as RawBMColor[]).map((c) => ({
   brand: 'sherwin_williams' as const,
 }));
 
-function getCatalog(brand: Brand = 'benjamin_moore'): BMColor[] {
-  return brand === 'sherwin_williams' ? swCatalog : bmCatalog;
+function getCatalog(brand: Brand = 'benjamin_moore'): PaintColor[] {
+  switch (brand) {
+    case 'benjamin_moore':
+      return bmCatalog;
+    case 'sherwin_williams':
+      return swCatalog;
+    case 'farrow_ball':
+      return [];
+  }
+}
+
+function normalizeSearchValue(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
 // ---------------------------------------------------------------------------
@@ -38,7 +49,7 @@ function getCatalog(brand: Brand = 'benjamin_moore'): BMColor[] {
 // ---------------------------------------------------------------------------
 
 /** Return the full color catalog for the given brand. */
-export function getAllColors(brand: Brand = 'benjamin_moore'): BMColor[] {
+export function getAllColors(brand: Brand = 'benjamin_moore'): PaintColor[] {
   return getCatalog(brand);
 }
 
@@ -72,7 +83,7 @@ const POPULAR_BM_NAMES: string[] = [
   "Dove Wing",
 ];
 
-const popularBMColors: BMColor[] = POPULAR_BM_NAMES.reduce<BMColor[]>(
+const popularBMColors: PaintColor[] = POPULAR_BM_NAMES.reduce<PaintColor[]>(
   (acc, name) => {
     const match = bmCatalog.find(
       (c) => c.name.toLowerCase() === name.toLowerCase()
@@ -113,7 +124,7 @@ const POPULAR_SW_NAMES: string[] = [
   "Kilim Beige",
 ];
 
-const popularSWColors: BMColor[] = POPULAR_SW_NAMES.reduce<BMColor[]>(
+const popularSWColors: PaintColor[] = POPULAR_SW_NAMES.reduce<PaintColor[]>(
   (acc, name) => {
     const match = swCatalog.find(
       (c) => c.name.toLowerCase() === name.toLowerCase()
@@ -125,19 +136,28 @@ const popularSWColors: BMColor[] = POPULAR_SW_NAMES.reduce<BMColor[]>(
 );
 
 /** Return the curated 24 best-selling colors for the given brand. */
-export function getPopularColors(brand: Brand = 'benjamin_moore'): BMColor[] {
-  return brand === 'sherwin_williams' ? popularSWColors : popularBMColors;
+export function getPopularColors(brand: Brand = 'benjamin_moore'): PaintColor[] {
+  switch (brand) {
+    case 'benjamin_moore':
+      return popularBMColors;
+    case 'sherwin_williams':
+      return popularSWColors;
+    case 'farrow_ball':
+      return [];
+  }
 }
 
 /**
  * Client-side search across name, number, and hex.
  * Case-insensitive. Returns up to 50 results.
  */
-export function searchColors(query: string, brand: Brand = 'benjamin_moore'): BMColor[] {
+export function searchColors(query: string, brand: Brand = 'benjamin_moore'): PaintColor[] {
   if (!query || !query.trim()) return [];
 
   const q = query.trim().toLowerCase();
-  const results: BMColor[] = [];
+  const normalizedQuery = normalizeSearchValue(q);
+  const normalizedHexQuery = q.replace(/^#/, "");
+  const results: PaintColor[] = [];
   const catalog = getCatalog(brand);
 
   for (const color of catalog) {
@@ -146,7 +166,9 @@ export function searchColors(query: string, brand: Brand = 'benjamin_moore'): BM
     if (
       color.name.toLowerCase().includes(q) ||
       color.number.toLowerCase().includes(q) ||
-      color.hex.toLowerCase().includes(q)
+      color.hex.toLowerCase().includes(normalizedHexQuery) ||
+      normalizeSearchValue(color.name).includes(normalizedQuery) ||
+      normalizeSearchValue(color.number).includes(normalizedQuery)
     ) {
       results.push(color);
     }
@@ -173,7 +195,7 @@ export function getColorFamilies(brand: Brand = 'benjamin_moore'): { family: str
 }
 
 /** Filter the catalog by a specific family name (case-insensitive). */
-export function filterByFamily(family: string, brand: Brand = 'benjamin_moore'): BMColor[] {
+export function filterByFamily(family: string, brand: Brand = 'benjamin_moore'): PaintColor[] {
   const f = family.toLowerCase();
   return getCatalog(brand).filter((c) => c.family.toLowerCase() === f);
 }

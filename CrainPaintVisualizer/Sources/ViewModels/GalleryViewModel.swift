@@ -37,7 +37,8 @@ final class GalleryViewModel {
                 roomName: roomName,
                 beforeImageName: "",
                 afterImageName: "",
-                surface: surface
+                surface: surface,
+                brand: color.brand
             )
         }
 

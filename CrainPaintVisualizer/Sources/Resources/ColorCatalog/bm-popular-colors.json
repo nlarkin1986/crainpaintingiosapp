@@ -1,0 +1,146 @@
+[
+  {
+    "number": "OC-17",
+    "name": "White Dove",
+    "family": "White",
+    "hex": "EFEEE5"
+  },
+  {
+    "number": "OC-117",
+    "name": "Simply White",
+    "family": "White",
+    "hex": "F6F6ED"
+  },
+  {
+    "number": "OC-65",
+    "name": "Chantilly Lace",
+    "family": "White",
+    "hex": "F4F6F1"
+  },
+  {
+    "number": "OC-45",
+    "name": "Swiss Coffee",
+    "family": "White",
+    "hex": "EEECE1"
+  },
+  {
+    "number": "HC-172",
+    "name": "Revere Pewter",
+    "family": "Gray",
+    "hex": "CBC6B8"
+  },
+  {
+    "number": "HC-154",
+    "name": "Hale Navy",
+    "family": "Neutral",
+    "hex": "434B56"
+  },
+  {
+    "number": "HC-166",
+    "name": "Kendall Charcoal",
+    "family": "Gray",
+    "hex": "676662"
+  },
+  {
+    "number": "OC-23",
+    "name": "Classic Gray",
+    "family": "White",
+    "hex": "E3E0D7"
+  },
+  {
+    "number": "HC-144",
+    "name": "Palladian Blue",
+    "family": "Blue",
+    "hex": "C1D1C9"
+  },
+  {
+    "number": "CSP-95",
+    "name": "Sea Salt",
+    "family": "Gray",
+    "hex": "D4CFC3"
+  },
+  {
+    "number": "HC-173",
+    "name": "Edgecomb Gray",
+    "family": "Beige",
+    "hex": "D9D3C4"
+  },
+  {
+    "number": "OC-27",
+    "name": "Balboa Mist",
+    "family": "White",
+    "hex": "DAD6CC"
+  },
+  {
+    "number": "HC-168",
+    "name": "Chelsea Gray",
+    "family": "Gray",
+    "hex": "86847C"
+  },
+  {
+    "number": "2124-10",
+    "name": "Wrought Iron",
+    "family": "Gray",
+    "hex": "494A4B"
+  },
+  {
+    "number": "CC-490",
+    "name": "Stone Hearth",
+    "family": "Beige",
+    "hex": "C4BAAA"
+  },
+  {
+    "number": "HC-155",
+    "name": "Newburyport Blue",
+    "family": "Blue",
+    "hex": "465566"
+  },
+  {
+    "number": "OC-57",
+    "name": "White Heron",
+    "family": "White",
+    "hex": "F0F1EA"
+  },
+  {
+    "number": "OC-28",
+    "name": "Collingwood",
+    "family": "White",
+    "hex": "D3CEC4"
+  },
+  {
+    "number": "HC-81",
+    "name": "Manchester Tan",
+    "family": "Neutral",
+    "hex": "DBD2BC"
+  },
+  {
+    "number": "1562",
+    "name": "Healing Aloe",
+    "family": "Green",
+    "hex": "D5DBD2"
+  },
+  {
+    "number": "OC-52",
+    "name": "Gray Owl",
+    "family": "White",
+    "hex": "D3D4CC"
+  },
+  {
+    "number": "OC-152",
+    "name": "Super White",
+    "family": "White",
+    "hex": "F1F2EE"
+  },
+  {
+    "number": "OC-55",
+    "name": "Paper White",
+    "family": "White",
+    "hex": "E0E2DC"
+  },
+  {
+    "number": "OC-18",
+    "name": "Dove Wing",
+    "family": "White",
+    "hex": "E9E6DB"
+  }
+]

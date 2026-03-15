@@ -19,7 +19,7 @@ enum TypographyTokens {
     static let label: Font = .system(.subheadline, design: .default, weight: .medium)
     static let caption: Font = .system(.footnote, design: .default, weight: .regular)
     static let captionSmall: Font = .system(.caption, design: .default, weight: .regular)
-    static let micro: Font = .system(.caption2, design: .default, weight: .medium)
+    static let micro: Font = .system(.caption, design: .default, weight: .medium)
 
     // MARK: - New York (Serif) — Editorial & Expert Content
 

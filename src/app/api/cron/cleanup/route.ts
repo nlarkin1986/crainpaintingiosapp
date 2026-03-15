@@ -1,32 +1,58 @@
-import { list, del } from "@vercel/blob";
-
-const blobToken = process.env.Crain_READ_WRITE_TOKEN;
+import { del } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  listExpiredVisualizations,
+  markVisualizationsExpired,
+} from "@/lib/visualization-store";
+
+export const runtime = "nodejs";
+export const maxDuration = 30;
+
+function blobToken(): string | null {
+  return process.env.BLOB_READ_WRITE_TOKEN ?? null;
+}
 
 export async function GET(request: NextRequest) {
-  // Verify cron secret
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const cutoff = Date.now() - 24 * 60 * 60 * 1000;
-  let deleted = 0;
-  let cursor: string | undefined;
-
-  do {
-    const result = await list({ cursor, token: blobToken });
-    const expired = result.blobs.filter(
-      (blob) => new Date(blob.uploadedAt).getTime() < cutoff
+  const token = blobToken();
+  if (!token) {
+    return NextResponse.json(
+      { error: "BLOB_READ_WRITE_TOKEN is not configured" },
+      { status: 500 }
     );
+  }
 
-    if (expired.length > 0) {
-      await del(expired.map((b) => b.url), { token: blobToken });
-      deleted += expired.length;
-    }
+  const expiredAssets = await listExpiredVisualizations(500);
+  if (expiredAssets.length === 0) {
+    return NextResponse.json({
+      deleted: 0,
+      expiredVisualizations: 0,
+      timestamp: new Date().toISOString(),
+    });
+  }
 
-    cursor = result.hasMore ? result.cursor : undefined;
-  } while (cursor);
+  const storageKeys = [...new Set(expiredAssets.map((asset) => asset.storage_key))];
+  const visualizationIds = [...new Set(expiredAssets.map((asset) => asset.id))];
 
-  return NextResponse.json({ deleted, timestamp: new Date().toISOString() });
+  try {
+    await del(storageKeys, { token });
+  } catch (error) {
+    console.error("Failed to delete expired visualization blobs:", error);
+    return NextResponse.json(
+      { error: "Failed to delete expired visualization assets" },
+      { status: 500 }
+    );
+  }
+
+  await markVisualizationsExpired(visualizationIds);
+
+  return NextResponse.json({
+    deleted: storageKeys.length,
+    expiredVisualizations: visualizationIds.length,
+    timestamp: new Date().toISOString(),
+  });
 }

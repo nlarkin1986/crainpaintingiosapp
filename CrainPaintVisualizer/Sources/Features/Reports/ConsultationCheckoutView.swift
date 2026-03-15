@@ -4,9 +4,11 @@ import UIKit
 
 struct ConsultationCheckoutView: View {
     @Environment(Theme.self) private var theme
+    @Environment(ReportsViewModel.self) private var reportsVM
+    @Environment(VisualizerViewModel.self) private var visualizerVM
     @Environment(\.dismiss) private var dismiss
 
-    let reportId: String
+    let flowState: ConsultationFlowState
 
     @State private var email = ""
     @State private var isPreparingPayment = false
@@ -16,20 +18,38 @@ struct ConsultationCheckoutView: View {
     @State private var latestOrderId: String?
 
     private let checkoutService: ConsultationCheckoutService
-    private let offer = CheckoutOffer(
-        id: "master-package",
-        packageType: .videoConsultation,
-        name: "Master Package",
-        subtitle: "Expert consultation & full report",
-        tag: "Best Value",
-        price: 100,
-        packageImageURL: "https://ggrhecslgdflloszjkwl.supabase.co/storage/v1/object/public/user-assets/Igcq9YRllt9/components/JN4WBk3pTIO.png"
-    )
-    private let profileImageURL = "https://ggrhecslgdflloszjkwl.supabase.co/storage/v1/object/public/user-assets/Igcq9YRllt9/ai/Screenshot2026-03-05at7-32-29PM-0GYwsDtSoeg.jpeg"
+    private let consultationService = DefaultConsultationService()
 
-    init(reportId: String, checkoutService: ConsultationCheckoutService = RemoteConsultationCheckoutService()) {
-        self.reportId = reportId
+    init(flowState: ConsultationFlowState, checkoutService: ConsultationCheckoutService = RemoteConsultationCheckoutService()) {
+        self.flowState = flowState
         self.checkoutService = checkoutService
+    }
+
+    private var package: ConsultationPackageDetails {
+        consultationService.packageDetails(for: flowState.packageType)
+    }
+
+    private var sourceVisualization: Visualization? {
+        guard let sourceVisualizationID = flowState.sourceVisualizationID else {
+            return visualizerVM.latestVisualization
+        }
+
+        return visualizerVM.visualization(
+            id: sourceVisualizationID,
+            projectID: flowState.sourceProjectID
+        ) ?? visualizerVM.savedVisualizations.first(where: { $0.id == sourceVisualizationID })
+    }
+
+    private var contextRoomName: String {
+        flowState.sourceRoomName ?? sourceVisualization?.roomName ?? "Current project"
+    }
+
+    private var contextColor: PaintColor? {
+        flowState.sourceColor ?? sourceVisualization?.asPaintColor
+    }
+
+    private var usesMockCheckout: Bool {
+        ProcessInfo.processInfo.arguments.contains("UITEST_MOCK_CONSULTATION_CHECKOUT_SUCCESS")
     }
 
     var body: some View {
@@ -47,6 +67,7 @@ struct ConsultationCheckoutView: View {
         }
         .background(theme.background)
         .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
         .safeAreaInset(edge: .top) {
             topBar
         }
@@ -73,6 +94,7 @@ struct ConsultationCheckoutView: View {
         }
         .fullScreenCover(isPresented: $showSuccess) {
             CheckoutSuccessView(orderId: latestOrderId) {
+                showSuccess = false
                 dismiss()
             }
         }
@@ -83,23 +105,26 @@ struct ConsultationCheckoutView: View {
             Button {
                 dismiss()
             } label: {
-                Image(systemName: "chevron.left")
+                Label("Back", systemImage: "chevron.left")
+                    .labelStyle(.iconOnly)
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundStyle(theme.foreground)
-                    .frame(width: 40, height: 40)
+                    .frame(width: 44, height: 44)
                     .contentShape(Rectangle())
             }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Back")
 
             Spacer()
 
-            Text("Secure Checkout")
+            Text("Expert Consultation")
                 .font(theme.headline)
                 .foregroundStyle(theme.foreground)
 
             Spacer()
 
             Color.clear
-                .frame(width: 40, height: 40)
+                .frame(width: 44, height: 44)
         }
         .padding(.horizontal, theme.spacingMD)
         .padding(.vertical, theme.spacingSM)
@@ -145,29 +170,26 @@ struct ConsultationCheckoutView: View {
             Divider()
                 .background(theme.borderSubtle)
 
+            consultationContextPanel
+
             HStack(alignment: .top, spacing: theme.spacingSM) {
-                AsyncImage(url: URL(string: offer.packageImageURL)) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } placeholder: {
-                    Rectangle().fill(theme.muted)
-                }
-                .frame(width: 62, height: 62)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(theme.borderSubtle, lineWidth: 1)
-                )
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(theme.primary.opacity(0.12))
+                    .frame(width: 62, height: 62)
+                    .overlay(
+                        Image(systemName: "person.crop.circle.badge.checkmark")
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundStyle(theme.primary)
+                    )
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(offer.name)
+                    Text(package.name)
                         .font(theme.headline)
                         .foregroundStyle(theme.foreground)
-                    Text(offer.subtitle)
+                    Text(package.subtitle)
                         .font(theme.caption)
                         .foregroundStyle(theme.mutedForeground)
-                    Text(offer.tag)
+                    Text("One-Time Consultation")
                         .font(theme.micro)
                         .fontWeight(.black)
                         .tracking(1)
@@ -180,7 +202,7 @@ struct ConsultationCheckoutView: View {
 
                 Spacer()
 
-                Text(currency(offer.price))
+                Text(currency(package.price))
                     .font(theme.heading2)
                     .fontWeight(.black)
                     .foregroundStyle(theme.foreground)
@@ -193,6 +215,52 @@ struct ConsultationCheckoutView: View {
             RoundedRectangle(cornerRadius: theme.radiusLG)
                 .stroke(theme.border, lineWidth: 1)
         )
+    }
+
+    private var consultationContextPanel: some View {
+        VStack(alignment: .leading, spacing: theme.spacingSM) {
+            Text("Room Context")
+                .font(theme.micro)
+                .fontWeight(.black)
+                .tracking(1)
+                .textCase(.uppercase)
+                .foregroundStyle(theme.mutedForeground)
+
+            VStack(alignment: .leading, spacing: theme.space8) {
+                Text(contextRoomName)
+                    .font(theme.heading3)
+                    .foregroundStyle(theme.foreground)
+
+                if let contextColor {
+                    HStack(spacing: theme.space8) {
+                        Circle()
+                            .fill(contextColor.color)
+                            .frame(width: 18, height: 18)
+                            .overlay(
+                                Circle()
+                                    .stroke(theme.borderSubtle, lineWidth: 1)
+                            )
+                        Text("\(contextColor.name) • \(contextColor.brand.displayName)")
+                            .font(theme.caption)
+                            .foregroundStyle(theme.mutedForeground)
+                    }
+                } else {
+                    Text("We'll anchor Curt's review to the room and project you already have in motion.")
+                        .font(theme.caption)
+                        .foregroundStyle(theme.mutedForeground)
+                }
+
+                if let projectID = flowState.sourceProjectID {
+                    Label("Linked to project \(projectID.prefix(8).uppercased())", systemImage: "square.stack.3d.up")
+                        .font(theme.caption)
+                        .foregroundStyle(theme.mutedForeground)
+                }
+            }
+            .padding(theme.spacingSM)
+            .background(theme.secondary)
+            .clipShape(RoundedRectangle(cornerRadius: theme.radiusMD))
+        }
+        .accessibilityIdentifier("consultationCheckout.context")
     }
 
     private var expressCheckoutSection: some View {
@@ -246,12 +314,13 @@ struct ConsultationCheckoutView: View {
                     .foregroundStyle(theme.mutedForeground)
 
                 inputField(title: "Email address", text: $email, keyboardType: .emailAddress)
+                    .accessibilityIdentifier("consultationCheckout.email")
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
             }
 
             VStack(alignment: .leading, spacing: theme.spacingSM) {
-                Text("Payment Method")
+                Text("What You're Booking")
                     .font(theme.micro)
                     .fontWeight(.black)
                     .tracking(1.2)
@@ -259,17 +328,13 @@ struct ConsultationCheckoutView: View {
                     .foregroundStyle(theme.mutedForeground)
 
                 VStack(spacing: theme.spacingSM) {
-                    paymentMethodRow(
-                        icon: "applelogo",
-                        title: "Apple Pay",
-                        subtitle: "Use Apple Pay instantly when it is available on this device."
-                    )
-
-                    paymentMethodRow(
-                        icon: "creditcard.fill",
-                        title: "Card via Stripe",
-                        subtitle: "Enter card details once inside Stripe's secure native payment sheet."
-                    )
+                    ForEach(package.features, id: \.self) { feature in
+                        paymentMethodRow(
+                            icon: "checkmark.circle.fill",
+                            title: feature,
+                            subtitle: package.turnaround
+                        )
+                    }
                 }
 
                 Text(checkoutStatusCopy)
@@ -281,27 +346,20 @@ struct ConsultationCheckoutView: View {
 
     private var quoteCard: some View {
         HStack(alignment: .center, spacing: theme.spacingSM) {
-            AsyncImage(url: URL(string: profileImageURL)) { image in
-                image
-                    .resizable()
-                    .scaledToFill()
-            } placeholder: {
-                Circle().fill(theme.muted)
-            }
-            .frame(width: 52, height: 52)
-            .clipShape(Circle())
-            .overlay(
-                Circle()
-                    .stroke(theme.background, lineWidth: 2)
-            )
+            Circle()
+                .fill(theme.primary.opacity(0.12))
+                .frame(width: 52, height: 52)
+                .overlay(
+                    Image(systemName: "clock.badge.checkmark")
+                        .foregroundStyle(theme.primary)
+                )
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(#""I personally review every report to ensure the highest standards of craft.""#)
+                Text("After payment, your order appears in Saved so you can track progress without digging through email.")
                     .font(theme.caption)
-                    .italic()
                     .foregroundStyle(theme.mutedForeground)
                     .multilineTextAlignment(.leading)
-                Text("— Curt Crain")
+                Text("REPORT CONTINUITY")
                     .font(theme.micro)
                     .fontWeight(.black)
                     .tracking(1)
@@ -322,9 +380,9 @@ struct ConsultationCheckoutView: View {
     private var guaranteeBlock: some View {
         VStack(spacing: theme.spacingSM) {
             HStack(spacing: 6) {
-                Image(systemName: "checkmark.seal.fill")
+                Image(systemName: "lock.shield")
                     .foregroundStyle(theme.primary)
-                Text("Satisfaction Guarantee")
+                Text("Secure Checkout")
                     .font(theme.subhead)
                     .fontWeight(.black)
                     .tracking(1)
@@ -332,11 +390,11 @@ struct ConsultationCheckoutView: View {
                     .foregroundStyle(theme.foreground)
             }
 
-            Text("If you're not thrilled with your consultation report, we'll refund you in full. No questions asked.")
+            Text("Payment happens inside Stripe's secure native sheet. The app only keeps the order status needed to show progress and reopen your report later.")
                 .font(theme.caption)
                 .foregroundStyle(theme.mutedForeground)
                 .multilineTextAlignment(.center)
-                .frame(maxWidth: 280)
+                .frame(maxWidth: 320)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, theme.spacingSM)
@@ -352,7 +410,7 @@ struct ConsultationCheckoutView: View {
                     .textCase(.uppercase)
                     .foregroundStyle(theme.mutedForeground)
                 Spacer()
-                Text(currency(offer.price))
+                Text(currency(package.price))
                     .font(theme.heading1)
                     .fontWeight(.black)
                     .foregroundStyle(theme.foreground)
@@ -379,6 +437,7 @@ struct ConsultationCheckoutView: View {
             .buttonStyle(ScaleButtonStyle())
             .disabled(!canLaunchCheckout)
             .opacity(canLaunchCheckout ? 1 : 0.7)
+            .accessibilityIdentifier("consultationCheckout.submit")
         }
         .padding(.horizontal, theme.spacingMD)
         .padding(.top, theme.spacingSM)
@@ -456,13 +515,19 @@ struct ConsultationCheckoutView: View {
         isPreparingPayment = true
         defer { isPreparingPayment = false }
 
+        if usesMockCheckout {
+            latestOrderId = "mock-\(flowState.id)"
+            completeCheckout(orderID: latestOrderId)
+            return
+        }
+
         do {
             let session = try await checkoutService.createSession(
-                packageType: offer.packageType,
+                packageType: package.type,
                 email: email.trimmingCharacters(in: .whitespacesAndNewlines),
-                orderId: reportId,
+                orderId: flowState.id,
                 platform: .iosNative,
-                displayPackage: .masterPackage
+                displayPackage: nil
             )
             latestOrderId = session.orderId
 
@@ -507,7 +572,7 @@ struct ConsultationCheckoutView: View {
             Task { @MainActor in
                 switch result {
                 case .completed:
-                    showSuccess = true
+                    completeCheckout(orderID: latestOrderId)
                 case .canceled:
                     break
                 case .failed(let error):
@@ -516,6 +581,19 @@ struct ConsultationCheckoutView: View {
                 }
             }
         }
+    }
+
+    @MainActor
+    private func completeCheckout(orderID: String?) {
+        let resolvedOrderID = orderID ?? latestOrderId ?? flowState.id
+        latestOrderId = resolvedOrderID
+        reportsVM.trackPendingReport(
+            orderID: resolvedOrderID,
+            consultationFlow: flowState,
+            sourceVisualization: sourceVisualization,
+            packageType: package.type
+        )
+        showSuccess = true
     }
 
     private var merchantIdentifier: String? {
@@ -534,7 +612,7 @@ struct ConsultationCheckoutView: View {
     }
 
     private var isCheckoutConfigured: Bool {
-        APIEnvironment.baseURL != nil
+        usesMockCheckout || APIEnvironment.baseURL != nil
     }
 
     private var canLaunchCheckout: Bool {
@@ -545,7 +623,7 @@ struct ConsultationCheckoutView: View {
         if isPreparingPayment {
             return "Preparing..."
         }
-        return "Continue to Payment"
+        return "Continue to Secure Checkout"
     }
 
     private var checkoutStatusCopy: String {
@@ -559,7 +637,7 @@ struct ConsultationCheckoutView: View {
         if !isValidEmail {
             return "Enter a valid email to continue to secure payment."
         }
-        return "You will review and confirm the payment inside Stripe's secure native sheet. Card details are never stored in the app."
+        return "You'll review and confirm this one-time consultation inside Stripe's secure native sheet. Card details are never stored in the app."
     }
 
     private func userFacingMessage(for error: Error) -> String {
@@ -583,18 +661,9 @@ struct ConsultationCheckoutView: View {
     }
 }
 
-private struct CheckoutOffer {
-    let id: String
-    let packageType: ConsultationPackageType
-    let name: String
-    let subtitle: String
-    let tag: String
-    let price: Decimal
-    let packageImageURL: String
-}
-
 private struct CheckoutSuccessView: View {
     @Environment(Theme.self) private var theme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let orderId: String?
     let onDismiss: () -> Void
 
@@ -622,7 +691,7 @@ private struct CheckoutSuccessView: View {
                 .font(theme.largeTitle)
                 .foregroundStyle(theme.foreground)
 
-            Text("Your consultation payment was successful. Curt's team is now preparing your report.")
+            Text("Your consultation is confirmed. We'll keep the report status updated in Saved while Curt's team prepares your walkthrough and recommendations.")
                 .font(theme.body)
                 .foregroundStyle(theme.mutedForeground)
                 .multilineTextAlignment(.center)
@@ -638,8 +707,8 @@ private struct CheckoutSuccessView: View {
 
             VStack(alignment: .leading, spacing: theme.spacingMD) {
                 timelineStep(icon: "envelope.fill", title: "Confirmation Email", detail: "Check your inbox shortly")
-                timelineStep(icon: "sparkles", title: "Report Is Generating", detail: "We start processing your room details now")
-                timelineStep(icon: "paintpalette.fill", title: "Expert Recommendations", detail: "Detailed color strategy is delivered next")
+                timelineStep(icon: "clock.fill", title: "Status Tracked In Saved", detail: "Open the app any time to check progress")
+                timelineStep(icon: "paintpalette.fill", title: "Expert Recommendations", detail: "Your walkthrough and color strategy arrive next")
             }
             .padding(theme.spacingMD)
             .background(theme.muted)
@@ -651,14 +720,19 @@ private struct CheckoutSuccessView: View {
             AppButton("Done", variant: .cta) {
                 onDismiss()
             }
+            .accessibilityIdentifier("consultationCheckout.successDone")
             .padding(.horizontal, theme.spacingLG)
             .padding(.bottom, theme.spacingXL)
         }
         .background(theme.background)
         .sensoryFeedback(.success, trigger: showCheckmark)
         .onAppear {
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.6).delay(0.2)) {
+            if reduceMotion {
                 showCheckmark = true
+            } else {
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.6).delay(0.2)) {
+                    showCheckmark = true
+                }
             }
         }
     }

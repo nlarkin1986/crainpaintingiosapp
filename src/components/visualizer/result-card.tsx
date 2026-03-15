@@ -8,18 +8,28 @@ import {
 } from "react-compare-slider";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Download, Share2, X, RotateCcw, Loader2 } from "lucide-react";
+import { Share2, X, RotateCcw, Loader2, MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import { getBrandLabel } from "@/lib/brands";
+import { ShareExportSheet } from "@/components/share/share-export-sheet";
+import { shareDesignCardFile } from "@/lib/share-client";
+import { getDesignCardFilename, getShareUrls } from "@/lib/share";
 
 interface ResultCardProps {
   result: ColorResult;
+  surface: string;
   onRemove: () => void;
   onRetry: () => void;
   isGenerating: boolean;
 }
 
-export function ResultCard({ result, onRemove, onRetry, isGenerating }: ResultCardProps) {
+export function ResultCard({
+  result,
+  surface,
+  onRemove,
+  onRetry,
+  isGenerating,
+}: ResultCardProps) {
   switch (result.status) {
     case 'pending':
       return <ShimmerCard color={result.color} label="Waiting..." />;
@@ -29,6 +39,7 @@ export function ResultCard({ result, onRemove, onRetry, isGenerating }: ResultCa
       return (
         <CompletedCard
           result={result}
+          surface={surface}
           onRemove={onRemove}
           isGenerating={isGenerating}
         />
@@ -43,8 +54,8 @@ export function ResultCard({ result, onRemove, onRetry, isGenerating }: ResultCa
         />
       );
     default: {
-      const _exhaustive: never = result;
-      return null;
+      const exhaustiveCheck: never = result;
+      return exhaustiveCheck;
     }
   }
 }
@@ -88,12 +99,14 @@ function ShimmerCard({ color, label, showSpinner }: {
 
 // --- Completed Card ---
 
-function CompletedCard({ result, onRemove, isGenerating }: {
+function CompletedCard({ result, surface, onRemove, isGenerating }: {
   result: Extract<ColorResult, { status: 'complete' }>;
+  surface: string;
   onRemove: () => void;
   isGenerating: boolean;
 }) {
   const [shouldLoadSlider, setShouldLoadSlider] = useState(false);
+  const [showExportSheet, setShowExportSheet] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -107,101 +120,125 @@ function CompletedCard({ result, onRemove, isGenerating }: {
     return () => observer.disconnect();
   }, []);
 
-  const shareUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/share/${result.shareId}`
-      : "";
   const brandLabel = getBrandLabel(result.color.brand);
 
   const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `${brandLabel} ${result.color.name} - Crain Painting Visualizer`,
-          text: `Check out this room visualized in ${brandLabel} ${result.color.name}!`,
-          url: shareUrl,
-        });
-      } catch {
-        // User cancelled
-      }
-    } else {
-      try {
-        await navigator.clipboard.writeText(shareUrl);
-        toast.success("Link copied to clipboard!");
-      } catch {
-        toast.error("Could not copy link");
-      }
+    const origin = typeof window !== "undefined" ? window.location.origin : undefined;
+    const { shareUrl, cardUrl } = getShareUrls(result.shareId, origin);
+    const outcome = await shareDesignCardFile({
+      cardUrl,
+      shareUrl,
+      filename: getDesignCardFilename({
+        brand: result.color.brand,
+        colorNumber: result.color.number,
+        surface,
+      }),
+      title: `${brandLabel} ${result.color.name}`,
+      text: `Sharing a Crain Painting design card for ${brandLabel} ${result.color.name}.`,
+    });
+
+    if (outcome === "shared") {
+      toast.success("Design card shared.");
+      return;
+    }
+
+    if (outcome === "unsupported") {
+      setShowExportSheet(true);
+      return;
+    }
+
+    if (outcome === "error") {
+      toast.error("Could not prepare the design card.");
+      setShowExportSheet(true);
     }
   };
 
-  const safeName = result.color.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  const safeNumber = result.color.number.replace(/[^a-zA-Z0-9-]/g, '');
-
   return (
-    <Card className="overflow-hidden p-0 transition-shadow hover:shadow-md" ref={cardRef}>
-      {/* Before/After Slider */}
-      <div className="relative">
-        {shouldLoadSlider ? (
-          <ReactCompareSlider
-            changePositionOnHover={false}
-            itemOne={
-              <ReactCompareSliderImage src={result.originalUrl} alt="Original photo" />
-            }
-            itemTwo={
-              <ReactCompareSliderImage
-                src={result.resultUrl}
-                alt={`Room visualized in ${result.color.name}`}
-              />
-            }
-            className="aspect-[4/3] w-full"
-          />
-        ) : (
-          <div className="shimmer aspect-[4/3] w-full" />
-        )}
-        {/* Labels */}
-        <span className="pointer-events-none absolute left-2 top-2 rounded-full bg-black/60 px-2.5 py-1 text-xs font-semibold tracking-wide text-white uppercase backdrop-blur-sm">
-          Before
-        </span>
-        <span className="pointer-events-none absolute right-2 top-2 rounded-full bg-white/80 px-2.5 py-1 text-xs font-semibold tracking-wide text-foreground uppercase backdrop-blur-sm">
-          After
-        </span>
-      </div>
-
-      {/* Color Info + Actions */}
-      <div className="flex items-center gap-3 p-3">
-        <div
-          className="h-10 w-10 shrink-0 rounded-lg border border-black/10 shadow-sm"
-          style={{ backgroundColor: `#${result.color.hex}` }}
-          aria-hidden="true"
-        />
-        <div className="flex min-w-0 flex-col">
-          <span className="truncate text-sm font-semibold text-foreground">{result.color.name}</span>
-          <span className="text-xs text-muted-foreground">{result.color.number}</span>
+    <>
+      <Card className="overflow-hidden p-0 transition-shadow hover:shadow-md" ref={cardRef}>
+        {/* Before/After Slider */}
+        <div className="relative">
+          {shouldLoadSlider ? (
+            <ReactCompareSlider
+              changePositionOnHover={false}
+              itemOne={
+                <ReactCompareSliderImage src={result.originalUrl} alt="Original photo" />
+              }
+              itemTwo={
+                <ReactCompareSliderImage
+                  src={result.resultUrl}
+                  alt={`Room visualized in ${result.color.name}`}
+                />
+              }
+              className="aspect-[4/3] w-full"
+            />
+          ) : (
+            <div className="shimmer aspect-[4/3] w-full" />
+          )}
+          {/* Labels */}
+          <span className="pointer-events-none absolute left-2 top-2 rounded-full bg-black/60 px-2.5 py-1 text-xs font-semibold tracking-wide text-white uppercase backdrop-blur-sm">
+            Before
+          </span>
+          <span className="pointer-events-none absolute right-2 top-2 rounded-full bg-white/80 px-2.5 py-1 text-xs font-semibold tracking-wide text-foreground uppercase backdrop-blur-sm">
+            After
+          </span>
         </div>
 
-        {/* Action buttons */}
-        <div className="ml-auto flex shrink-0 items-center gap-1">
-          <Button asChild variant="ghost" size="icon" className="h-9 w-9">
-            <a href={result.resultUrl} download={`crain-${safeName}-${safeNumber}.jpg`} aria-label="Save">
-              <Download className="h-4 w-4" />
-            </a>
-          </Button>
-          <Button variant="ghost" size="icon" className="h-9 w-9" onClick={handleShare} aria-label="Share">
-            <Share2 className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9 text-muted-foreground hover:text-destructive"
-            onClick={onRemove}
-            disabled={isGenerating}
-            aria-label={`Remove ${result.color.name}`}
-          >
-            <X className="h-4 w-4" />
-          </Button>
+        {/* Color Info + Actions */}
+        <div className="flex flex-col gap-3 p-3">
+          <div className="flex items-center gap-3">
+            <div
+              className="h-10 w-10 shrink-0 rounded-lg border border-black/10 shadow-sm"
+              style={{ backgroundColor: `#${result.color.hex}` }}
+              aria-hidden="true"
+            />
+            <div className="flex min-w-0 flex-col">
+              <span className="truncate text-sm font-semibold text-foreground">{result.color.name}</span>
+              <span className="text-xs text-muted-foreground">{result.color.number}</span>
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className="ml-auto h-9 w-9 text-muted-foreground hover:text-destructive"
+              onClick={onRemove}
+              disabled={isGenerating}
+              aria-label={`Remove ${result.color.name}`}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button size="sm" className="flex-1" onClick={handleShare}>
+              <Share2 className="h-4 w-4" />
+              Share Design Card
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              className="shrink-0"
+              onClick={() => setShowExportSheet(true)}
+            >
+              <MoreHorizontal className="h-4 w-4" />
+              More
+            </Button>
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+
+      <ShareExportSheet
+        open={showExportSheet}
+        onClose={() => setShowExportSheet(false)}
+        shareId={result.shareId}
+        colorName={result.color.name}
+        colorNumber={result.color.number}
+        brand={result.color.brand}
+        surface={surface}
+        rawImageUrl={result.resultUrl}
+      />
+    </>
   );
 }
 

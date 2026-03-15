@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crain Paint iOS Approval Mockups</title>
+    <style>
+      :root {
+        --bg: #f4f1ea;
+        --paper: #fffdf8;
+        --card: #ffffff;
+        --ink: #161616;
+        --muted: #666158;
+        --line: #ded7ca;
+        --teal: #27ccc0;
+        --teal-deep: #139b91;
+        --orange: #f6653c;
+        --cream: #f7f2e8;
+        --sand: #e9e2d5;
+        --shadow: 0 28px 80px rgba(35, 31, 24, 0.12);
+        --phone-shadow: 0 20px 45px rgba(0, 0, 0, 0.14);
+        --radius-xl: 28px;
+        --radius-lg: 22px;
+        --radius-md: 16px;
+        --radius-sm: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Open Sans", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(39, 204, 192, 0.12), transparent 28%),
+          radial-gradient(circle at top right, rgba(246, 101, 60, 0.09), transparent 22%),
+          linear-gradient(180deg, #f8f5ef 0%, #f2ede4 100%);
+        color: var(--ink);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: min(1440px, calc(100vw - 40px));
+        margin: 0 auto;
+        padding: 32px 0 72px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .hero-panel,
+      .hero-summary,
+      .surface,
+      .screen-block,
+      .matrix,
+      .note-block {
+        background: rgba(255, 253, 248, 0.92);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(222, 215, 202, 0.9);
+        box-shadow: var(--shadow);
+        border-radius: var(--radius-xl);
+      }
+
+      .hero-panel {
+        padding: 36px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        background: rgba(39, 204, 192, 0.14);
+        color: var(--teal-deep);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Merriweather Sans", "Trebuchet MS", sans-serif;
+        margin: 0;
+        letter-spacing: -0.02em;
+      }
+
+      h1 {
+        margin-top: 18px;
+        font-size: clamp(38px, 5vw, 62px);
+        line-height: 0.98;
+      }
+
+      .hero-lead {
+        margin: 20px 0 0;
+        max-width: 820px;
+        font-size: 19px;
+        line-height: 1.55;
+        color: var(--muted);
+      }
+
+      .hero-actions {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .hero-summary {
+        padding: 28px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .mini-stat {
+        padding: 18px;
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, #ffffff 0%, #faf5ec 100%);
+        border: 1px solid var(--line);
+      }
+
+      .mini-stat strong {
+        display: block;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .mini-stat span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .decision-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .decision {
+        padding: 16px 18px;
+        border-radius: var(--radius-md);
+        background: #fff;
+        border: 1px solid var(--line);
+      }
+
+      .decision strong {
+        display: block;
+        font-size: 15px;
+      }
+
+      .decision span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .jumpbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        margin: 28px 0;
+        padding: 14px;
+        background: rgba(249, 246, 239, 0.88);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(222, 215, 202, 0.8);
+        border-radius: 999px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .jumpbar a {
+        padding: 10px 14px;
+        text-decoration: none;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .jumpbar a:hover {
+        background: rgba(39, 204, 192, 0.12);
+        color: var(--teal-deep);
+      }
+
+      .surface {
+        padding: 28px;
+        margin-bottom: 28px;
+      }
+
+      .surface h2 {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .surface-copy {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.6;
+        max-width: 950px;
+      }
+
+      .flow-strip {
+        margin-top: 24px;
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .step-card {
+        position: relative;
+        padding: 18px 18px 20px;
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, #fff 0%, #fbf7f0 100%);
+        border: 1px solid var(--line);
+        min-height: 164px;
+      }
+
+      .step-num {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 14px;
+        font-weight: 800;
+        background: rgba(39, 204, 192, 0.15);
+        color: var(--teal-deep);
+      }
+
+      .step-card h3 {
+        margin-top: 14px;
+        font-size: 18px;
+      }
+
+      .step-card p {
+        margin: 8px 0 0;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--muted);
+      }
+
+      .screen-block {
+        padding: 30px;
+        margin-bottom: 24px;
+      }
+
+      .screen-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: end;
+        margin-bottom: 20px;
+      }
+
+      .screen-header h2 {
+        font-size: 30px;
+      }
+
+      .screen-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: rgba(246, 101, 60, 0.1);
+        color: #b94e2e;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .review-grid {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 26px;
+        align-items: start;
+      }
+
+      .current-shot {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        padding: 18px;
+      }
+
+      .current-shot img {
+        width: 100%;
+        display: block;
+        border-radius: 22px;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+      }
+
+      .shot-label,
+      .mockup-label {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .mockup-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(39, 204, 192, 0.14);
+        color: var(--teal-deep);
+        border: 1px solid rgba(39, 204, 192, 0.22);
+      }
+
+      .phone-wrap {
+        display: grid;
+        gap: 18px;
+      }
+
+      .proposed-note {
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(39, 204, 192, 0.24);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(240, 252, 250, 0.96) 100%);
+        box-shadow: 0 10px 22px rgba(39, 204, 192, 0.08);
+      }
+
+      .proposed-note strong {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--teal-deep);
+      }
+
+      .proposed-note span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .phone {
+        width: min(100%, 370px);
+        margin: 0 auto;
+        padding: 14px;
+        border-radius: 42px;
+        background: linear-gradient(180deg, #161616 0%, #272727 100%);
+        box-shadow: var(--phone-shadow);
+      }
+
+      .phone-screen {
+        position: relative;
+        overflow: hidden;
+        min-height: 760px;
+        border-radius: 30px;
+        background:
+          radial-gradient(circle at top left, rgba(39, 204, 192, 0.16), transparent 26%),
+          linear-gradient(180deg, #fbf7ef 0%, #f5f0e7 100%);
+        padding: 18px 18px 22px;
+      }
+
+      .statusbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .dynamic-island {
+        width: 110px;
+        height: 28px;
+        border-radius: 999px;
+        background: #111;
+      }
+
+      .mock-section {
+        margin-top: 18px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(222, 215, 202, 0.8);
+        border-radius: 22px;
+        padding: 18px;
+      }
+
+      .mock-kicker {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .mock-title {
+        margin-top: 10px;
+        font-family: "Merriweather Sans", "Trebuchet MS", sans-serif;
+        font-size: 30px;
+        line-height: 1.02;
+      }
+
+      .mock-body {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .mock-pills,
+      .metric-row,
+      .action-row,
+      .mini-grid,
+      .color-grid,
+      .button-stack,
+      .toolbar-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .mock-pills {
+        margin-top: 14px;
+      }
+
+      .pill {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid var(--line);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .primary-btn,
+      .secondary-btn,
+      .ghost-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 18px;
+        border-radius: 18px;
+        font-size: 15px;
+        font-weight: 800;
+        border: 1px solid transparent;
+      }
+
+      .primary-btn {
+        background: linear-gradient(135deg, var(--teal) 0%, #59ded4 100%);
+        color: #fff;
+        box-shadow: 0 16px 28px rgba(39, 204, 192, 0.28);
+      }
+
+      .secondary-btn {
+        background: #fff;
+        color: var(--ink);
+        border-color: var(--line);
+      }
+
+      .ghost-btn {
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--teal-deep);
+        border-color: rgba(39, 204, 192, 0.22);
+      }
+
+      .button-stack {
+        margin-top: 16px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .button-stack .primary-btn,
+      .button-stack .secondary-btn,
+      .button-stack .ghost-btn {
+        width: 100%;
+      }
+
+      .hero-card,
+      .project-card,
+      .result-card,
+      .design-card,
+      .support-card,
+      .status-card,
+      .checkout-card,
+      .report-card {
+        margin-top: 16px;
+        border-radius: 24px;
+        border: 1px solid rgba(222, 215, 202, 0.84);
+        background: linear-gradient(180deg, #ffffff 0%, #fbf7ef 100%);
+        padding: 16px;
+      }
+
+      .focus-area {
+        position: relative;
+        border: 2px solid rgba(39, 204, 192, 0.46);
+        box-shadow:
+          0 0 0 6px rgba(39, 204, 192, 0.11),
+          0 14px 28px rgba(39, 204, 192, 0.1);
+      }
+
+      .focus-area::after {
+        content: attr(data-tag);
+        position: absolute;
+        top: -12px;
+        right: 14px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--teal-deep);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        box-shadow: 0 10px 18px rgba(19, 155, 145, 0.26);
+      }
+
+      .focus-inline {
+        border: 2px solid rgba(39, 204, 192, 0.42);
+        box-shadow: 0 10px 18px rgba(39, 204, 192, 0.1);
+      }
+
+      .hero-card {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 249, 240, 0.9) 100%),
+          radial-gradient(circle at top right, rgba(39, 204, 192, 0.14), transparent 36%);
+      }
+
+      .mini-grid {
+        margin-top: 16px;
+      }
+
+      .mini-tile,
+      .surface-tile,
+      .color-tile {
+        flex: 1 1 140px;
+        min-height: 108px;
+        padding: 14px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .mini-tile {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .mini-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .mini-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: rgba(39, 204, 192, 0.14);
+        color: var(--teal-deep);
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        font-size: 21px;
+        line-height: 1;
+      }
+
+      .mini-tile strong,
+      .surface-tile strong,
+      .color-tile strong,
+      .result-card strong,
+      .project-card strong,
+      .report-card strong,
+      .support-card strong {
+        display: block;
+        font-size: 15px;
+      }
+
+      .mini-tile span,
+      .surface-tile span,
+      .color-tile span,
+      .result-card span,
+      .project-card span,
+      .report-card span,
+      .support-card span,
+      .checkout-card span,
+      .status-card span {
+        display: block;
+        margin-top: 8px;
+        font-size: 13px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .surface-grid,
+      .color-grid {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .progress-shell {
+        display: grid;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .progress-topline {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .progress-bars {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .progress-bar {
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(39, 204, 192, 0.18);
+        overflow: hidden;
+      }
+
+      .progress-bar span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--teal) 0%, #6de2d8 100%);
+      }
+
+      .selection-card {
+        margin-top: 16px;
+        padding: 14px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .selection-card .label {
+        display: block;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .selection-card .value {
+        display: block;
+        margin-top: 10px;
+        font-size: 14px;
+        line-height: 1.45;
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .selection-card .subvalue {
+        display: block;
+        margin-top: 6px;
+        font-size: 13px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .direction-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .direction-card {
+        padding: 12px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .direction-card.active {
+        border: 2px solid var(--teal-deep);
+        box-shadow: 0 12px 20px rgba(39, 204, 192, 0.16);
+      }
+
+      .direction-card .swatch {
+        height: 110px;
+      }
+
+      .direction-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .tiny-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 26px;
+        height: 26px;
+        padding: 0 8px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #fff;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+
+      .tiny-badge.active {
+        background: rgba(39, 204, 192, 0.14);
+        color: var(--teal-deep);
+        border-color: rgba(39, 204, 192, 0.28);
+      }
+
+      .upload-panel {
+        margin-top: 16px;
+        padding: 18px;
+        border-radius: 22px;
+        border: 2px dashed rgba(222, 215, 202, 0.95);
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .panel-icon {
+        width: 68px;
+        height: 68px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 12px 24px rgba(32, 28, 21, 0.08);
+        display: grid;
+        place-items: center;
+        color: var(--teal-deep);
+        font-size: 28px;
+      }
+
+      .hint-line {
+        margin-top: 12px;
+        font-size: 13px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .hint-link {
+        display: block;
+        margin-top: 10px;
+        font-size: 13px;
+        line-height: 1.45;
+        color: var(--teal-deep);
+        font-weight: 700;
+      }
+
+      .tile-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .dash-tile {
+        padding: 14px;
+        border-radius: 20px;
+        border: 2px dashed rgba(222, 215, 202, 0.95);
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .row-list {
+        margin-top: 16px;
+        border-radius: 22px;
+        border: 1px solid var(--line);
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .row-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 16px 18px;
+        border-bottom: 1px solid rgba(222, 215, 202, 0.7);
+      }
+
+      .row-item:last-child {
+        border-bottom: 0;
+      }
+
+      .row-item strong {
+        display: block;
+        font-size: 15px;
+      }
+
+      .row-item span {
+        display: block;
+        margin-top: 6px;
+        font-size: 13px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .text-link {
+        color: var(--teal-deep);
+        font-weight: 800;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      .ready-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid var(--line);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .tab-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+        padding: 6px;
+        border-radius: 16px;
+        background: rgba(222, 215, 202, 0.45);
+      }
+
+      .tab-strip span {
+        display: grid;
+        place-items: center;
+        min-height: 34px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .tab-strip span.active {
+        background: #fff;
+        color: var(--ink);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      }
+
+      .list-card {
+        margin-top: 14px;
+        padding: 16px;
+        border-radius: 22px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .list-row {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .thumb {
+        width: 84px;
+        height: 84px;
+        border-radius: 20px;
+        background: linear-gradient(180deg, #f4f0e8 0 48%, #dcd5ca 48% 100%);
+        flex: 0 0 auto;
+      }
+
+      .pill.active {
+        background: rgba(39, 204, 192, 0.14);
+        color: var(--teal-deep);
+        border-color: rgba(39, 204, 192, 0.3);
+      }
+
+      .surface-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .color-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .surface-tile.active,
+      .color-tile.active {
+        border: 2px solid var(--teal-deep);
+        box-shadow: 0 12px 20px rgba(39, 204, 192, 0.16);
+      }
+
+      .swatch {
+        width: 100%;
+        height: 62px;
+        border-radius: 14px;
+        background: #e8e5db;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .color-tile small {
+        display: block;
+        margin-top: 10px;
+        font-size: 11px;
+        line-height: 1.3;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+
+      .room-preview {
+        margin-top: 16px;
+        height: 200px;
+        border-radius: 24px;
+        background:
+          linear-gradient(180deg, #f4f0e8 0 48%, #dcd5ca 48% 100%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .room-preview::before {
+        content: "";
+        position: absolute;
+        top: 48px;
+        left: 28px;
+        width: 64px;
+        height: 46px;
+        background: rgba(120, 111, 96, 0.22);
+      }
+
+      .room-preview::after {
+        content: "";
+        position: absolute;
+        top: 42px;
+        right: 34px;
+        width: 170px;
+        height: 82px;
+        background: rgba(120, 111, 96, 0.18);
+      }
+
+      .compare-slider {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(39, 204, 192, 0.1) 0 49.5%, rgba(255, 255, 255, 0) 49.5% 50.5%, rgba(255, 255, 255, 0) 100%);
+      }
+
+      .compare-slider::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 2px;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .compare-slider::after {
+        content: "<>";
+        position: absolute;
+        left: calc(50% - 20px);
+        top: calc(50% - 20px);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--teal-deep);
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+        font-weight: 800;
+        border: 2px solid rgba(39, 204, 192, 0.4);
+      }
+
+      .card-footer {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 14px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.76));
+        color: #fff;
+      }
+
+      .card-footer small {
+        display: block;
+        opacity: 0.76;
+        font-size: 11px;
+      }
+
+      .action-row {
+        margin-top: 16px;
+      }
+
+      .action-row > * {
+        flex: 1 1 140px;
+      }
+
+      .change-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .change-card {
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .change-card strong {
+        display: block;
+        font-size: 14px;
+      }
+
+      .change-card span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .matrix {
+        padding: 28px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 18px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 14px 14px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      th {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .status-pill.recommended {
+        background: rgba(39, 204, 192, 0.14);
+        color: var(--teal-deep);
+      }
+
+      .status-pill.watch {
+        background: rgba(246, 101, 60, 0.12);
+        color: #be542f;
+      }
+
+      .note-block {
+        padding: 24px 28px;
+        margin-top: 24px;
+      }
+
+      .note-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .note {
+        padding: 16px;
+        border-radius: 18px;
+        background: #fff;
+        border: 1px solid var(--line);
+      }
+
+      .note strong {
+        display: block;
+      }
+
+      .note span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .footer {
+        padding: 20px 0 0;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 1180px) {
+        .hero,
+        .review-grid,
+        .note-grid,
+        .summary-grid,
+        .flow-strip,
+        .change-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .flow-strip {
+          display: grid;
+        }
+
+        .phone {
+          width: min(100%, 420px);
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          width: min(100vw - 20px, 100%);
+          padding-top: 14px;
+        }
+
+        .hero-panel,
+        .hero-summary,
+        .surface,
+        .screen-block,
+        .matrix,
+        .note-block {
+          padding: 20px;
+          border-radius: 22px;
+        }
+
+        .jumpbar {
+          border-radius: 24px;
+        }
+
+        h1 {
+          font-size: 34px;
+        }
+
+        .mock-title {
+          font-size: 26px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-panel">
+          <span class="eyebrow">Approval Refresh</span>
+          <h1>Crain Paint iOS current flow, improved clarity.</h1>
+          <p class="hero-lead">
+            This page keeps the current app structure and screen designs recognizable.
+            It turns the second-board audit into a lighter-touch approval artifact:
+            better labels, stronger CTA emphasis, clearer affordances, and small
+            hierarchy improvements inside the screens you already like.
+          </p>
+          <div class="hero-actions">
+            <span class="chip">Keep current screen designs</span>
+            <span class="chip">Clarify labels and CTA emphasis</span>
+            <span class="chip">Inline brand filter on current color screen</span>
+            <span class="chip">No IA rewrite in this pass</span>
+          </div>
+        </div>
+        <aside class="hero-summary">
+          <div class="summary-grid">
+            <div class="mini-stat">
+              <strong>10</strong>
+              <span>clarity improvements grouped into one conservative approval pass</span>
+            </div>
+            <div class="mini-stat">
+              <strong>8</strong>
+              <span>core screens refined without replacing their current layouts</span>
+            </div>
+            <div class="mini-stat">
+              <strong>28</strong>
+              <span>live simulator screenshots behind the recommendations</span>
+            </div>
+            <div class="mini-stat">
+              <strong>5</strong>
+              <span>independent reviewer lanes still informing the lighter-touch pass</span>
+            </div>
+          </div>
+          <div class="decision-list">
+            <div class="decision">
+              <strong>Layout decision</strong>
+              <span>Keep the current screens and improve the elements inside them instead of proposing a new shell or new tab model.</span>
+            </div>
+            <div class="decision">
+              <strong>Clarity decision</strong>
+              <span>Fix the parts that create hesitation now: resume language, button hierarchy, inline affordances, and hidden actions.</span>
+            </div>
+            <div class="decision">
+              <strong>Naming decision</strong>
+              <span>Keep current app naming mostly intact in this pass and limit changes to local label cleanups where clarity is weakest.</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <nav class="jumpbar">
+        <a href="#journey">Journey</a>
+        <a href="#welcome">Welcome</a>
+        <a href="#home">Preview Home</a>
+        <a href="#photo">Add Photo</a>
+        <a href="#surface">Surface</a>
+        <a href="#colors">Choose Direction</a>
+        <a href="#review">Review</a>
+        <a href="#results">Results</a>
+        <a href="#design-card">Current Room</a>
+        <a href="#saved">Library</a>
+        <a href="#more">More</a>
+        <a href="#matrix">Full Breakdown</a>
+      </nav>
+
+      <section class="surface" id="journey">
+        <h2>Current journey, improved clarity</h2>
+        <p class="surface-copy">
+          The stronger overhaul recommendation is intentionally not the direction of this
+          pass. This version keeps the current journey recognizable and shows where the
+          board wants clearer labels, stronger hierarchy, and better in-screen guidance.
+        </p>
+        <div class="flow-strip">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <h3>Welcome</h3>
+            <p>Keep the entry and explainer pattern, but sharpen the first CTA and promise.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <h3>Preview Home</h3>
+            <p>Keep start, browse, and resume, but make the primary path and resume state easier to read.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <h3>Build Steps</h3>
+            <p>Keep Choose Direction, Add Photo, Choose Surface, and Review, then tighten labels and affordances inside them.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <h3>Results</h3>
+            <p>Keep the ready-state layout, but make the next action more obvious once a preview finishes.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <h3>Current Room</h3>
+            <p>Keep the saved detail screen and surface the high-value actions more clearly.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">6</div>
+            <h3>Library &amp; More</h3>
+            <p>Keep both tabs intact and improve how ready previews, consultation, and report status are surfaced.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="welcome">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Screen 1</span>
+            <h2>Welcome</h2>
+          </div>
+          <span class="screen-tag">Keep the welcome, sharpen the first CTA</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/welcome_clean.jpg" alt="Current welcome screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>Clearer first CTA and stronger free-preview promise, while keeping the same welcome-sheet structure.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen" style="background:
+                linear-gradient(180deg, rgba(24, 18, 16, 0.2), rgba(24, 18, 16, 0.42)),
+                linear-gradient(135deg, #dfd4c5 0%, #f2ece1 58%, #c8bca9 100%);">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>LTE</span>
+                </div>
+                <div class="mock-section" style="margin-top: 230px;">
+                  <div class="mock-kicker">How it works</div>
+                  <div class="mock-title">Preview your own room first.</div>
+                  <div class="mock-body">
+                    Keep the current explainer pattern, but make the free-preview promise
+                    and the first action easier to understand at a glance.
+                  </div>
+                  <div class="mock-pills">
+                    <span class="pill">3 free previews</span>
+                    <span class="pill">No credit card required</span>
+                  </div>
+                  <div class="button-stack focus-area" data-tag="cta update">
+                    <div class="primary-btn">Start with my room</div>
+                    <div class="ghost-btn">How it works</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Clearer entry CTA</strong>
+                <span>The welcome keeps its current shape, but the first button should say what the user will actually do next.</span>
+              </div>
+              <div class="change-card">
+                <strong>Keep the current sheet feel</strong>
+                <span>The lighter-touch pass keeps the same entry pattern and only improves the hierarchy of promise, explanation, and CTA.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="home">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Screen 2</span>
+            <h2>Preview Home</h2>
+          </div>
+          <span class="screen-tag">Keep the current home, clarify start and resume</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/seeded_preview_home.jpg" alt="Current preview home screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>Resume state is easier to parse, and alternate starts are still present but visually more secondary.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="project-card focus-area" data-tag="resume clarity">
+                  <div class="mock-kicker">Preview</div>
+                  <div class="mock-title" style="font-size: 28px;">Resume your strongest direction</div>
+                  <div class="mock-body">
+                    Keep the current home card, but make the saved state and next step more explicit before the user taps resume.
+                  </div>
+                  <div class="metric-row" style="margin-top: 14px;">
+                    <span class="pill">Draft saved</span>
+                  </div>
+                  <div class="metric-row" style="margin-top: 10px;">
+                    <span class="pill">No direction yet</span>
+                    <span class="pill">Photo ready</span>
+                  </div>
+                  <div class="button-stack">
+                    <div class="primary-btn">Resume project</div>
+                  </div>
+                </div>
+                <div class="project-card">
+                  <strong>Current project</strong>
+                  <span>Current Project</span>
+                  <div class="action-row">
+                    <div class="secondary-btn">Photo ready</div>
+                  </div>
+                </div>
+                <div class="mini-grid focus-inline" style="margin-top: 18px;">
+                  <div class="mini-tile">
+                    <strong>Browse by brand</strong>
+                    <span>Keep the alternate path, but make it feel clearly secondary to resume or start.</span>
+                  </div>
+                  <div class="mini-tile">
+                    <strong>Open Color Matcher</strong>
+                    <span>Keep this utility in the current home, but label it as a helper tool instead of a competing first step.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Clarify resume state</strong>
+                <span>Keep the current card design, but make the saved draft status and next action easier to understand before tapping.</span>
+              </div>
+              <div class="change-card">
+                <strong>Keep current entry paths</strong>
+                <span>Start, browse, and Color Matcher can all stay, as long as the hierarchy makes the primary path obvious.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="photo">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Screen 3</span>
+            <h2>Add Photo</h2>
+          </div>
+          <span class="screen-tag">Keep the current photo step, clarify the actions</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/photo_upload_primary.jpg" alt="Current add photo screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>Camera and Library are more scannable, and the disabled continue state is more explicit without changing the panel layout.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="mock-section">
+                  <div class="mock-kicker">Add Photo</div>
+                  <div class="progress-shell">
+                    <div class="progress-topline">
+                      <span>Step 3 of 4</span>
+                      <span>Photo</span>
+                    </div>
+                    <div class="progress-bars">
+                      <div class="progress-bar"><span style="width: 100%;"></span></div>
+                      <div class="progress-bar"><span style="width: 100%;"></span></div>
+                      <div class="progress-bar"><span style="width: 40%;"></span></div>
+                    </div>
+                  </div>
+                  <div class="mock-title">Take or Upload Photo</div>
+                  <div class="mock-body">
+                    Capture or select the room you want to visualize. The layout stays the same, but the actions become easier to scan.
+                  </div>
+                  <div class="upload-panel focus-area" data-tag="clearer actions">
+                    <div class="panel-icon">&#128196;</div>
+                    <div class="mock-body" style="margin-top: 14px; text-align: center;">
+                      Upload a clear photo of the room you want to repaint.
+                    </div>
+                    <div class="mini-grid">
+                      <div class="mini-tile">
+                        <div class="mini-head">
+                          <div class="mini-icon">&#128247;</div>
+                          <strong>Camera</strong>
+                        </div>
+                        <span>Take a room photo now.</span>
+                      </div>
+                      <div class="mini-tile">
+                        <div class="mini-head">
+                          <div class="mini-icon">&#128444;</div>
+                          <strong>Library</strong>
+                        </div>
+                        <span>Choose an existing room photo.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hint-line">Use even light and keep the wall or surface fully in frame for the most believable preview.</div>
+                  <div class="hint-link">Need to match an object color first? Open Color Matcher</div>
+                  <div class="button-stack focus-inline">
+                    <div class="primary-btn">Continue to Surfaces</div>
+                    <div class="ghost-btn">Disabled until a photo is added</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Icon-led intake actions</strong>
+                <span>Camera and Library stay exactly where users expect them, but the icons and wording make the two paths easier to scan.</span>
+              </div>
+              <div class="change-card">
+                <strong>Explain the block</strong>
+                <span>The disabled footer should tell the user exactly what is missing instead of only looking inactive.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="surface">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Screen 4</span>
+            <h2>Choose Surface</h2>
+          </div>
+          <span class="screen-tag">Keep the current tiles, tighten the guidance</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/surface_picker_selected.jpg" alt="Current surface picker screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>Selected context is easier to see, while the current tile grid and Review Project flow stay intact.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="mock-section">
+                  <div class="mock-kicker">Choose Surface</div>
+                  <div class="progress-shell">
+                    <div class="progress-topline">
+                      <span>Step 4 of 4</span>
+                      <span>Surface</span>
+                    </div>
+                    <div class="progress-bars">
+                      <div class="progress-bar"><span style="width: 100%;"></span></div>
+                      <div class="progress-bar"><span style="width: 100%;"></span></div>
+                      <div class="progress-bar"><span style="width: 100%;"></span></div>
+                    </div>
+                  </div>
+                  <div class="mock-title">Choose the surface you want to preview.</div>
+                  <div class="mock-body">
+                    Keep the current tile layout and selection summary, then tighten the helper text and button copy.
+                  </div>
+                  <div class="selection-card focus-area" data-tag="selection context">
+                    <span class="label">Your selections</span>
+                    <span class="value">1 colors ready</span>
+                    <span class="subvalue">Keep this current summary card so the user can see what is already locked in.</span>
+                  </div>
+                  <div class="tile-grid-3">
+                    <div class="surface-tile active">
+                      <strong>Full Walls</strong>
+                      <span>Selected</span>
+                    </div>
+                    <div class="surface-tile">
+                      <strong>Trim &amp; Base</strong>
+                      <span>Keep current tile treatment.</span>
+                    </div>
+                    <div class="surface-tile">
+                      <strong>Accent Wall</strong>
+                      <span>Single focal wall.</span>
+                    </div>
+                    <div class="surface-tile">
+                      <strong>Doors</strong>
+                      <span>Keep current option.</span>
+                    </div>
+                    <div class="surface-tile">
+                      <strong>Cabinets</strong>
+                      <span>Keep current option.</span>
+                    </div>
+                    <div class="surface-tile">
+                      <strong>Ceiling</strong>
+                      <span>Keep current option.</span>
+                    </div>
+                  </div>
+                  <div class="dash-tile" style="margin-top: 12px;">
+                    <strong>Custom / Other</strong>
+                    <span>Describe the surface to paint before continuing.</span>
+                  </div>
+                  <div class="button-stack">
+                    <div class="primary-btn">Review Project</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Keep current tile layout</strong>
+                <span>The lighter-touch version keeps the same surface grid and only improves the surrounding guidance and selection context.</span>
+              </div>
+              <div class="change-card">
+                <strong>Carry validation forward</strong>
+                <span>The custom surface flow still needs the first-board validation fix before implementation.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="colors">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Screen 5</span>
+            <h2>Choose Direction</h2>
+          </div>
+          <span class="screen-tag">Keep the current screen, add inline company filters</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/direction_picker_selected.jpg" alt="Current choose direction screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>An inline company filter is added inside the current screen, while the shortlist and suggested-direction cards still behave the same way.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="mock-section">
+                  <div class="mock-kicker">Choose Direction</div>
+                  <div class="progress-shell">
+                    <div class="progress-topline">
+                      <span>Step 2 of 3</span>
+                      <span>Photo</span>
+                    </div>
+                    <div class="progress-bars">
+                      <div class="progress-bar"><span style="width: 100%;"></span></div>
+                      <div class="progress-bar"><span style="width: 52%;"></span></div>
+                      <div class="progress-bar"><span style="width: 0%;"></span></div>
+                    </div>
+                  </div>
+                  <div class="mock-title">Pick a tight set of colors before you render.</div>
+                  <div class="mock-body">
+                    Keep the current shortlist flow and suggested directions layout. The main polish change is adding an inline company filter where the brand context already lives.
+                  </div>
+                  <div class="selection-card">
+                    <span class="label">Current shortlist</span>
+                    <span class="value">White Dove</span>
+                    <span class="subvalue">OC-17</span>
+                  </div>
+                  <div class="mock-body" style="margin-top: 16px; font-weight: 700; color: var(--ink);">Suggested directions</div>
+                  <div class="filter-row focus-area" data-tag="new filter">
+                    <span class="pill active">All Brands</span>
+                    <span class="pill">Benjamin Moore</span>
+                    <span class="pill">Sherwin-Williams</span>
+                  </div>
+                  <div class="direction-grid">
+                    <div class="direction-card active">
+                      <div class="swatch" style="background: #f3ede4;"></div>
+                      <div class="direction-meta">
+                        <div>
+                          <strong>White Dove</strong>
+                          <span>OC-17</span>
+                        </div>
+                        <span class="tiny-badge active">&#10003;</span>
+                      </div>
+                    </div>
+                    <div class="direction-card">
+                      <div class="swatch" style="background: #ece5d8;"></div>
+                      <div class="direction-meta">
+                        <div>
+                          <strong>Alabaster</strong>
+                          <span>SW 7008</span>
+                        </div>
+                        <span class="tiny-badge">+</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="button-stack focus-inline">
+                    <div class="primary-btn">Choose surface</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Add inline brand filters</strong>
+                <span>All Brands, Benjamin Moore, and Sherwin-Williams can live inside the current screen without changing the shortlist model.</span>
+              </div>
+              <div class="change-card">
+                <strong>Keep current selection feel</strong>
+                <span>The same current suggested-direction cards stay in place; the filter only changes what the user sees, not what is already selected.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="review">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Screen 6</span>
+            <h2>Review Project</h2>
+          </div>
+          <span class="screen-tag">Keep the current summary, tighten the labels</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/project_review.jpg" alt="Current review project screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>The summary rows are easier to scan, and the final generation action reads more clearly without changing the review-screen structure.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="mock-section">
+                  <div class="mock-kicker">Review Project</div>
+                  <div class="mock-title">Ready to create your previews?</div>
+                  <div class="mock-body">
+                    Keep the current review layout and tighten the wording around the edit links and final button.
+                  </div>
+                  <div class="room-preview"></div>
+                  <div class="row-list focus-area" data-tag="clearer summary">
+                    <div class="row-item">
+                      <div>
+                        <strong>Colors</strong>
+                        <span>1 selected</span>
+                      </div>
+                      <span class="text-link">Edit Colors</span>
+                    </div>
+                    <div class="row-item">
+                      <div>
+                        <strong>Photo</strong>
+                        <span>Photo ready for upload</span>
+                      </div>
+                      <span class="text-link">Change Photo</span>
+                    </div>
+                    <div class="row-item">
+                      <div>
+                        <strong>Surface</strong>
+                        <span>Full Walls selected</span>
+                      </div>
+                      <span class="text-link">Edit Surface</span>
+                    </div>
+                  </div>
+                  <div class="button-stack focus-inline">
+                    <div class="primary-btn">Generate My Previews</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Tighten edit labels</strong>
+                <span>Keep the same review card, but make the edit verbs and summary rows easier to parse on a quick scan.</span>
+              </div>
+              <div class="change-card">
+                <strong>Keep current review structure</strong>
+                <span>The current flow into generation can stay; the main opportunity is cleaner wording and clearer row hierarchy.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="results">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Screen 7</span>
+            <h2>Results</h2>
+          </div>
+          <span class="screen-tag">Keep the results layout, clarify the ready action</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/results_ready.jpg" alt="Current results screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>The ready preview is more obvious inside the same results layout, so the next action stands out before project edits.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="mock-section">
+                  <div class="mock-kicker">Results</div>
+                  <div style="display: flex; justify-content: space-between; gap: 12px; align-items: center;">
+                    <div class="mock-title" style="font-size: 28px;">Your results</div>
+                    <span class="ready-pill">1 ready</span>
+                  </div>
+                  <div class="mock-body">
+                    Keep the current results structure, but make the ready preview link feel more obvious before the user falls back to project edits.
+                  </div>
+                  <div class="result-card focus-area" data-tag="next action">
+                    <strong>Ready to Review</strong>
+                    <span>Current Room · Full Walls</span>
+                    <div class="room-preview" style="height: 180px; margin-top: 14px;"></div>
+                    <div class="hint-link" style="margin-top: 14px;">Open Preview</div>
+                  </div>
+                  <div class="hint-line">Your finished previews are ready to compare, reopen, and refine.</div>
+                  <div class="button-stack">
+                    <div class="secondary-btn">Adjust Project</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Elevate the ready preview</strong>
+                <span>Keep the current result card layout, but make the ready preview action read like the next step instead of a hidden detail.</span>
+              </div>
+              <div class="change-card">
+                <strong>Keep the current results screen</strong>
+                <span>The lighter-touch change is about emphasis and wording, not a new result-screen composition.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="design-card">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Screen 8</span>
+            <h2>Current Room Detail</h2>
+          </div>
+          <span class="screen-tag">Keep the current detail, surface saved actions</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/saved_design_card_detail.jpg" alt="Current saved design card screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>The current-room detail keeps its layout, but saved-card actions are now visibly surfaced instead of feeling hidden in the toolbar.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="design-card">
+                  <div class="mock-kicker">Current Room</div>
+                  <div class="room-preview" style="height: 240px; margin-top: 14px;">
+                    <div class="card-footer">
+                      <div>
+                        <strong style="font-size: 15px;">White Dove</strong>
+                        <small>Benjamin Moore · OC-17</small>
+                      </div>
+                      <div class="pill" style="background: rgba(255,255,255,0.18); color: #fff; border-color: rgba(255,255,255,0.14);">Ready</div>
+                    </div>
+                  </div>
+                  <div class="selection-card focus-area" data-tag="saved card">
+                    <span class="label">Saved Design Card</span>
+                    <span class="value">White Dove</span>
+                    <span class="subvalue">Benjamin Moore / OC-17 · Design card and share link ready</span>
+                  </div>
+                  <div class="action-row focus-inline">
+                    <div class="secondary-btn">Share</div>
+                    <div class="secondary-btn">Save to Photos</div>
+                  </div>
+                  <div class="action-row">
+                    <div class="ghost-btn">Reopen Preview</div>
+                    <div class="ghost-btn">Before / After</div>
+                  </div>
+                </div>
+                <div class="support-card">
+                  <strong>Why this changes</strong>
+                  <span>The current detail screen can stay. The improvement is adding visible saved-card actions without depending only on the toolbar and overflow menu.</span>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Visible saved-card actions</strong>
+                <span>Share, save, reopen, and before/after stay inside the current screen instead of feeling hidden behind icons alone.</span>
+              </div>
+              <div class="change-card">
+                <strong>Keep current room detail</strong>
+                <span>The lighter-touch pass keeps the current-room layout and only strengthens action discovery around the saved card.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="saved">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Container</span>
+            <h2>Library</h2>
+          </div>
+          <span class="screen-tag">Keep Library, make ready work easier to spot</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/library_design_cards.jpg" alt="Current library landing screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>Library stays the same screen, but the active project now makes the ready state and reopen action much easier to notice.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="mock-section">
+                  <div class="mock-kicker">Library</div>
+                  <div class="mock-title">Projects keep rooms, previews, and next steps together.</div>
+                  <div class="mock-body">
+                    Keep the current Library structure. The lighter-touch change is making ready previews and the latest saved design easier to spot inside the project card.
+                  </div>
+                  <div class="mock-pills">
+                    <span class="pill">1 Projects</span>
+                    <span class="pill">8 Colors</span>
+                    <span class="pill">0 Reports</span>
+                  </div>
+                  <div class="tab-strip">
+                    <span class="active">Projects</span>
+                    <span>Colors</span>
+                    <span>Reports</span>
+                  </div>
+                  <div class="list-card">
+                    <div class="mock-body" style="margin-top: 0;">
+                      <strong style="color: var(--ink); font-size: 15px;">Room projects</strong><br />
+                      Resume active rooms, reopen results, or continue a draft where you left off.
+                    </div>
+                  </div>
+                  <div class="project-card focus-area" data-tag="ready project">
+                    <div class="metric-row" style="margin-top: 0;">
+                      <span class="pill" style="background: rgba(39, 204, 192, 0.14); color: var(--teal-deep);">Results Ready</span>
+                      <span class="pill">Active</span>
+                    </div>
+                    <strong>Current Room</strong>
+                    <span>Previews are ready to compare, save, and reopen.</span>
+                    <div class="room-preview" style="height: 156px; margin-top: 14px;"></div>
+                    <div class="metric-row" style="margin-top: 12px;">
+                      <span class="pill">1 Directions</span>
+                      <span class="pill">1 Photo</span>
+                      <span class="pill">1 Previews</span>
+                    </div>
+                    <div class="hint-link" style="margin-top: 12px;">Open Results</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Keep current Library structure</strong>
+                <span>Projects, Colors, and Reports stay intact; the improvement is stronger emphasis on the current room’s ready state.</span>
+              </div>
+              <div class="change-card">
+                <strong>Highlight ready work</strong>
+                <span>Badges, preview counts, and the open-results affordance should make the active project more immediately understandable.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen-block" id="more">
+        <div class="screen-header">
+          <div>
+            <span class="eyebrow">Support Surface</span>
+            <h2>More</h2>
+          </div>
+          <span class="screen-tag">Keep More, move consultation and report context higher</span>
+        </div>
+        <div class="review-grid">
+          <div class="current-shot">
+            <span class="shot-label">Current live capture</span>
+            <img src="./evidence/2026-03-12-second-board/screenshots/more_latest_report.jpg" alt="Current more screen" />
+          </div>
+          <div class="phone-wrap">
+            <span class="mockup-label">Proposed approval mockup</span>
+            <div class="proposed-note">
+              <strong>Visible Changes</strong>
+              <span>More stays the same destination, but consultation and latest-report context are elevated so the important actions appear earlier.</span>
+            </div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="dynamic-island"></div>
+                  <span>5G</span>
+                </div>
+                <div class="mock-section">
+                  <div class="mock-kicker">More</div>
+                  <div class="mock-title">Consultation, help, and settings stay here.</div>
+                  <div class="mock-body">
+                    Keep the current More layout, but make the consultation card and latest report easier to see before the help rows take over the screen.
+                  </div>
+                  <div class="support-card focus-area" data-tag="consultation">
+                    <strong>Detailed Color Analysis</strong>
+                    <span>Keep the current consultation card and make the CTA visible before users scroll into settings and help.</span>
+                    <div class="metric-row" style="margin-top: 12px;">
+                      <span class="pill">Optional add-on</span>
+                    </div>
+                    <div class="button-stack">
+                      <div class="primary-btn">Add Curt's Consultation for $149.00</div>
+                      <div class="secondary-btn">Preview Sample Walkthrough</div>
+                    </div>
+                  </div>
+                  <div class="report-card focus-inline">
+                    <strong>Your latest report</strong>
+                    <span>Keep active consultation or report status closer to the consultation card instead of burying it lower in the stack.</span>
+                  </div>
+                  <div class="row-list">
+                    <div class="row-item">
+                      <div>
+                        <strong>How the preview flow works</strong>
+                        <span>Revisit the core steps and free-preview promise.</span>
+                      </div>
+                      <span class="text-link">&#8250;</span>
+                    </div>
+                    <div class="row-item">
+                      <div>
+                        <strong>Open Color Matcher</strong>
+                        <span>Sample a real-world object and start from that direction.</span>
+                      </div>
+                      <span class="text-link">&#8250;</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="change-cards">
+              <div class="change-card">
+                <strong>Keep the current More stack</strong>
+                <span>The lighter-touch version keeps Consultation, report status, and Help &amp; Learn in More, but makes the important cards show up earlier.</span>
+              </div>
+              <div class="change-card">
+                <strong>Promote consultation and report context</strong>
+                <span>Users should see the consultation CTA and current report state before the screen turns into a long help-and-settings list.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="matrix" id="matrix">
+        <span class="eyebrow">Full Breakdown</span>
+        <h2 style="margin-top: 16px; font-size: 30px;">Every approved polish change in one table</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Area</th>
+              <th>Current Issue</th>
+              <th>Approved Direction</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Journey guidance</td>
+              <td>The current flow can feel inconsistent as users move between start, build, and results screens.</td>
+              <td>Clarify helper text and progress labels within the current flow instead of rewriting the journey in this pass.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Progress model</td>
+              <td>`Step 2 of 3` and `Step 3 of 4` appear in the same journey.</td>
+              <td>Keep the current screens, but make the progress treatment less surprising where possible.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Resume</td>
+              <td>`Resume project` can land in empty `Results` even when colors are missing.</td>
+              <td>Keep the current resume card, but make the saved state and likely next step clearer in the home surface.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Preview home</td>
+              <td>Primary and secondary routes are conceptually mixed.</td>
+              <td>Keep the current home structure and improve emphasis between Resume, Browse by brand, and Color Matcher.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Choose Direction</td>
+              <td>`Direction` language and tiny `+` affordances feel insider-ish and easy to miss.</td>
+              <td>Keep the current screen and shortlist model, then add an inline `All Brands / Benjamin Moore / Sherwin-Williams` filter in place.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Photo step</td>
+              <td>Disabled footer does not explain why the user cannot continue.</td>
+              <td>Keep the current upload panel, add clearer camera and library affordances, and retain the explicit disabled-state explanation.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Choose Surface</td>
+              <td>The current surface picker is strong, but the selected context and custom path can still be clearer.</td>
+              <td>Keep the current tile layout and selected-state card, then tighten helper text and custom/other guidance.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Review Project</td>
+              <td>The review screen is useful, but the edit rows and final button copy can read more clearly.</td>
+              <td>Keep the current review structure and improve row hierarchy, edit wording, and generation CTA clarity.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Results</td>
+              <td>`Adjust Project` is more explicit than the finished preview or design card.</td>
+              <td>Keep the current results card layout, but make the ready preview action more obvious before the edit action.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Current Room detail</td>
+              <td>Share and save actions are hidden in toolbar icons and overflow.</td>
+              <td>Keep the current saved-detail screen and surface share, save, reopen, and compare actions more clearly within it.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Library</td>
+              <td>The room project is strong, but the latest design card is not obvious enough there.</td>
+              <td>Keep the current Library structure and make ready previews, badges, and open-result affordances easier to spot inside each project card.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>More / reports</td>
+              <td>Consultation, active report status, and help content all compete in one surface.</td>
+              <td>Keep the current More stack, but move consultation and report context higher within the current layout.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Checkout context</td>
+              <td>The user has to infer which room and color are being sent to Curt.</td>
+              <td>Improve room-context copy in the current expert surfaces without changing the overall consultation structure in this pass.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Reporting language</td>
+              <td>Report and saved-work helper copy drifts between Library, More, and consultation states.</td>
+              <td>Use smaller helper-copy cleanups now and leave bigger naming/IA changes out of this approval pass.</td>
+              <td><span class="status-pill recommended">Ship</span></td>
+            </tr>
+            <tr>
+              <td>Color Matcher</td>
+              <td>First-board concern still open.</td>
+              <td>Keep out of this visual approval pass and re-verify separately before implementation.</td>
+              <td><span class="status-pill watch">Follow-up</span></td>
+            </tr>
+            <tr>
+              <td>Custom surface validation</td>
+              <td>First-board concern still open.</td>
+              <td>Carry forward as a separate implementation check before shipping the current builder polish.</td>
+              <td><span class="status-pill watch">Follow-up</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="note-block">
+        <span class="eyebrow">Approval Notes</span>
+        <h2 style="margin-top: 16px; font-size: 28px;">What this page is and is not</h2>
+        <div class="note-grid">
+          <div class="note">
+            <strong>This is for approval</strong>
+            <span>These are decision mockups, not implementation-perfect SwiftUI screens.</span>
+          </div>
+          <div class="note">
+            <strong>What should be approved</strong>
+            <span>In-screen clarity improvements, better CTA emphasis, inline filters, stronger affordances, and lighter hierarchy polish on the current screens.</span>
+          </div>
+          <div class="note">
+            <strong>What stays open</strong>
+            <span>Color Matcher handoff, custom-surface validation, and any future deeper IA or naming cleanup remain outside this approval page.</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        Built from the second-board live audit on March 12, 2026.
+      </div>
+    </main>
+  </body>
+</html>

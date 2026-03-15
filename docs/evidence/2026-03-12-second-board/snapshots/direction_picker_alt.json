@@ -1,0 +1,865 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{0, 56.333333333333343}, {90.333333333333329, 44}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 56.333333333333343,
+          "x" : 0,
+          "width" : 90.333333333333329,
+          "height" : 44
+        },
+        "role_description" : "back button",
+        "AXLabel" : "Preview",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{132.66666666666666, 68.000000000000014}, {136.99999999999997, 20.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 68.000000000000014,
+          "x" : 132.66666666666666,
+          "width" : 136.99999999999997,
+          "height" : 20.333333333333329
+        },
+        "role_description" : "heading",
+        "AXLabel" : "Choose Direction",
+        "content_required" : false,
+        "type" : "Heading",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXHeading",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{32, 128.33332824707031}, {338, 28.333343505859375}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 128.33332824707031,
+          "x" : 32,
+          "width" : 338,
+          "height" : 28.333343505859375
+        },
+        "role_description" : "text",
+        "AXLabel" : "Step 2 of 3: Photo",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{32, 164.66666666666666}, {298.33333333333326, 14.333333333333343}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 164.66666666666666,
+          "x" : 32,
+          "width" : 298.33333333333326,
+          "height" : 14.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "Build a focused shortlist before you render the room.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{16, 203}, {77.333333333333329, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 203,
+          "x" : 16,
+          "width" : 77.333333333333329,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "DIRECTION",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{16, 229.33333333333331}, {317.66666666666663, 67.666666666666686}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 229.33333333333331,
+          "x" : 16,
+          "width" : 317.66666666666663,
+          "height" : 67.666666666666686
+        },
+        "role_description" : "text",
+        "AXLabel" : "Pick a tight set of colors before you render.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{16, 309}, {367.33333333333326, 61.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 309,
+          "x" : 16,
+          "width" : 367.33333333333326,
+          "height" : 61.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Start with suggested directions, pull from your saved favorites, or browse by brand. You can keep up to five options in the batch.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{16, 394.33333333333331}, {169.66666666666666, 20.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 394.33333333333331,
+          "x" : 16,
+          "width" : 169.66666666666666,
+          "height" : 20.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Suggested directions",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{294.66666666666663, 397.33333333333331}, {91.333333333333258, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 397.33333333333331,
+          "x" : 294.66666666666663,
+          "width" : 91.333333333333258,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Benjamin Moore",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{15.5, 426.16665649414062}, {180, 185.66665649414062}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-OC-17",
+        "frame" : {
+          "y" : 426.16665649414062,
+          "x" : 15.5,
+          "width" : 180,
+          "height" : 185.66665649414062
+        },
+        "role_description" : "button",
+        "AXLabel" : "White Dove, OC-17",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{206.5, 426.16665649414062}, {180, 185.66665649414062}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-OC-117",
+        "frame" : {
+          "y" : 426.16665649414062,
+          "x" : 206.5,
+          "width" : 180,
+          "height" : 185.66665649414062
+        },
+        "role_description" : "button",
+        "AXLabel" : "Simply White, OC-117",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{15.5, 622.83331298828125}, {180, 185.66668701171875}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-OC-65",
+        "frame" : {
+          "y" : 622.83331298828125,
+          "x" : 15.5,
+          "width" : 180,
+          "height" : 185.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Chantilly Lace, OC-65",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{206.5, 622.83331298828125}, {180, 185.66668701171875}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-OC-45",
+        "frame" : {
+          "y" : 622.83331298828125,
+          "x" : 206.5,
+          "width" : 180,
+          "height" : 185.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Swiss Coffee, OC-45",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{15.5, 819.5}, {180, 185.66668701171875}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-HC-172",
+        "frame" : {
+          "y" : 819.5,
+          "x" : 15.5,
+          "width" : 180,
+          "height" : 185.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Revere Pewter, HC-172",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{206.5, 819.5}, {180, 185.66668701171875}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-HC-154",
+        "frame" : {
+          "y" : 819.5,
+          "x" : 206.5,
+          "width" : 180,
+          "height" : 185.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Hale Navy, HC-154",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{15.5, 1016.1666870117188}, {180, 185.66668701171875}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-HC-166",
+        "frame" : {
+          "y" : 1016.1666870117188,
+          "x" : 15.5,
+          "width" : 180,
+          "height" : 185.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Kendall Charcoal, HC-166",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{206.5, 1016.1666870117188}, {180, 185.66668701171875}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-OC-23",
+        "frame" : {
+          "y" : 1016.1666870117188,
+          "x" : 206.5,
+          "width" : 180,
+          "height" : 185.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Classic Gray, OC-23",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{16, 1225.6666666666667}, {102, 20.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1225.6666666666667,
+          "x" : 16,
+          "width" : 102,
+          "height" : 20.333333333333258
+        },
+        "role_description" : "text",
+        "AXLabel" : "Saved colors",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{334.66666666666663, 1228.6666666666667}, {51.333333333333258, 14.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1228.6666666666667,
+          "x" : 334.66666666666663,
+          "width" : 51.333333333333258,
+          "height" : 14.333333333333258
+        },
+        "role_description" : "text",
+        "AXLabel" : "Favorites",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{15.5, 1257.5}, {185, 185.6666259765625}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-2163-10",
+        "frame" : {
+          "y" : 1257.5,
+          "x" : 15.5,
+          "width" : 185,
+          "height" : 185.6666259765625
+        },
+        "role_description" : "button",
+        "AXLabel" : "Hale Navy, Benjamin Moore",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{211.5, 1257.5}, {185, 185.6666259765625}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-OC-45",
+        "frame" : {
+          "y" : 1257.5,
+          "x" : 211.5,
+          "width" : 185,
+          "height" : 185.6666259765625
+        },
+        "role_description" : "button",
+        "AXLabel" : "Swiss Coffee, Benjamin Moore",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{407.5, 1257.5}, {185, 185.6666259765625}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-AF-70",
+        "frame" : {
+          "y" : 1257.5,
+          "x" : 407.5,
+          "width" : 185,
+          "height" : 185.6666259765625
+        },
+        "role_description" : "button",
+        "AXLabel" : "Sea Salt, Benjamin Moore",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{603.5, 1257.5}, {185, 185.6666259765625}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-2050-10",
+        "frame" : {
+          "y" : 1257.5,
+          "x" : 603.5,
+          "width" : 185,
+          "height" : 185.6666259765625
+        },
+        "role_description" : "button",
+        "AXLabel" : "Backwoods, Benjamin Moore",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{799.5, 1257.5}, {185, 185.6666259765625}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-OC-17",
+        "frame" : {
+          "y" : 1257.5,
+          "x" : 799.5,
+          "width" : 185,
+          "height" : 185.6666259765625
+        },
+        "role_description" : "button",
+        "AXLabel" : "White Dove, Benjamin Moore",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{995.5, 1257.5}, {185, 185.6666259765625}}",
+        "AXUniqueId" : "colorSwatch.sherwin_williams-SW 6244",
+        "frame" : {
+          "y" : 1257.5,
+          "x" : 995.5,
+          "width" : 185,
+          "height" : 185.6666259765625
+        },
+        "role_description" : "button",
+        "AXLabel" : "Naval, Sherwin-Williams",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{1191.5, 1257.5}, {185, 185.6666259765625}}",
+        "AXUniqueId" : "colorSwatch.sherwin_williams-SW 7029",
+        "frame" : {
+          "y" : 1257.5,
+          "x" : 1191.5,
+          "width" : 185,
+          "height" : 185.6666259765625
+        },
+        "role_description" : "button",
+        "AXLabel" : "Agreeable Gray, Sherwin-Williams",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{1387.5, 1257.5}, {185, 185.6666259765625}}",
+        "AXUniqueId" : "colorSwatch.benjamin_moore-HC-173",
+        "frame" : {
+          "y" : 1257.5,
+          "x" : 1387.5,
+          "width" : 185,
+          "height" : 185.6666259765625
+        },
+        "role_description" : "button",
+        "AXLabel" : "Edgecomb Gray, Benjamin Moore",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{16, 1466.6666666666667}, {173, 20.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1466.6666666666667,
+          "x" : 16,
+          "width" : 173,
+          "height" : 20.333333333333258
+        },
+        "role_description" : "text",
+        "AXLabel" : "Browse brand catalog",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{353, 1469.6666666666667}, {33, 14.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1469.6666666666667,
+          "x" : 353,
+          "width" : 33,
+          "height" : 14.333333333333258
+        },
+        "role_description" : "text",
+        "AXLabel" : "Sheet",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{15.5, 1498.5}, {371, 115.3333740234375}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1498.5,
+          "x" : 15.5,
+          "width" : 371,
+          "height" : 115.3333740234375
+        },
+        "role_description" : "button",
+        "AXLabel" : "Browse Benjamin Moore, Search the catalog, switch brands, and add colors without leaving this step.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      },
+      {
+        "AXFrame" : "{{20, 742}, {362, 56}}",
+        "AXUniqueId" : "directionPicker.continue",
+        "frame" : {
+          "y" : 742,
+          "x" : 20,
+          "width" : 362,
+          "height" : 56
+        },
+        "role_description" : "button",
+        "AXLabel" : "Add room photo",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : false,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49505
+      }
+    ],
+    "subrole" : null,
+    "pid" : 49505
+  }
+]

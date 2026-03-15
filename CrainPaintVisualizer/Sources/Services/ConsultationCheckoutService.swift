@@ -1,17 +1,17 @@
 import Foundation
 
-enum ConsultationPackageType: String {
+enum ConsultationPackageType: String, CaseIterable, Codable, Hashable, Sendable {
     case quickReview = "quick_review"
     case videoConsultation = "video_consultation"
     case wholeHome = "whole_home"
 }
 
-enum ConsultationCheckoutPlatform: String {
+enum ConsultationCheckoutPlatform: String, Codable, Hashable, Sendable {
     case web
     case iosNative = "ios_native"
 }
 
-enum ConsultationDisplayPackage: String {
+enum ConsultationDisplayPackage: String, Codable, Hashable, Sendable {
     case masterPackage = "master_package"
 }
 
@@ -53,7 +53,7 @@ extension ConsultationCheckoutService {
             email: email,
             orderId: orderId,
             platform: .iosNative,
-            displayPackage: .masterPackage
+            displayPackage: nil
         )
     }
 }

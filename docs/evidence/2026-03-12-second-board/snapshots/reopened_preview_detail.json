@@ -1,0 +1,163 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{144.66666666666666, 89.666666666666671}, {112.99999999999997, 20.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 89.666666666666671,
+          "x" : 144.66666666666666,
+          "width" : 112.99999999999997,
+          "height" : 20.333333333333329
+        },
+        "role_description" : "heading",
+        "AXLabel" : "Before & After",
+        "content_required" : false,
+        "type" : "Heading",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXHeading",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{337.66666666666669, 86}, {48.333333333333314, 28.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 86,
+          "x" : 337.66666666666669,
+          "width" : 48.333333333333314,
+          "height" : 28.333333333333329
+        },
+        "role_description" : "button",
+        "AXLabel" : "Done",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{75.833333333333343, 158}, {69.333333333333343, 18}}",
+        "AXUniqueId" : "savedPreviewComparison.mode.afterOnly",
+        "frame" : {
+          "y" : 158,
+          "x" : 75.833333333333343,
+          "width" : 69.333333333333343,
+          "height" : 18
+        },
+        "role_description" : "button",
+        "AXLabel" : "After Only",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : "not selected",
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{201, 148}, {181, 38}}",
+        "AXUniqueId" : "savedPreviewComparison.mode.beforeAfter",
+        "frame" : {
+          "y" : 148,
+          "x" : 201,
+          "width" : 181,
+          "height" : 38
+        },
+        "role_description" : "button",
+        "AXLabel" : "Before & After",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : "selected",
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{15.5, 205.5}, {371, 321}}",
+        "AXUniqueId" : "savedPreviewComparison.preview",
+        "frame" : {
+          "y" : 205.5,
+          "x" : 15.5,
+          "width" : 371,
+          "height" : 321
+        },
+        "role_description" : "button",
+        "AXLabel" : "Before and after comparison slider, View Larger",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : "50% showing before image",
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      }
+    ],
+    "subrole" : null,
+    "pid" : 49976
+  }
+]

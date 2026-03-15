@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import {
+  mapConsultationOrder,
+  mapConsultationReport,
+} from "@/lib/consultation-report";
 import { generatePdfBuffer } from "@/lib/pdf-report";
-import type {
-  ConsultationReport,
-  ConsultationOrder,
-} from "@/types/consultation";
 
 export const maxDuration = 30;
 
@@ -27,7 +27,7 @@ export async function GET(
 
     // Fetch report
     const { data: report, error: reportError } = await supabase
-      .from("consultation_reports")
+      .from("reports")
       .select("*")
       .eq("id", id)
       .eq("access_token", token)
@@ -42,9 +42,9 @@ export async function GET(
 
     // Fetch order
     const { data: order, error: orderError } = await supabase
-      .from("consultation_orders")
+      .from("orders")
       .select("*")
-      .eq("id", report.orderId)
+      .eq("id", report.order_id)
       .single();
 
     if (orderError || !order) {
@@ -54,14 +54,13 @@ export async function GET(
       );
     }
 
-    // Generate PDF
-    const pdfBuffer = await generatePdfBuffer(
-      report as ConsultationReport,
-      order as ConsultationOrder
-    );
+    const mappedReport = mapConsultationReport(report);
+    const mappedOrder = mapConsultationOrder(order);
 
-    const roomType =
-      (order as ConsultationOrder).quizResponses?.roomType ?? "Room";
+    // Generate PDF
+    const pdfBuffer = await generatePdfBuffer(mappedReport, mappedOrder);
+
+    const roomType = mappedOrder.quizResponses?.roomType ?? "Room";
     const filename = `Crain-Painting-${roomType.replace(/\s+/g, "-")}-Color-Report.pdf`;
 
     return new NextResponse(new Uint8Array(pdfBuffer), {

@@ -229,14 +229,14 @@ async function generateWithModel(
 }
 
 /**
- * Send an image + text prompt to Gemini and return the generated image.
- * Returns { data: string (base64), mimeType: string } or throws.
+ * Send an image + text prompt to Gemini and return the generated image plus
+ * the model that produced it.
  */
-export async function generatePaintVisualization(
+export async function generatePaintVisualizationDetailed(
   prompt: string,
   imageBase64: string,
   imageMimeType: string
-): Promise<{ data: string; mimeType: string }> {
+): Promise<{ data: string; mimeType: string; modelId: string }> {
   const ai = getClient();
   const modelIds = configuredModelIds();
   let lastError: unknown = null;
@@ -251,7 +251,10 @@ export async function generatePaintVisualization(
         imageBase64,
         imageMimeType
       );
-      return image;
+      return {
+        ...image,
+        modelId,
+      };
     } catch (error) {
       lastError = error;
       const hasFallback = i < modelIds.length - 1;
@@ -270,4 +273,25 @@ export async function generatePaintVisualization(
   );
   wrapped.message = `${wrapped.message} Tried models: ${modelList}.`;
   throw wrapped;
+}
+
+/**
+ * Send an image + text prompt to Gemini and return the generated image.
+ * Returns { data: string (base64), mimeType: string } or throws.
+ */
+export async function generatePaintVisualization(
+  prompt: string,
+  imageBase64: string,
+  imageMimeType: string
+): Promise<{ data: string; mimeType: string }> {
+  const result = await generatePaintVisualizationDetailed(
+    prompt,
+    imageBase64,
+    imageMimeType
+  );
+
+  return {
+    data: result.data,
+    mimeType: result.mimeType,
+  };
 }

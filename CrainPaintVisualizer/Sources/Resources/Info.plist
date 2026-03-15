@@ -20,6 +20,8 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>API_BASE_URL</key>
+	<string>https://crain-paint-visualizer-ios-backend.vercel.app</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need camera access to photograph your room for paint visualization</string>
 	<key>NSPhotoLibraryUsageDescription</key>

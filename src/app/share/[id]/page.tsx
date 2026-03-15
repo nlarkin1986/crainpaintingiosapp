@@ -1,44 +1,17 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ShareComparison } from "@/components/share/share-comparison";
+import { SharePageActions } from "@/components/share/share-page-actions";
 import { getBrandLabel } from "@/lib/brands";
-
-interface ShareData {
-  originalUrl: string;
-  resultUrl: string;
-  colorName: string;
-  colorNumber: string;
-  colorHex: string;
-  brand?: string;
-  surface: string;
-  createdAt: string;
-}
-
-async function getShareData(id: string): Promise<ShareData | null> {
-  try {
-    // Fetch the share JSON from Vercel Blob using the public URL pattern
-    // Vercel Blob stores public files at the blob store URL
-    const baseUrl = process.env.BLOB_STORE_URL;
-    if (!baseUrl) {
-      console.error("BLOB_STORE_URL not configured");
-      return null;
-    }
-
-    const res = await fetch(`${baseUrl}/shares/${id}.json`, {
-      next: { revalidate: 0 },
-    });
-
-    if (!res.ok) return null;
-
-    const data: ShareData = await res.json();
-    return data;
-  } catch (err) {
-    console.error("Failed to fetch share data:", err);
-    return null;
-  }
-}
+import {
+  getSharePaths,
+  getShareSurfaceLabel,
+  getShareUrls,
+  getShareVisualizationData,
+} from "@/lib/share";
 
 export async function generateMetadata({
   params,
@@ -46,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const data = await getShareData(id);
+  const data = await getShareVisualizationData(id);
 
   if (!data) {
     return {
@@ -63,14 +36,14 @@ export async function generateMetadata({
     openGraph: {
       title: `${data.colorName} - Crain Painting Color Visualizer`,
       description: `Room visualized in ${brandLabel} ${data.colorName} (${data.colorNumber})`,
-      images: [{ url: data.resultUrl, width: 1200, height: 630 }],
+      images: [{ url: getShareUrls(id).cardUrl, width: 1600, height: 2000 }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: `${data.colorName} - Crain Painting Color Visualizer`,
       description: `Room visualized in ${brandLabel} ${data.colorName}`,
-      images: [data.resultUrl],
+      images: [getShareUrls(id).cardUrl],
     },
   };
 }
@@ -81,7 +54,7 @@ export default async function SharePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const data = await getShareData(id);
+  const data = await getShareVisualizationData(id);
 
   if (!data) {
     return (
@@ -109,13 +82,15 @@ export default async function SharePage({
   }
 
   const brandLabel = getBrandLabel(data.brand);
+  const { cardPath } = getSharePaths(id);
+  const surfaceLabel = getShareSurfaceLabel(data.surface);
 
   return (
     <main className="min-h-dvh bg-background">
-      <div className="mx-auto max-w-2xl px-4 py-6">
+      <div className="mx-auto max-w-4xl px-4 py-6 sm:py-8">
         {/* Header */}
-        <div className="mb-6 text-center">
-          <h1 className="font-heading text-2xl font-bold text-foreground">
+        <div className="mb-6 text-center sm:mb-8">
+          <h1 className="font-heading text-3xl font-bold text-foreground">
             Crain Painting
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -123,31 +98,63 @@ export default async function SharePage({
           </p>
         </div>
 
-        {/* Before / After Comparison */}
-        <ShareComparison
-          originalUrl={data.originalUrl}
-          resultUrl={data.resultUrl}
-          colorName={data.colorName}
-        />
+        <Card className="overflow-hidden p-0">
+          <div className="border-b border-border px-5 py-5 sm:px-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary">
+                  Shareable Review
+                </p>
+                <h2 className="mt-2 font-heading text-2xl font-bold text-foreground sm:text-3xl">
+                  {data.colorName}
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground sm:text-base">
+                  {brandLabel} {data.colorNumber} on {surfaceLabel}
+                </p>
+              </div>
 
-        {/* Color Info */}
-        <Card className="mt-6 p-4">
-          <div className="flex items-center gap-3">
-            <div
-              className="h-14 w-14 shrink-0 rounded-lg border border-border shadow-sm"
-              style={{ backgroundColor: `#${data.colorHex}` }}
-              aria-hidden="true"
-            />
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold text-foreground">
-                {data.colorName}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                {brandLabel} {data.colorNumber}
-              </span>
+              <SharePageActions
+                shareId={id}
+                colorName={data.colorName}
+                colorNumber={data.colorNumber}
+                brand={data.brand}
+                surface={data.surface}
+                rawImageUrl={data.resultUrl}
+              />
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-6">
+            <div className="overflow-hidden rounded-2xl border border-border bg-muted/20 shadow-sm">
+              <div className="relative aspect-[4/5] w-full">
+                <Image
+                  src={cardPath}
+                  alt={`${data.colorName} design card`}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 896px, 100vw"
+                />
+              </div>
             </div>
           </div>
         </Card>
+
+        <div className="mt-8">
+          <div className="mb-4">
+            <h3 className="font-heading text-xl font-bold text-foreground">
+              Live Before / After Comparison
+            </h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Use the interactive slider for a closer look, then send the design card or review PDF.
+            </p>
+          </div>
+
+          <ShareComparison
+            originalUrl={data.originalUrl}
+            resultUrl={data.resultUrl}
+            colorName={data.colorName}
+          />
+        </div>
 
         {/* CTA */}
         <div className="mt-6">

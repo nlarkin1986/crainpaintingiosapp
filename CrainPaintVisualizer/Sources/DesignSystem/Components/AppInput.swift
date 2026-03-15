@@ -25,18 +25,27 @@ struct AppInput: View {
                     Button {
                         text = ""
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
+                        Label("Clear text", systemImage: "xmark.circle.fill")
+                            .labelStyle(.iconOnly)
                             .foregroundStyle(theme.mutedForeground)
+                            .frame(width: 44, height: 44)
                     }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Clear text")
                 }
             }
             .padding(.horizontal, theme.spacingMD)
-            .frame(height: 48)
-            .background(theme.input)
+            .frame(height: 52)
+            .background(theme.card)
             .clipShape(RoundedRectangle(cornerRadius: theme.radiusMD))
             .overlay(
                 RoundedRectangle(cornerRadius: theme.radiusMD)
-                    .stroke(borderColor, lineWidth: hasError || isFocused ? 2 : 0)
+                    .stroke(borderColor, lineWidth: hasError || isFocused ? 2 : 1)
+            )
+            .shadow(
+                color: isFocused ? theme.primary.opacity(0.14) : .black.opacity(0.04),
+                radius: isFocused ? 14 : 6,
+                y: 2
             )
 
             if let errorMessage, hasError {
@@ -55,6 +64,6 @@ struct AppInput: View {
     private var borderColor: Color {
         if hasError { return theme.destructive }
         if isFocused { return theme.primary }
-        return .clear
+        return theme.border
     }
 }

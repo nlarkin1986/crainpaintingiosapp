@@ -222,6 +222,11 @@ export default function HomePage() {
     );
   };
 
+  const surfaceLabel =
+    selectedSurface === "custom"
+      ? customInstruction.trim() || "Custom / Other"
+      : selectedSurface;
+
   return (
     <main className="min-h-dvh bg-background">
       <div className="mx-auto max-w-2xl px-4 pb-8 pt-6">
@@ -284,7 +289,7 @@ export default function HomePage() {
               onRetry={handleRetry}
               onAddAnotherColor={handleAddAnotherColor}
               onStartOver={handleStartOver}
-              surface={selectedSurface}
+              surface={surfaceLabel}
               onSaved={setSavedProposalId}
               onCancelGeneration={handleCancelGeneration}
             />

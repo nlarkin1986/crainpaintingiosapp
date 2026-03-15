@@ -15,34 +15,20 @@ struct ItemPickerView: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(spacing: theme.spacingMD) {
-                    BrandedHeader(title: "Pick Colors")
+                    WizardHeader(
+                        steps: wizardSteps,
+                        currentStep: 2,
+                        helper: "Pick up to five colors to compare before generation."
+                    )
 
-                    StepProgressView(steps: ["Color", "Photo", "Surface"], currentStep: 0, icons: ["paintpalette", "camera", "sofa"])
-
-                    // Brand toggle — custom rounded
-                    HStack(spacing: 0) {
-                        ForEach(ColorCatalogViewModel.availableBrands, id: \.self) { brand in
-                            Button {
-                                visualizerVM.selectedBrand = brand
-                                viewModel.selectedBrand = brand
-                            } label: {
-                                Text(brand.displayName)
-                                    .font(theme.subhead)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 10)
-                                    .foregroundStyle(visualizerVM.selectedBrand == brand ? .white : theme.mutedForeground)
-                                    .background(visualizerVM.selectedBrand == brand ? theme.primary : .clear)
-                                    .clipShape(RoundedRectangle(cornerRadius: theme.radiusSM))
-                            }
-                            .sensoryFeedback(.selection, trigger: visualizerVM.selectedBrand)
-                        }
-                    }
-                    .padding(4)
-                    .background(theme.muted)
-                    .clipShape(RoundedRectangle(cornerRadius: theme.radiusMD))
+                    CompactBrandSelectorView(
+                        brands: ColorCatalogViewModel.availableBrands,
+                        selectedBrand: visualizerVM.selectedBrand,
+                        onSelect: selectBrand
+                    )
                     .padding(.horizontal, theme.spacingLG)
+                    .sensoryFeedback(.selection, trigger: visualizerVM.selectedBrand)
 
-                    // Underline-style filter tabs
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: theme.spacingLG) {
                             ForEach(ColorCatalogViewModel.ColorFilter.allCases, id: \.self) { filter in
@@ -69,46 +55,62 @@ struct ItemPickerView: View {
                                             .frame(height: 2)
                                     }
                                 }
+                                .accessibilityIdentifier(filterAccessibilityIdentifier(for: filter))
                             }
                         }
                         .padding(.horizontal, theme.spacingLG)
                     }
 
-                    // Search bar
                     AppInput(placeholder: "Search colors...", text: $viewModel.searchText, icon: "magnifyingglass")
                         .padding(.horizontal, theme.spacingLG)
 
-                    // Results counter
-                    Text("Showing \(viewModel.filteredColors.count) results")
+                    Text(resultsLabel)
                         .font(theme.caption)
                         .foregroundStyle(theme.mutedForeground)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, theme.spacingLG)
 
-                    // Color grid
-                    LazyVGrid(columns: columns, spacing: 12) {
-                        ForEach(viewModel.filteredColors) { color in
-                            ColorSwatchCard(
-                                color: color,
-                                isSelected: visualizerVM.isSelected(color)
-                            ) {
-                                if visualizerVM.isSelected(color) || visualizerVM.canAddColor {
-                                    visualizerVM.toggleColor(color)
-                                } else {
-                                    showLimitToast = true
+                    if viewModel.shouldShowGridLoadingState {
+                        VStack(spacing: theme.spacingSM) {
+                            ProgressView()
+                            Text("Loading color catalog...")
+                                .font(theme.caption)
+                                .foregroundStyle(theme.mutedForeground)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, theme.spacingLG)
+                    } else if viewModel.filteredColors.isEmpty {
+                        ContentUnavailableView.search(text: viewModel.searchText)
+                            .foregroundStyle(theme.mutedForeground)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, theme.spacingLG)
+                    } else {
+                        LazyVGrid(columns: columns, spacing: 12) {
+                            ForEach(viewModel.filteredColors) { color in
+                                ColorSwatchCard(
+                                    color: color,
+                                    isSelected: visualizerVM.isSelected(color)
+                                ) {
+                                    if visualizerVM.isSelected(color) || visualizerVM.canAddColor {
+                                        visualizerVM.toggleColor(color)
+                                    } else {
+                                        showLimitToast = true
+                                    }
+                                }
+                                .onAppear {
+                                    viewModel.loadNextPageIfNeeded(currentItem: color)
                                 }
                             }
                         }
+                        .padding(.horizontal, theme.spacingLG)
+                        .padding(.bottom, 100)
                     }
-                    .padding(.horizontal, theme.spacingLG)
-                    .padding(.bottom, 100)
                 }
             }
             .scrollDismissesKeyboard(.interactively)
             .sensoryFeedback(.error, trigger: showLimitToast)
             .toast(isPresented: $showLimitToast, message: "Maximum 5 colors. Deselect one to add another.", icon: "exclamationmark.triangle")
 
-            // Floating action bar
             if !visualizerVM.selectedColors.isEmpty {
                 FloatingActionBar {
                     HStack {
@@ -124,8 +126,8 @@ struct ItemPickerView: View {
                             .font(theme.subhead)
                             .foregroundStyle(theme.foreground)
                         Spacer()
-                        AppButton("Next Step", variant: .cta, icon: "arrow.right") {
-                            router.navigate(to: .photoUpload)
+                        AppButton(nextStepTitle, variant: .cta, icon: "arrow.right") {
+                            router.navigate(to: nextStepRoute)
                         }
                         .frame(width: 160)
                         .accessibilityIdentifier("itemPicker.nextStep")
@@ -133,14 +135,65 @@ struct ItemPickerView: View {
                 }
             }
         }
-        .navigationTitle("")
+        .navigationTitle("Pick Colors")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
+        .task {
             viewModel.selectedBrand = visualizerVM.selectedBrand
+            await viewModel.loadIfNeeded()
         }
         .onChange(of: visualizerVM.selectedBrand) { _, newValue in
             viewModel.selectedBrand = newValue
         }
+    }
+
+    private var resultsLabel: String {
+        if viewModel.totalResultCount == 0 {
+            return viewModel.isLoading ? "Loading results" : "No results"
+        }
+
+        if viewModel.filteredColors.count < viewModel.totalResultCount {
+            return "Showing \(viewModel.filteredColors.count) of \(viewModel.totalResultCount) results"
+        }
+
+        return "Showing \(viewModel.totalResultCount) results"
+    }
+
+    private func filterAccessibilityIdentifier(for filter: ColorCatalogViewModel.ColorFilter) -> String {
+        let normalized = filter.rawValue.replacingOccurrences(of: " ", with: "").lowercased()
+        return "itemPicker.filter.\(normalized)"
+    }
+
+    private func selectBrand(_ brand: PaintBrand) {
+        visualizerVM.setSelectedBrand(brand)
+        viewModel.selectedBrand = brand
+
+        Task(priority: .utility) {
+            await SharedColorCatalogStore.shared.prewarm(brand: brand)
+        }
+    }
+
+    private var wizardSteps: [String] {
+        ["Photo", "Surface", "Colors", "Review"]
+    }
+
+    private var nextStepRoute: AppRoute {
+        if !visualizerVM.hasPhoto {
+            return .photoUpload
+        }
+        if !visualizerVM.isSurfaceSelectionValid {
+            return .surfacePicker
+        }
+        return .projectReview
+    }
+
+    private var nextStepTitle: String {
+        if !visualizerVM.hasPhoto {
+            return "Add Photo"
+        }
+        if !visualizerVM.isSurfaceSelectionValid {
+            return "Choose Surface"
+        }
+        return "Review Project"
     }
 }
 

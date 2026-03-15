@@ -1,0 +1,784 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{169.66666666666666, 68.000000000000014}, {63, 20.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 68.000000000000014,
+          "x" : 169.66666666666666,
+          "width" : 63,
+          "height" : 20.333333333333329
+        },
+        "role_description" : "heading",
+        "AXLabel" : "Preview",
+        "content_required" : false,
+        "type" : "Heading",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXHeading",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{40, 144.33333333333331}, {63.333333333333329, 14.333333333333343}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 144.33333333333331,
+          "x" : 40,
+          "width" : 63.333333333333329,
+          "height" : 14.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "PREVIEW",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{40, 174.66666666666666}, {248.33333333333326, 67.666666666666657}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 174.66666666666666,
+          "x" : 40,
+          "width" : 248.33333333333326,
+          "height" : 67.666666666666657
+        },
+        "role_description" : "text",
+        "AXLabel" : "Resume your strongest direction",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{40, 258.33333333333331}, {297.66666666666663, 61.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 258.33333333333331,
+          "x" : 40,
+          "width" : 297.66666666666663,
+          "height" : 61.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Pick up exactly where you left off. Your room, surface, and shortlisted directions stay in one place.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{53.000000000000028, 345.33333333333331}, {11.333333969116211, 11.333333969116211}}",
+        "AXUniqueId" : "clock",
+        "frame" : {
+          "y" : 345.33333333333331,
+          "x" : 53.000000000000028,
+          "width" : 11.333333969116211,
+          "height" : 11.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "Clock",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{71.333333333333329, 343.66666666666663}, {67.999999999999986, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 343.66666666666663,
+          "x" : 71.333333333333329,
+          "width" : 67.999999999999986,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Draft saved",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{53.333333333333364, 393.33333333333331}, {13.999999999999993, 14}}",
+        "AXUniqueId" : "swatchpalette",
+        "frame" : {
+          "y" : 393.33333333333331,
+          "x" : 53.333333333333364,
+          "width" : 13.999999999999993,
+          "height" : 14
+        },
+        "role_description" : "image",
+        "AXLabel" : "swatchpalette",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{76.666666666666671, 393.16666666666657}, {96.666666666666643, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 393.16666666666657,
+          "x" : 76.666666666666671,
+          "width" : 96.666666666666643,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "No directions yet",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{210, 392.99999999999994}, {14.666666984558105, 14.666666984558105}}",
+        "AXUniqueId" : "sparkles.rectangle.stack",
+        "frame" : {
+          "y" : 392.99999999999994,
+          "x" : 210,
+          "width" : 14.666666984558105,
+          "height" : 14.666666984558105
+        },
+        "role_description" : "image",
+        "AXLabel" : "sparkles.rectangle.stack",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{233.33333333333331, 393.16666666666663}, {68.333333333333314, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 393.16666666666663,
+          "x" : 233.33333333333331,
+          "width" : 68.333333333333314,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Photo ready",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{40.000000000000028, 434.66666666666663}, {322, 56}}",
+        "AXUniqueId" : "home.primaryCTA",
+        "frame" : {
+          "y" : 434.66666666666663,
+          "x" : 40.000000000000028,
+          "width" : 322,
+          "height" : 56
+        },
+        "role_description" : "button",
+        "AXLabel" : "Resume project",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{36, 558.66666666666663}, {121.33333333333331, 20.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 558.66666666666663,
+          "x" : 36,
+          "width" : 121.33333333333331,
+          "height" : 20.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Current project",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{36, 595}, {140, 24}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 595,
+          "x" : 36,
+          "width" : 140,
+          "height" : 24
+        },
+        "role_description" : "text",
+        "AXLabel" : "Current Project",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{333.66666666666663, 608.66666666666663}, {21, 16.666667938232422}}",
+        "AXUniqueId" : "photo",
+        "frame" : {
+          "y" : 608.66666666666663,
+          "x" : 333.66666666666663,
+          "width" : 21,
+          "height" : 16.666667938232422
+        },
+        "role_description" : "image",
+        "AXLabel" : "Photo",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{36, 627}, {83, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 627,
+          "x" : 36,
+          "width" : 83,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "Photo ready",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{16, 689}, {152, 20.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 689,
+          "x" : 16,
+          "width" : 152,
+          "height" : 20.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Other ways to start",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{15.5, 720.83331298828125}, {371, 95.3333740234375}}",
+        "AXUniqueId" : "previewHome.matchObject",
+        "frame" : {
+          "y" : 720.83331298828125,
+          "x" : 15.5,
+          "width" : 371,
+          "height" : 95.3333740234375
+        },
+        "role_description" : "button",
+        "AXLabel" : "Match a real object, Pull a paint direction from a chair, tile, or fabric sample.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{15.5, 827.16668701171875}, {371, 115.33331298828125}}",
+        "AXUniqueId" : "previewHome.browseByBrand",
+        "frame" : {
+          "y" : 827.16668701171875,
+          "x" : 15.5,
+          "width" : 371,
+          "height" : 115.33331298828125
+        },
+        "role_description" : "button",
+        "AXLabel" : "Browse colors by brand, Start with Benjamin Moore or Sherwin-Williams, then narrow fast.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{16, 966}, {102, 20.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 966,
+          "x" : 16,
+          "width" : 102,
+          "height" : 20.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Saved colors",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{15.5, 997.83331298828125}, {165, 193.66668701171875}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 997.83331298828125,
+          "x" : 15.5,
+          "width" : 165,
+          "height" : 193.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Hale Navy, 2163-10",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{191.5, 997.83331298828125}, {165, 193.66668701171875}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 997.83331298828125,
+          "x" : 191.5,
+          "width" : 165,
+          "height" : 193.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Swiss Coffee, OC-45",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{367.5, 997.83331298828125}, {165, 193.66668701171875}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 997.83331298828125,
+          "x" : 367.5,
+          "width" : 165,
+          "height" : 193.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Sea Salt, AF-70",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{543.5, 997.83331298828125}, {165, 193.66668701171875}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 997.83331298828125,
+          "x" : 543.5,
+          "width" : 165,
+          "height" : 193.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Backwoods, 2050-10",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{719.5, 997.83331298828125}, {165, 193.66668701171875}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 997.83331298828125,
+          "x" : 719.5,
+          "width" : 165,
+          "height" : 193.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "White Dove, OC-17",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{895.5, 997.83331298828125}, {165, 193.66668701171875}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 997.83331298828125,
+          "x" : 895.5,
+          "width" : 165,
+          "height" : 193.66668701171875
+        },
+        "role_description" : "button",
+        "AXLabel" : "Naval, SW 6244",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{20, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.preview",
+        "frame" : {
+          "y" : 750,
+          "x" : 20,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "Preview",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{142, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.library",
+        "frame" : {
+          "y" : 750,
+          "x" : 142,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "Library",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      },
+      {
+        "AXFrame" : "{{264, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.more",
+        "frame" : {
+          "y" : 750,
+          "x" : 264,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "More",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 33719
+      }
+    ],
+    "subrole" : null,
+    "pid" : 33719
+  }
+]

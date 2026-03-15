@@ -8,14 +8,11 @@ import type { PackageType } from '@/types/consultation';
 export const maxDuration = 10;
 
 type CheckoutPlatform = 'web' | 'ios_native';
-type DisplayPackage = 'master_package' | undefined;
-
 interface CreateSessionRequestBody {
   packageType: PackageType;
   email: string;
   orderId: string;
   platform?: CheckoutPlatform;
-  displayPackage?: DisplayPackage;
 }
 
 function sanitizeOrderId(candidate: string): string {
@@ -69,7 +66,7 @@ async function ensureOrderExists(orderId: string, email: string, packageType: Pa
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { packageType, email, orderId, displayPackage } = body as CreateSessionRequestBody;
+    const { packageType, email, orderId } = body as CreateSessionRequestBody;
     const platform: CheckoutPlatform = body.platform === 'ios_native' ? 'ios_native' : 'web';
 
     const pkg = CONSULTATION_PACKAGES[packageType];
@@ -82,17 +79,18 @@ export async function POST(request: NextRequest) {
     }
 
     const normalizedOrderId = sanitizeOrderId(orderId);
-    const isMasterPackage = platform === 'ios_native' && displayPackage === 'master_package';
-    const lineItemName = isMasterPackage ? 'Master Package' : pkg.name;
-    const lineItemDescription = isMasterPackage ? 'Expert consultation & full report' : pkg.description;
-    const lineItemPriceCents = isMasterPackage ? 10000 : pkg.priceCents;
+    const lineItemName = pkg.name;
+    const lineItemDescription = pkg.description;
+    const lineItemPriceCents = pkg.priceCents;
 
     await ensureOrderExists(normalizedOrderId, email, packageType, lineItemPriceCents);
 
     const stripe = getStripe();
 
     if (platform === 'ios_native') {
-      const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+      const publishableKey =
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
+        process.env.STRIPE_PUBLISHABLE_KEY;
       if (!publishableKey) {
         return NextResponse.json({ error: 'Stripe publishable key is not configured' }, { status: 500 });
       }
@@ -101,13 +99,12 @@ export async function POST(request: NextRequest) {
         amount: lineItemPriceCents,
         currency: 'usd',
         automatic_payment_methods: { enabled: true },
-        receipt_email: email,
-        metadata: {
-          orderId: normalizedOrderId,
-          packageType,
-          platform: 'ios_native',
-          displayPackage: displayPackage ?? '',
-        },
+          receipt_email: email,
+          metadata: {
+            orderId: normalizedOrderId,
+            packageType,
+            platform: 'ios_native',
+          },
       });
 
       if (!paymentIntent.client_secret) {
@@ -119,6 +116,8 @@ export async function POST(request: NextRequest) {
         paymentIntentClientSecret: paymentIntent.client_secret,
         publishableKey,
         merchantCountryCode: (process.env.STRIPE_MERCHANT_COUNTRY || 'US').toUpperCase(),
+        message: `Secure checkout is ready for ${pkg.name}.`,
+        createdAt: new Date().toISOString(),
       });
     }
 

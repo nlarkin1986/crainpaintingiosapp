@@ -10,28 +10,35 @@ struct FloatingActionBar<Content: View>: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Gradient fade above bar
             LinearGradient(
-                colors: [theme.background.opacity(0), theme.background.opacity(0.85), theme.background],
+                colors: [theme.background.opacity(0), theme.background.opacity(0.45), theme.background],
                 startPoint: .top,
                 endPoint: .bottom
             )
-            .frame(height: 8)
+            .frame(height: 16)
 
-            VStack(spacing: 0) {
-                Rectangle()
-                    .fill(theme.border)
-                    .frame(height: 0.5)
-
-                content()
-                    .padding(.horizontal, theme.spacingMD)
-                    .padding(.vertical, theme.space12)
-                    .background(.regularMaterial)
-            }
+            content()
+                .padding(theme.space8)
+                .background(
+                    RoundedRectangle(cornerRadius: theme.radiusLG)
+                        .fill(theme.card.opacity(0.98))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: theme.radiusLG)
+                                .stroke(theme.border, lineWidth: 1)
+                        )
+                        .shadow(color: .black.opacity(0.08), radius: 10, y: -2)
+                )
+                .padding(.horizontal, theme.space12)
         }
-        .padding(.bottom, safeAreaBottom)
-        .background(.regularMaterial.opacity(safeAreaBottom > 0 ? 1 : 0))
-        .shadow(color: .black.opacity(0.12), radius: 16, y: -8)
+        .padding(.bottom, max(safeAreaBottom, theme.space4))
+        .background(
+            LinearGradient(
+                colors: [theme.background.opacity(0), theme.background.opacity(0.88)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea(edges: .bottom)
+        )
         .accessibilityElement(children: .contain)
     }
 

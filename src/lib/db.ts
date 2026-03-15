@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { sql } from '@/lib/postgres';
 import type { Client, Proposal, ProposalResult, SaveProposalPayload } from '@/types/proposals';
 
 export async function saveProposal(payload: SaveProposalPayload): Promise<{ proposalId: string; clientId: string }> {

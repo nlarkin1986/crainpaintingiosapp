@@ -22,7 +22,7 @@ struct AppCard<Content: View>: View {
             .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
             .overlay(
                 RoundedRectangle(cornerRadius: theme.radiusLG)
-                    .stroke(elevation == .flat ? theme.border : .clear, lineWidth: 1)
+                    .stroke(theme.border.opacity(elevation == .flat ? 1 : 0.8), lineWidth: 1)
             )
             .modifier(ElevationShadow(elevation: elevation, theme: theme))
     }

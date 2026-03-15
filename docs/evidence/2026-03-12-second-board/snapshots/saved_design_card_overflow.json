@@ -1,0 +1,163 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{24, 573.66666666666663}, {354, 15.666666666666629}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 573.66666666666663,
+          "x" : 24,
+          "width" : 354,
+          "height" : 15.666666666666629
+        },
+        "role_description" : "text",
+        "AXLabel" : "Design Card Actions",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{8, 603.33333333333337}, {386, 57}}",
+        "AXUniqueId" : "savedPreviewDetail.openComparison",
+        "frame" : {
+          "y" : 603.33333333333337,
+          "x" : 8,
+          "width" : 386,
+          "height" : 57
+        },
+        "role_description" : "button",
+        "AXLabel" : "Open Before\/After Preview",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{8, 660.66666666666674}, {386, 57}}",
+        "AXUniqueId" : "savedPreviewDetail.saveToPhotos",
+        "frame" : {
+          "y" : 660.66666666666674,
+          "x" : 8,
+          "width" : 386,
+          "height" : 57
+        },
+        "role_description" : "button",
+        "AXLabel" : "Save to Photos",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{8, 718}, {386, 57}}",
+        "AXUniqueId" : "savedPreviewDetail.edit",
+        "frame" : {
+          "y" : 718,
+          "x" : 8,
+          "width" : 386,
+          "height" : 57
+        },
+        "role_description" : "button",
+        "AXLabel" : "Reopen Preview",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{8, 783}, {386, 57}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 783,
+          "x" : 8,
+          "width" : 386,
+          "height" : 57
+        },
+        "role_description" : "button",
+        "AXLabel" : "Cancel",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      }
+    ],
+    "subrole" : null,
+    "pid" : 49976
+  }
+]

@@ -9,22 +9,37 @@ struct CustomTabBar: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 0) {
+            HStack(spacing: theme.space4) {
                 ForEach(AppTab.allCases) { tab in
                     tabButton(tab)
                 }
             }
             .padding(.horizontal, theme.space8)
-            .padding(.top, theme.space8)
-            .padding(.bottom, theme.space4)
+            .padding(.vertical, theme.space4)
+            .background(
+                RoundedRectangle(cornerRadius: theme.radiusLG)
+                    .fill(theme.card.opacity(0.96))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: theme.radiusLG)
+                            .stroke(theme.border, lineWidth: 1)
+                    )
+                    .shadow(color: .black.opacity(0.08), radius: 10, y: -2)
+            )
+            .padding(.horizontal, theme.space12)
+            .padding(.top, theme.space4)
+            .sensoryFeedback(.selection, trigger: selectedTab)
         }
-        .padding(.bottom, safeAreaBottom)
-        .background {
-            // Frosted glass material with a subtle top shadow
-            Rectangle()
-                .fill(.ultraThinMaterial)
-                .shadow(color: .black.opacity(0.06), radius: 8, y: -2)
-        }
+        .padding(.bottom, max(safeAreaBottom, theme.space8))
+        .background(
+            LinearGradient(
+                colors: [theme.background.opacity(0), theme.background.opacity(0.82)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea(edges: .bottom)
+        )
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("app.tabBar")
     }
 
     private func tabButton(_ tab: AppTab) -> some View {
@@ -34,42 +49,40 @@ struct CustomTabBar: View {
             if selectedTab == tab {
                 onDoubleTap(tab)
             } else {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                withAnimation(.easeInOut(duration: 0.18)) {
                     selectedTab = tab
                 }
             }
         } label: {
             VStack(spacing: 3) {
                 ZStack {
-                    // Sliding pill indicator using matchedGeometryEffect
                     if isSelected {
                         Capsule()
-                            .fill(theme.accentSubtle)
-                            .frame(width: 64, height: 32)
+                            .fill(theme.primary.opacity(0.12))
+                            .frame(width: 68, height: 32)
                             .matchedGeometryEffect(id: "activeTabPill", in: pillNamespace)
                     } else {
                         Color.clear
-                            .frame(width: 64, height: 32)
+                            .frame(width: 68, height: 32)
                     }
 
                     Image(systemName: isSelected ? tab.iconFilled : tab.iconOutlined)
                         .font(.system(size: 20, weight: isSelected ? .semibold : .regular))
                         .foregroundStyle(isSelected ? theme.actionPrimaryPressed : theme.textTertiary)
-                        .symbolEffect(.bounce.byLayer, value: isSelected)
-                        .frame(width: 64, height: 32)
+                        .frame(width: 68, height: 32)
                 }
 
                 Text(tab.title)
-                    .font(.caption2.weight(isSelected ? .semibold : .medium))
+                    .font(theme.micro.weight(isSelected ? .semibold : .medium))
                     .foregroundStyle(isSelected ? theme.actionPrimaryPressed : theme.textTertiary)
             }
             .frame(maxWidth: .infinity)
-            .frame(minHeight: 48)
+            .frame(minHeight: 52)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .sensoryFeedback(.selection, trigger: selectedTab)
         .accessibilityLabel(tab.title)
+        .accessibilityIdentifier(tab.accessibilityIdentifier)
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
 
@@ -77,5 +90,18 @@ struct CustomTabBar: View {
         (UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .first?.windows.first?.safeAreaInsets.bottom ?? 0)
+    }
+}
+
+private extension AppTab {
+    var accessibilityIdentifier: String {
+        switch self {
+        case .preview:
+            return "app.tab.preview"
+        case .library:
+            return "app.tab.library"
+        case .more:
+            return "app.tab.more"
+        }
     }
 }

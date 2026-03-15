@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:migrate": "node scripts/migrate.mjs"
+    "db:migrate": "node scripts/migrate.mjs",
+    "color-match:benchmark": "node scripts/benchmark-color-match.mjs",
+    "colors:generate-fb": "node scripts/generate-fb-colors.mjs",
+    "colors:refresh": "node scripts/refresh-colors.mjs",
+    "colors:validate": "node scripts/validate-colors.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.74.0",
@@ -33,10 +37,12 @@
     "react-compare-slider": "^3.1.0",
     "react-dom": "19.2.3",
     "resend": "^6.9.2",
+    "sharp": "^0.34.5",
     "sonner": "^2.0.7",
     "stripe": "^20.3.1",
     "suncalc": "^1.9.0",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -10,90 +10,150 @@ struct SurfacePickerView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView {
-                VStack(spacing: theme.spacingMD) {
-                    BrandedHeader(
-                        title: "Select Surface",
-                        subtitle: "Where do you want to apply the color?"
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: theme.space16) {
+                    WizardHeader(
+                        steps: wizardSteps,
+                        currentStep: 1,
+                        helper: "Choose the surface you want the preview to repaint."
                     )
 
-                    StepProgressView(steps: ["Color", "Photo", "Surface"], currentStep: 2, icons: ["paintpalette", "camera", "sofa"])
+                    contextStrip
 
-                    // Surface grid
                     LazyVGrid(columns: columns, spacing: 12) {
                         ForEach(presets, id: \.self) { surface in
                             SurfaceTile(
                                 surface: surface,
                                 isSelected: visualizerVM.selectedSurface == surface
                             ) {
-                                visualizerVM.selectedSurface = surface
-                                visualizerVM.customSurfaceText = ""
+                                visualizerVM.setSelectedSurface(surface)
                             }
                         }
                     }
-                    .padding(.horizontal, theme.spacingLG)
+                    .padding(.horizontal, theme.spacingMD)
 
-                    // Custom / Other tile
-                    Button {
-                        visualizerVM.selectedSurface = .custom
-                    } label: {
-                        HStack(spacing: theme.spacingSM) {
-                            ZStack {
-                                Circle()
-                                    .fill(visualizerVM.selectedSurface == .custom ? theme.primary.opacity(0.1) : theme.muted)
-                                    .frame(width: 48, height: 48)
-                                Image(systemName: "paintpalette")
-                                    .font(.system(size: 20))
-                                    .foregroundStyle(visualizerVM.selectedSurface == .custom ? theme.primary : theme.mutedForeground)
-                            }
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Custom / Other")
-                                    .font(theme.subhead)
-                                    .foregroundStyle(visualizerVM.selectedSurface == .custom ? theme.primary : theme.foreground)
-                                Text("Describe the surface to paint")
-                                    .font(theme.caption)
-                                    .foregroundStyle(theme.mutedForeground)
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 12))
-                                .foregroundStyle(theme.mutedForeground)
-                        }
-                        .padding(theme.spacingMD)
-                        .background(visualizerVM.selectedSurface == .custom ? theme.primary.opacity(0.05) : .clear)
-                        .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: theme.radiusLG)
-                                .stroke(
-                                    visualizerVM.selectedSurface == .custom ? theme.primary : theme.border,
-                                    style: StrokeStyle(lineWidth: visualizerVM.selectedSurface == .custom ? 2 : 1.5, dash: [6])
-                                )
-                        )
-                    }
-                    .buttonStyle(ScaleButtonStyle())
-                    .padding(.horizontal, theme.spacingLG)
+                    customSurfaceSection
 
-                    // Custom input
                     if visualizerVM.selectedSurface == .custom {
-                        AppInput(placeholder: "e.g., garage door, fence, brick exterior...", text: Bindable(visualizerVM).customSurfaceText)
-                            .padding(.horizontal, theme.spacingLG)
-                            .transition(.move(edge: .top).combined(with: .opacity))
+                        AppInput(
+                            placeholder: "e.g., garage door, fence, brick exterior...",
+                            text: Binding(
+                                get: { visualizerVM.customSurfaceText },
+                                set: { visualizerVM.setCustomSurfaceText($0) }
+                            )
+                        )
+                        .padding(.horizontal, theme.spacingMD)
+                        .transition(.move(edge: .top).combined(with: .opacity))
                     }
                 }
                 .animation(.spring(response: 0.3), value: visualizerVM.selectedSurface)
+                .padding(.bottom, 120)
             }
             .scrollDismissesKeyboard(.interactively)
 
             FloatingActionBar {
                 let isDisabled = visualizerVM.selectedSurface == nil || (visualizerVM.selectedSurface == .custom && visualizerVM.customSurfaceText.isEmpty)
-                AppButton("Visualize Now", variant: .cta, icon: "wand.and.stars", isDisabled: isDisabled) {
-                    router.navigate(to: .resultsGallery)
+                AppButton("Continue to Colors", variant: .cta, icon: "arrow.right", isDisabled: isDisabled) {
+                    router.navigate(to: .itemPicker)
                 }
                 .accessibilityIdentifier("surfacePicker.visualizeNow")
             }
         }
-        .navigationTitle("")
+        .background(theme.background.ignoresSafeArea())
+        .navigationTitle("Choose Surface")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var contextStrip: some View {
+        AppCard(elevation: .flat) {
+            HStack(spacing: theme.space12) {
+                Group {
+                    if let photo = visualizerVM.photo {
+                        Image(uiImage: photo)
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        RoundedRectangle(cornerRadius: theme.radiusMD)
+                            .fill(theme.secondary)
+                    }
+                }
+                .frame(width: 56, height: 56)
+                .clipShape(RoundedRectangle(cornerRadius: theme.radiusMD))
+
+                VStack(alignment: .leading, spacing: theme.space4) {
+                    Text("Your selections")
+                        .font(theme.micro.weight(.bold))
+                        .tracking(1.0)
+                        .textCase(.uppercase)
+                        .foregroundStyle(theme.mutedForeground)
+
+                    HStack(spacing: -8) {
+                        ForEach(visualizerVM.selectedColors.prefix(4)) { color in
+                            Circle()
+                                .fill(color.color)
+                                .frame(width: 26, height: 26)
+                                .overlay(Circle().stroke(.white, lineWidth: 2))
+                        }
+                    }
+
+                    Text("\(visualizerVM.selectedColors.count) colors ready")
+                        .font(theme.caption)
+                        .foregroundStyle(theme.foreground)
+                }
+
+                Spacer()
+            }
+            .padding(theme.space16)
+        }
+        .padding(.horizontal, theme.spacingMD)
+    }
+
+    private var customSurfaceSection: some View {
+        Button {
+            visualizerVM.setSelectedSurface(.custom)
+        } label: {
+            HStack(spacing: theme.spacingSM) {
+                ZStack {
+                    Circle()
+                        .fill(visualizerVM.selectedSurface == .custom ? theme.primary.opacity(0.1) : theme.muted)
+                        .frame(width: 48, height: 48)
+                    Image(systemName: "paintpalette")
+                        .font(.system(size: 20))
+                        .foregroundStyle(visualizerVM.selectedSurface == .custom ? theme.primary : theme.mutedForeground)
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Custom / Other")
+                        .font(theme.subhead)
+                        .foregroundStyle(visualizerVM.selectedSurface == .custom ? theme.primary : theme.foreground)
+                    Text("Describe the surface to paint")
+                        .font(theme.caption)
+                        .foregroundStyle(theme.mutedForeground)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12))
+                    .foregroundStyle(theme.mutedForeground)
+            }
+            .padding(theme.spacingMD)
+            .background(visualizerVM.selectedSurface == .custom ? theme.primary.opacity(0.05) : theme.card)
+            .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
+            .overlay(
+                RoundedRectangle(cornerRadius: theme.radiusLG)
+                    .stroke(
+                        visualizerVM.selectedSurface == .custom ? theme.primary : theme.border,
+                        style: StrokeStyle(lineWidth: visualizerVM.selectedSurface == .custom ? 2 : 1.5, dash: [6])
+                    )
+            )
+        }
+        .buttonStyle(ScaleButtonStyle())
+        .padding(.horizontal, theme.spacingMD)
+    }
+
+    private var wizardSteps: [String] {
+        ["Photo", "Surface", "Colors", "Review"]
     }
 }
 

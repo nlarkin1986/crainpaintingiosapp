@@ -1,0 +1,433 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{0, 56.333333333333343}, {68, 44}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 56.333333333333343,
+          "x" : 0,
+          "width" : 68,
+          "height" : 44
+        },
+        "role_description" : "back button",
+        "AXLabel" : "Choose Direction",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{137.66666666666666, 68.000000000000014}, {126.66666666666666, 20.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 68.000000000000014,
+          "x" : 137.66666666666666,
+          "width" : 126.66666666666666,
+          "height" : 20.333333333333329
+        },
+        "role_description" : "heading",
+        "AXLabel" : "Choose Surface",
+        "content_required" : false,
+        "type" : "Heading",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXHeading",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 108.33333587646484}, {370, 28.333335876464844}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 108.33333587646484,
+          "x" : 16,
+          "width" : 370,
+          "height" : 28.333335876464844
+        },
+        "role_description" : "text",
+        "AXLabel" : "Step 4 of 4: Surface",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 144.66666666666666}, {295.33333333333331, 14.333333333333343}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 144.66666666666666,
+          "x" : 16,
+          "width" : 295.33333333333331,
+          "height" : 14.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "Choose the surface you want the preview to repaint.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{22.666666666666664, 194.33333333333331}, {74.666666666666657, 56}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 194.33333333333331,
+          "x" : 22.666666666666664,
+          "width" : 74.666666666666657,
+          "height" : 56
+        },
+        "role_description" : "image",
+        "AXLabel" : null,
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{100, 191}, {130.66666666666666, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 191,
+          "x" : 100,
+          "width" : 130.66666666666666,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "YOUR SELECTIONS",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{100, 239.33333333333331}, {79, 14.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 239.33333333333331,
+          "x" : 100,
+          "width" : 79,
+          "height" : 14.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "1 colors ready",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 285.66666666666663}, {179, 100}}",
+        "AXUniqueId" : "surfacePicker.surface.fullWalls",
+        "frame" : {
+          "y" : 285.66666666666663,
+          "x" : 16,
+          "width" : 179,
+          "height" : 100
+        },
+        "role_description" : "button",
+        "AXLabel" : "Full Walls",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : "Double tap to select this surface",
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{207, 285.66666666666663}, {179, 100}}",
+        "AXUniqueId" : "surfacePicker.surface.trimBase",
+        "frame" : {
+          "y" : 285.66666666666663,
+          "x" : 207,
+          "width" : 179,
+          "height" : 100
+        },
+        "role_description" : "button",
+        "AXLabel" : "Trim & Base",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : "Double tap to select this surface",
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 397.66666666666663}, {179, 100}}",
+        "AXUniqueId" : "surfacePicker.surface.accentWall",
+        "frame" : {
+          "y" : 397.66666666666663,
+          "x" : 16,
+          "width" : 179,
+          "height" : 100
+        },
+        "role_description" : "button",
+        "AXLabel" : "Accent Wall",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : "Double tap to select this surface",
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{207, 397.66666666666663}, {179, 100}}",
+        "AXUniqueId" : "surfacePicker.surface.doors",
+        "frame" : {
+          "y" : 397.66666666666663,
+          "x" : 207,
+          "width" : 179,
+          "height" : 100
+        },
+        "role_description" : "button",
+        "AXLabel" : "Doors",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : "Double tap to select this surface",
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 509.66666666666663}, {179, 100}}",
+        "AXUniqueId" : "surfacePicker.surface.cabinets",
+        "frame" : {
+          "y" : 509.66666666666663,
+          "x" : 16,
+          "width" : 179,
+          "height" : 100
+        },
+        "role_description" : "button",
+        "AXLabel" : "Cabinets",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : "Double tap to select this surface",
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{207, 509.66666666666663}, {179, 100}}",
+        "AXUniqueId" : "surfacePicker.surface.ceiling",
+        "frame" : {
+          "y" : 509.66666666666663,
+          "x" : 207,
+          "width" : 179,
+          "height" : 100
+        },
+        "role_description" : "button",
+        "AXLabel" : "Ceiling",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : "Double tap to select this surface",
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{15.25, 624.91668701171875}, {371.5, 81.5}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 624.91668701171875,
+          "x" : 15.25,
+          "width" : 371.5,
+          "height" : 81.5
+        },
+        "role_description" : "button",
+        "AXLabel" : "Custom \/ Other, Describe the surface to paint",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{20, 742}, {362, 56}}",
+        "AXUniqueId" : "surfacePicker.visualizeNow",
+        "frame" : {
+          "y" : 742,
+          "x" : 20,
+          "width" : 362,
+          "height" : 56
+        },
+        "role_description" : "button",
+        "AXLabel" : "Review Project",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      }
+    ],
+    "subrole" : null,
+    "pid" : 49976
+  }
+]

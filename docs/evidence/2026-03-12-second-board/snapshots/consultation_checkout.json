@@ -1,0 +1,1081 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{16, 70}, {44, 44}}",
+        "AXUniqueId" : "chevron.left",
+        "frame" : {
+          "y" : 70,
+          "x" : 16,
+          "width" : 44,
+          "height" : 44
+        },
+        "role_description" : "button",
+        "AXLabel" : "Back",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{122.33333333333334, 81.833333333333329}, {157.33333333333329, 20.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 81.833333333333329,
+          "x" : 122.33333333333334,
+          "width" : 157.33333333333329,
+          "height" : 20.333333333333329
+        },
+        "role_description" : "text",
+        "AXLabel" : "Expert Consultation",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{80, 164.83333333333334}, {135.33333333333331, 14.333333333333343}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 164.83333333333334,
+          "x" : 80,
+          "width" : 135.33333333333331,
+          "height" : 14.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "TRUSTED PAYMENT",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{45.166666666666657, 173.66666666666666}, {13.666666984558105, 16.666667938232422}}",
+        "AXUniqueId" : "checkmark.shield.fill",
+        "frame" : {
+          "y" : 173.66666666666666,
+          "x" : 45.166666666666657,
+          "width" : 13.666666984558105,
+          "height" : 16.666667938232422
+        },
+        "role_description" : "image",
+        "AXLabel" : "checkmark.shield.fill",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{80, 181.16666666666669}, {163.66666666666666, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 181.16666666666669,
+          "x" : 80,
+          "width" : 163.66666666666666,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "256-bit SSL Encrypted",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{337.33333333333326, 175.33333333333334}, {33, 13.333333333333343}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 175.33333333333334,
+          "x" : 337.33333333333326,
+          "width" : 33,
+          "height" : 13.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "stripe",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{37.333333333333343, 234.33333333333331}, {116.33333333333334, 14.333333333333343}}",
+        "AXUniqueId" : "consultationCheckout.context",
+        "frame" : {
+          "y" : 234.33333333333331,
+          "x" : 37.333333333333343,
+          "width" : 116.33333333333334,
+          "height" : 14.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "ROOM CONTEXT",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{45.333333333333343, 264.66666666666663}, {122, 20.333333333333371}}",
+        "AXUniqueId" : "consultationCheckout.context",
+        "frame" : {
+          "y" : 264.66666666666663,
+          "x" : 45.333333333333343,
+          "width" : 122,
+          "height" : 20.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Current Project",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{45.333333333333343, 293}, {311.66666666666663, 30.333333333333371}}",
+        "AXUniqueId" : "consultationCheckout.context",
+        "frame" : {
+          "y" : 293,
+          "x" : 45.333333333333343,
+          "width" : 311.66666666666663,
+          "height" : 30.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "We'll anchor Curt's review to the room and project you already have in motion.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{45.5, 332}, {180.5, 15.060882568359375}}",
+        "AXUniqueId" : "consultationCheckout.context",
+        "frame" : {
+          "y" : 332,
+          "x" : 45.5,
+          "width" : 180.5,
+          "height" : 15.060882568359375
+        },
+        "role_description" : "text",
+        "AXLabel" : "Linked to project PROJECT-",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{44.833333333333321, 389}, {30.666667938232415, 26.333333969116211}}",
+        "AXUniqueId" : "person.crop.circle.badge.checkmark",
+        "frame" : {
+          "y" : 389,
+          "x" : 44.833333333333321,
+          "width" : 30.666667938232415,
+          "height" : 26.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "person.crop.circle.badge.checkmark",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{102, 371.06087239583331}, {113.66666666666666, 42.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 371.06087239583331,
+          "x" : 102,
+          "width" : 113.66666666666666,
+          "height" : 42.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Detailed Color Analysis",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{284.66666666666663, 371.06087239583331}, {85.666666666666629, 24}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 371.06087239583331,
+          "x" : 284.66666666666663,
+          "width" : 85.666666666666629,
+          "height" : 24
+        },
+        "role_description" : "text",
+        "AXLabel" : "$149.00",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{102, 417.39420572916663}, {158.66666666666663, 30.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 417.39420572916663,
+          "x" : 102,
+          "width" : 158.66666666666663,
+          "height" : 30.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "In-depth expert review with a recorded walkthrough.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{112, 456.72753906249994}, {138, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 456.72753906249994,
+          "x" : 112,
+          "width" : 138,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "One-Time Consultation",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{158.16666666666666, 532.06087239583326}, {86, 30.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 532.06087239583326,
+          "x" : 158.16666666666666,
+          "width" : 86,
+          "height" : 30.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "EXPRESS CHECKOUT",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{16.166666666666657, 570.33333333333326}, {370.33333333333337, 56}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 570.33333333333326,
+          "x" : 16.166666666666657,
+          "width" : 370.33333333333337,
+          "height" : 56
+        },
+        "role_description" : "button",
+        "AXLabel" : "Apple Pay or Card",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : false,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{16, 650.39420572916663}, {179.66666666666666, 14.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 650.39420572916663,
+          "x" : 16,
+          "width" : 179.66666666666666,
+          "height" : 14.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "CONTACT INFORMATION",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{15.666666666666657, 672.16666666666663}, {371.33334350585938, 53}}",
+        "AXUniqueId" : "consultationCheckout.email",
+        "frame" : {
+          "y" : 672.16666666666663,
+          "x" : 15.666666666666657,
+          "width" : 371.33334350585938,
+          "height" : 53
+        },
+        "role_description" : "text field",
+        "AXLabel" : null,
+        "content_required" : false,
+        "type" : "TextField",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : "Email address",
+        "enabled" : true,
+        "role" : "AXTextField",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{16, 740.7275390625}, {177.33333333333331, 14.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 740.7275390625,
+          "x" : 16,
+          "width" : 177.33333333333331,
+          "height" : 14.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "WHAT YOU'RE BOOKING",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{74, 771.06087239583337}, {209.33333333333326, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 771.06087239583337,
+          "x" : 74,
+          "width" : 209.33333333333326,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "4-5 expert recommendations",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{35.833333333333321, 782.99999999999989}, {18.333333969116218, 18.333333969116211}}",
+        "AXUniqueId" : "checkmark.circle.fill",
+        "frame" : {
+          "y" : 782.99999999999989,
+          "x" : 35.833333333333321,
+          "width" : 18.333333969116218,
+          "height" : 18.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "Selected",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{74, 792.06087239583337}, {103.66666666666666, 14.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 792.06087239583337,
+          "x" : 74,
+          "width" : 103.66666666666666,
+          "height" : 14.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "2-3 business days",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{74.000000000000028, 837.06087239583337}, {234.6666666666666, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 837.06087239583337,
+          "x" : 74.000000000000028,
+          "width" : 234.6666666666666,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "Recorded walkthrough from Curt",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{35.833333333333321, 848.99999999999989}, {18.333333969116218, 18.333333969116211}}",
+        "AXUniqueId" : "checkmark.circle.fill",
+        "frame" : {
+          "y" : 848.99999999999989,
+          "x" : 35.833333333333321,
+          "width" : 18.333333969116218,
+          "height" : 18.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "Selected",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{74.000000000000028, 858.06087239583337}, {103.66666666666666, 14.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 858.06087239583337,
+          "x" : 74.000000000000028,
+          "width" : 103.66666666666666,
+          "height" : 14.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "2-3 business days",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{74, 903.06087239583337}, {240, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 903.06087239583337,
+          "x" : 74,
+          "width" : 240,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "Lighting and time-of-day analysis",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{35.833333333333321, 914.99999999999989}, {18.333333969116218, 18.333333969116211}}",
+        "AXUniqueId" : "checkmark.circle.fill",
+        "frame" : {
+          "y" : 914.99999999999989,
+          "x" : 35.833333333333321,
+          "width" : 18.333333969116218,
+          "height" : 18.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "Selected",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{74, 924.06087239583337}, {103.66666666666666, 14.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 924.06087239583337,
+          "x" : 74,
+          "width" : 103.66666666666666,
+          "height" : 14.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "2-3 business days",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{16, 961.06087239583337}, {312.66666666666663, 30.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 961.06087239583337,
+          "x" : 16,
+          "width" : 312.66666666666663,
+          "height" : 30.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Enter your email to continue into Stripe's secure native payment sheet.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{49.499999999999993, 1054.6666666666665}, {21.333333969116204, 18.333333969116211}}",
+        "AXUniqueId" : "clock.badge.checkmark",
+        "frame" : {
+          "y" : 1054.6666666666665,
+          "x" : 49.499999999999993,
+          "width" : 21.333333969116204,
+          "height" : 18.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "clock.badge.checkmark",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{92, 1031.3942057291665}, {270.33333333333326, 46.333333333333485}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1031.3942057291665,
+          "x" : 92,
+          "width" : 270.33333333333326,
+          "height" : 46.333333333333485
+        },
+        "role_description" : "text",
+        "AXLabel" : "After payment, your order appears in Saved so you can track progress without digging through email.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{92, 1081.7275390625}, {153.66666666666666, 14.333333333333485}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1081.7275390625,
+          "x" : 92,
+          "width" : 153.66666666666666,
+          "height" : 14.333333333333485
+        },
+        "role_description" : "text",
+        "AXLabel" : "REPORT CONTINUITY",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{106.49999999999999, 1145}, {14, 17}}",
+        "AXUniqueId" : "lock.shield",
+        "frame" : {
+          "y" : 1145,
+          "x" : 106.49999999999999,
+          "width" : 14,
+          "height" : 17
+        },
+        "role_description" : "image",
+        "AXLabel" : "lock.shield",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{128.5, 1144.5608723958333}, {169.33333333333326, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1144.5608723958333,
+          "x" : 128.5,
+          "width" : 169.33333333333326,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "SECURE CHECKOUT",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{48.5, 1171.0608723958333}, {305.33333333333326, 46.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1171.0608723958333,
+          "x" : 48.5,
+          "width" : 305.33333333333326,
+          "height" : 46.333333333333258
+        },
+        "role_description" : "text",
+        "AXLabel" : "Payment happens inside Stripe's secure native sheet. The app only keeps the order status needed to show progress and reopen your report later.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{15.833333333333371, 737.83333333333326}, {95.666666666666657, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 737.83333333333326,
+          "x" : 15.833333333333371,
+          "width" : 95.666666666666657,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "TOTAL DUE",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{292.5, 733.66666666666663}, {93.666666666666629, 26.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 733.66666666666663,
+          "x" : 292.5,
+          "width" : 93.666666666666629,
+          "height" : 26.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "$149.00",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      },
+      {
+        "AXFrame" : "{{16, 768}, {370.33333333333331, 56}}",
+        "AXUniqueId" : "consultationCheckout.submit",
+        "frame" : {
+          "y" : 768,
+          "x" : 16,
+          "width" : 370.33333333333331,
+          "height" : 56
+        },
+        "role_description" : "button",
+        "AXLabel" : "Continue to Secure Checkout",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : false,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52689
+      }
+    ],
+    "subrole" : null,
+    "pid" : 52689
+  }
+]

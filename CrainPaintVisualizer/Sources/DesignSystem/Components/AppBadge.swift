@@ -12,7 +12,11 @@ struct AppBadge: View {
             .padding(.horizontal, theme.spacingSM)
             .padding(.vertical, theme.spacingXS)
             .foregroundStyle(isFilled ? theme.actionPrimaryText : theme.mutedForeground)
-            .background(isFilled ? theme.actionPrimary : theme.muted)
+            .background(isFilled ? theme.actionPrimary : theme.card)
             .clipShape(Capsule())
+            .overlay(
+                Capsule()
+                    .stroke(isFilled ? theme.actionPrimary.opacity(0.3) : theme.border, lineWidth: 1)
+            )
     }
 }

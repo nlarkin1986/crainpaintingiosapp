@@ -32,15 +32,20 @@ struct AppButton: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: theme.spacingSM) {
+            HStack(alignment: .center, spacing: theme.spacingSM) {
                 if let icon {
                     Image(systemName: icon)
                 }
                 Text(title)
                     .font(fontSize)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            .padding(.horizontal, theme.spacingMD)
+            .padding(.vertical, verticalPadding)
             .frame(maxWidth: .infinity)
-            .frame(height: variant == .cta ? 56 : 48)
+            .frame(minHeight: minHeight)
             .foregroundStyle(foregroundColor)
             .background(backgroundView)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
@@ -64,6 +69,14 @@ struct AppButton: View {
 
     private var cornerRadius: CGFloat {
         variant == .cta ? theme.radiusLG : theme.radiusMD
+    }
+
+    private var minHeight: CGFloat {
+        variant == .cta ? 56 : 48
+    }
+
+    private var verticalPadding: CGFloat {
+        variant == .cta ? theme.space12 : 10
     }
 
     private var foregroundColor: Color {

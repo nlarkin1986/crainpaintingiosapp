@@ -1,0 +1,460 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{16, 78}, {70.333333333333329, 26.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 78,
+          "x" : 16,
+          "width" : 70.333333333333329,
+          "height" : 26.333333333333329
+        },
+        "role_description" : "text",
+        "AXLabel" : "Library",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{330.33333333333331, 82}, {47.666666666666686, 14.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 82,
+          "x" : 330.33333333333331,
+          "width" : 47.666666666666686,
+          "height" : 14.333333333333329
+        },
+        "role_description" : "text",
+        "AXLabel" : "Projects",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{16, 112.33333333333333}, {247, 37.999999999999986}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 112.33333333333333,
+          "x" : 16,
+          "width" : 247,
+          "height" : 37.999999999999986
+        },
+        "role_description" : "text",
+        "AXLabel" : "Projects keep rooms, previews, and next steps together.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{28.333333333333332, 171.33333333333331}, {13.333333969116214, 13.333333969116211}}",
+        "AXUniqueId" : "square.stack.3d.up.fill",
+        "frame" : {
+          "y" : 171.33333333333331,
+          "x" : 28.333333333333332,
+          "width" : 13.333333969116214,
+          "height" : 13.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "Hdr",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{48, 170.83333333333331}, {58, 14.333333333333343}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 170.83333333333331,
+          "x" : 48,
+          "width" : 58,
+          "height" : 14.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "1 Projects",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{139.33333333333334, 173}, {11, 10.333333969116211}}",
+        "AXUniqueId" : "heart.fill",
+        "frame" : {
+          "y" : 173,
+          "x" : 139.33333333333334,
+          "width" : 11,
+          "height" : 10.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "Love",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{157.66666666666666, 170.83333333333331}, {49.666666666666657, 14.333333333333343}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 170.83333333333331,
+          "x" : 157.66666666666666,
+          "width" : 49.666666666666657,
+          "height" : 14.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "8 Colors",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{240.66666666666666, 172}, {9.6666669845581055, 12}}",
+        "AXUniqueId" : "doc.text.fill",
+        "frame" : {
+          "y" : 172,
+          "x" : 240.66666666666666,
+          "width" : 9.6666669845581055,
+          "height" : 12
+        },
+        "role_description" : "image",
+        "AXLabel" : "Plain Text Document",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{257.66666666666663, 170.83333333333331}, {57.666666666666686, 14.333333333333343}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 170.83333333333331,
+          "x" : 257.66666666666663,
+          "width" : 57.666666666666686,
+          "height" : 14.333333333333343
+        },
+        "role_description" : "text",
+        "AXLabel" : "0 Reports",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{16, 213.66666666666666}, {370, 31}}",
+        "AXUniqueId" : "library.sectionPicker",
+        "frame" : {
+          "y" : 213.66666666666666,
+          "x" : 16,
+          "width" : 370,
+          "height" : 31
+        },
+        "role_description" : "tab group",
+        "AXLabel" : null,
+        "content_required" : false,
+        "type" : "TabGroup",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXTabGroup",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{16, 264.66666666666663}, {132.66666666666666, 24}}",
+        "AXUniqueId" : "library.section.projects",
+        "frame" : {
+          "y" : 264.66666666666663,
+          "x" : 16,
+          "width" : 132.66666666666666,
+          "height" : 24
+        },
+        "role_description" : "text",
+        "AXLabel" : "Room projects",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{16, 292.66666666666663}, {355, 38}}",
+        "AXUniqueId" : "library.section.projects",
+        "frame" : {
+          "y" : 292.66666666666663,
+          "x" : 16,
+          "width" : 355,
+          "height" : 38
+        },
+        "role_description" : "text",
+        "AXLabel" : "Resume active rooms, reopen results, or continue a draft where you left off.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{15.5, 336}, {371, 393.83331298828125}}",
+        "AXUniqueId" : "library.project.project-33F70E80-1C49-41A1-B198-EDC6B02AFE49",
+        "frame" : {
+          "y" : 336,
+          "x" : 15.5,
+          "width" : 371,
+          "height" : 393.83331298828125
+        },
+        "role_description" : "button",
+        "AXLabel" : "Full Walls, Benjamin Moore, Results Ready, Active, Current Room, Previews are ready to compare, save, and reopen., 1, Directions, 1, Photo, 1, Previews, Mar 12, 2026, Open Results",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{20, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.preview",
+        "frame" : {
+          "y" : 750,
+          "x" : 20,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "Preview",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{142, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.library",
+        "frame" : {
+          "y" : 750,
+          "x" : 142,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "Library",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      },
+      {
+        "AXFrame" : "{{264, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.more",
+        "frame" : {
+          "y" : 750,
+          "x" : 264,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "More",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 51735
+      }
+    ],
+    "subrole" : null,
+    "pid" : 51735
+  }
+]

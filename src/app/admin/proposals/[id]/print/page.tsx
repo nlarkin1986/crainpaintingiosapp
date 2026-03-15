@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { getProposal } from '@/lib/db';
+import { getBrandLabel } from '@/lib/brands';
 import { notFound } from 'next/navigation';
 import { PrintButton } from './print-button';
 
@@ -57,7 +58,9 @@ export default async function PrintPage({ params }: { params: Promise<{ id: stri
             />
             <div>
               <p className="font-bold text-lg">{r.color_name}</p>
-              <p className="text-sm text-muted-foreground">{r.color_number} {r.brand === 'sherwin_williams' ? '- Sherwin-Williams' : '- Benjamin Moore'}</p>
+              <p className="text-sm text-muted-foreground">
+                {r.color_number} - {getBrandLabel(r.brand)}
+              </p>
             </div>
           </div>
 

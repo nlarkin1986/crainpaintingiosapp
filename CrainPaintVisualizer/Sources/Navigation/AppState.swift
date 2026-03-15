@@ -1,12 +1,48 @@
 import SwiftUI
 
+enum SavedLandingSection: String, CaseIterable, Identifiable {
+    case previews = "Projects"
+    case colors = "Colors"
+    case reports = "Reports"
+
+    var id: String { rawValue }
+
+    init(_ section: LibrarySection) {
+        switch section {
+        case .projects:
+            self = .previews
+        case .colors:
+            self = .colors
+        case .reports:
+            self = .reports
+        }
+    }
+
+    var librarySection: LibrarySection {
+        switch self {
+        case .previews:
+            return .projects
+        case .colors:
+            return .colors
+        case .reports:
+            return .reports
+        }
+    }
+}
+
 @MainActor
 @Observable
 final class AppState {
     private static let onboardingKey = "onboardingComplete"
     private let userDefaults: UserDefaults
 
-    var selectedTab: AppTab = .visualize
+    var selectedTab: AppTab = .preview
+    var selectedLibrarySection: LibrarySection = .projects
+    var selectedSavedSection: SavedLandingSection {
+        get { SavedLandingSection(selectedLibrarySection) }
+        set { selectedLibrarySection = newValue.librarySection }
+    }
+
     var onboardingComplete: Bool {
         didSet {
             userDefaults.set(onboardingComplete, forKey: Self.onboardingKey)

@@ -7,16 +7,18 @@ struct PaintColor: Codable, Hashable, Identifiable, Sendable {
     let family: String
     let hex: String
     let brand: PaintBrand
-    let color: Color
 
     init(number: String, name: String, family: String, hex: String, brand: PaintBrand) {
-        self.id = "\(brand.rawValue)-\(number)"
+        self.id = Self.makeID(number: number, name: name, brand: brand)
         self.number = number
         self.name = name
         self.family = family
         self.hex = hex
         self.brand = brand
-        self.color = Color(hex: hex)
+    }
+
+    var color: Color {
+        Color(hex: hex)
     }
 
     // Codable conformance — Color is not Codable, so decode/encode manually
@@ -51,17 +53,36 @@ struct PaintColor: Codable, Hashable, Identifiable, Sendable {
     static func == (lhs: PaintColor, rhs: PaintColor) -> Bool {
         lhs.id == rhs.id
     }
+
+    private static func makeID(number: String, name: String, brand: PaintBrand) -> String {
+        guard brand == .farrowBall else {
+            return "\(brand.rawValue)-\(number)"
+        }
+
+        let normalizedName = name
+            .lowercased()
+            .unicodeScalars
+            .filter { CharacterSet.alphanumerics.contains($0) }
+            .map(String.init)
+            .joined()
+
+        return "\(brand.rawValue)-\(number)-\(normalizedName)"
+    }
 }
 
 enum PaintBrand: String, Codable, CaseIterable, Hashable, Sendable {
     case benjaminMoore = "benjamin_moore"
     case sherwinWilliams = "sherwin_williams"
+    case farrowBall = "farrow_ball"
     case behr = "behr"
+
+    static let supportedCases: [PaintBrand] = [.benjaminMoore, .sherwinWilliams, .farrowBall]
 
     var displayName: String {
         switch self {
         case .benjaminMoore: "Benjamin Moore"
         case .sherwinWilliams: "Sherwin-Williams"
+        case .farrowBall: "Farrow & Ball"
         case .behr: "Behr"
         }
     }

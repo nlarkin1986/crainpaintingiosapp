@@ -1,0 +1,298 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{0, 56.333333333333343}, {142.66666666666666, 44}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 56.333333333333343,
+          "x" : 0,
+          "width" : 142.66666666666666,
+          "height" : 44
+        },
+        "role_description" : "back button",
+        "AXLabel" : "Review Project",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{171.66666666666666, 68.000000000000014}, {59, 20.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 68.000000000000014,
+          "x" : 171.66666666666666,
+          "width" : 59,
+          "height" : 20.333333333333329
+        },
+        "role_description" : "heading",
+        "AXLabel" : "Results",
+        "content_required" : false,
+        "type" : "Heading",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXHeading",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 116.33333333333333}, {118.33333333333331, 26.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 116.33333333333333,
+          "x" : 16,
+          "width" : 118.33333333333331,
+          "height" : 26.333333333333329
+        },
+        "role_description" : "text",
+        "AXLabel" : "Your results",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{336, 120.33333333333333}, {42, 14.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 120.33333333333333,
+          "x" : 336,
+          "width" : 42,
+          "height" : 14.333333333333329
+        },
+        "role_description" : "text",
+        "AXLabel" : "1 ready",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 150.66666666666666}, {234, 38}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 150.66666666666666,
+          "x" : 16,
+          "width" : 234,
+          "height" : 38
+        },
+        "role_description" : "text",
+        "AXLabel" : "Review a finished preview or start another room study.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 208.66666666666666}, {150.66666666666666, 23.999999999999972}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 208.66666666666666,
+          "x" : 16,
+          "width" : 150.66666666666666,
+          "height" : 23.999999999999972
+        },
+        "role_description" : "text",
+        "AXLabel" : "Ready to Review",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 236.66666666666663}, {144.33333333333331, 14.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 236.66666666666663,
+          "x" : 16,
+          "width" : 144.33333333333331,
+          "height" : 14.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Current Room • Full Walls",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{-23.666666030883789, 262.5}, {293.33334350585938, 310}}",
+        "AXUniqueId" : "results.readyPreviewCard",
+        "frame" : {
+          "y" : 262.5,
+          "x" : -23.666666030883789,
+          "width" : 293.33334350585938,
+          "height" : 310
+        },
+        "role_description" : "button",
+        "AXLabel" : "White Dove, Current Room, Open Preview",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{16, 592}, {368.66666666666663, 38}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 592,
+          "x" : 16,
+          "width" : 368.66666666666663,
+          "height" : 38
+        },
+        "role_description" : "text",
+        "AXLabel" : "Your finished previews are ready to compare, reopen, and refine.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{15.25, 641.25}, {221.5, 49.5}}",
+        "AXUniqueId" : "results.adjustProjectInline",
+        "frame" : {
+          "y" : 641.25,
+          "x" : 15.25,
+          "width" : 221.5,
+          "height" : 49.5
+        },
+        "role_description" : "button",
+        "AXLabel" : "Adjust Project",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      }
+    ],
+    "subrole" : null,
+    "pid" : 49976
+  }
+]

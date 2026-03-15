@@ -1,0 +1,244 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{0, 56.333333333333343}, {402, 44}}",
+        "AXUniqueId" : "Current Room",
+        "frame" : {
+          "y" : 56.333333333333343,
+          "x" : 0,
+          "width" : 402,
+          "height" : 44
+        },
+        "role_description" : "Nav bar",
+        "AXLabel" : null,
+        "content_required" : false,
+        "type" : "Group",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXGroup",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{15.5, 115.83333333333333}, {371, 321}}",
+        "AXUniqueId" : "savedPreviewDetail.designCard",
+        "frame" : {
+          "y" : 115.83333333333333,
+          "x" : 15.5,
+          "width" : 371,
+          "height" : 321
+        },
+        "role_description" : "button",
+        "AXLabel" : "View Larger",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{100, 468.33333333333331}, {127.33333333333331, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 468.33333333333331,
+          "x" : 100,
+          "width" : 127.33333333333331,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Saved Design Card",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{100, 486.66666666666663}, {91, 20.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 486.66666666666663,
+          "x" : 100,
+          "width" : 91,
+          "height" : 20.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "White Dove",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{100, 510.99999999999994}, {137.66666666666666, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 510.99999999999994,
+          "x" : 100,
+          "width" : 137.66666666666666,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Benjamin Moore \/ OC-17",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{100, 529.33333333333326}, {177, 14.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 529.33333333333326,
+          "x" : 100,
+          "width" : 177,
+          "height" : 14.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Saved Mar 12, 2026 at 9:58 AM",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{33.333332061767578, 559.66668701171875}, {124.66667175292969, 14.33331298828125}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 559.66668701171875,
+          "x" : 33.333332061767578,
+          "width" : 124.66667175292969,
+          "height" : 14.33331298828125
+        },
+        "role_description" : "text",
+        "AXLabel" : "Surface: Full Walls",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      },
+      {
+        "AXFrame" : "{{33, 582.39422607421875}, {207, 14.33331298828125}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 582.39422607421875,
+          "x" : 33,
+          "width" : 207,
+          "height" : 14.33331298828125
+        },
+        "role_description" : "text",
+        "AXLabel" : "Design card and share link ready",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 49976
+      }
+    ],
+    "subrole" : null,
+    "pid" : 49976
+  }
+]

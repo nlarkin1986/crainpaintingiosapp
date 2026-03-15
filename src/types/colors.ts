@@ -1,14 +1,18 @@
-export interface BMColor {
+export type PaintBrand = "benjamin_moore" | "sherwin_williams" | "farrow_ball";
+
+export interface PaintColor {
   number: string;    // "HC-70"
   name: string;      // "Van Buren Brown"
   family: string;    // "Brown"
   hex: string;       // "5F4F46" (no # prefix)
-  brand?: 'benjamin_moore' | 'sherwin_williams';
+  brand?: PaintBrand;
 }
+
+export type BMColor = PaintColor;
 
 // Discriminated union for multi-color generation results
 interface ColorResultBase {
-  color: BMColor;
+  color: PaintColor;
 }
 
 interface ColorResultPending extends ColorResultBase {

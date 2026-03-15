@@ -1,11 +1,13 @@
 import imageCompression from 'browser-image-compression';
+import { MAX_IMAGE_UPLOAD_MB, MAX_IMAGE_UPLOAD_BYTES } from "@/lib/image-upload-limits";
 
 export async function compressImage(file: File): Promise<File> {
-  // Always compress to stay under Vercel's 4.5 MB body limit
-  if (file.size <= 1 * 1024 * 1024) return file;
+  // Keep the file under the deployed multipart request ceiling while still
+  // allowing source images that started above 4 MB.
+  if (file.size <= MAX_IMAGE_UPLOAD_BYTES) return file;
 
   return imageCompression(file, {
-    maxSizeMB: 3.5,
+    maxSizeMB: MAX_IMAGE_UPLOAD_MB,
     maxWidthOrHeight: 2048,
     fileType: 'image/jpeg',
     initialQuality: 0.8,

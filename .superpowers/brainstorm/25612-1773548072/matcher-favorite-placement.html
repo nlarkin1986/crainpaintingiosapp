@@ -1,0 +1,54 @@
+<h2>Where should the favorite control live in color match results?</h2>
+<p class="subtitle">Both options keep inline save behavior and let users favorite any returned match.</p>
+
+<div class="cards">
+  <div class="card" data-choice="inline-heart" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Option A: Separate heart action</div>
+        <div class="mockup-body" style="background:#f6f5f2;padding:18px;">
+          <div style="display:flex;align-items:center;gap:14px;background:#ffffff;border:1px solid #e2ddd3;border-radius:22px;padding:14px 16px;box-shadow:0 10px 26px rgba(34,40,52,0.08);">
+            <div style="width:58px;height:58px;border-radius:16px;background:#9ba495;border:1px solid #d7d1c5;"></div>
+            <div style="flex:1;min-width:0;">
+              <div style="display:inline-block;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#0b7a72;background:#d7f3ef;border-radius:999px;padding:4px 8px;">98% Match</div>
+              <div style="font-size:17px;font-weight:800;color:#1f2937;margin-top:8px;">Saybrook Sage</div>
+              <div style="font-size:12px;color:#69707d;margin-top:2px;">Benjamin Moore • HC-114</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <button style="width:44px;height:44px;border-radius:999px;border:1px solid #f3c0c8;background:#fff5f6;color:#d9475c;font-size:20px;">♡</button>
+              <button style="height:40px;border:none;border-radius:999px;background:#1b9d92;color:#ffffff;font-weight:700;padding:0 16px;">Use</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Option A</h3>
+      <p>Keep “Use” and favorite as separate controls. Strongest for saving alternates without implying the color gets added to the project.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="corner-heart" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">Option B: Floating corner heart</div>
+        <div class="mockup-body" style="background:#f6f5f2;padding:18px;">
+          <div style="position:relative;display:flex;align-items:center;gap:14px;background:#ffffff;border:1px solid #e2ddd3;border-radius:22px;padding:14px 16px;box-shadow:0 10px 26px rgba(34,40,52,0.08);">
+            <button style="position:absolute;top:10px;right:10px;width:42px;height:42px;border-radius:999px;border:1px solid #f3c0c8;background:#fff5f6;color:#d9475c;font-size:20px;">♡</button>
+            <div style="width:58px;height:58px;border-radius:16px;background:#9ba495;border:1px solid #d7d1c5;"></div>
+            <div style="flex:1;min-width:0;padding-right:42px;">
+              <div style="display:inline-block;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#0b7a72;background:#d7f3ef;border-radius:999px;padding:4px 8px;">98% Match</div>
+              <div style="font-size:17px;font-weight:800;color:#1f2937;margin-top:8px;">Saybrook Sage</div>
+              <div style="font-size:12px;color:#69707d;margin-top:2px;">Benjamin Moore • HC-114</div>
+            </div>
+            <button style="height:40px;border:none;border-radius:999px;background:#1b9d92;color:#ffffff;font-weight:700;padding:0 16px;">Use</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Option B</h3>
+      <p>Put the heart in the card corner. Cleaner at a glance, but it competes more with the result content and confidence badge.</p>
+    </div>
+  </div>
+</div>

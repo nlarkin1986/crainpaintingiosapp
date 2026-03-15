@@ -43,6 +43,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ status: 'already_complete' });
   }
 
+  if (order.payment_status !== 'paid') {
+    return NextResponse.json(
+      { error: 'Payment is required before generating a report' },
+      { status: 402 }
+    );
+  }
+
   try {
     // 1. Geocode address (use stored lat/lng if available)
     let latitude = order.latitude;

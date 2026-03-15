@@ -1,47 +1,46 @@
 import SwiftUI
 
 enum AppTab: Int, Identifiable, Hashable, CaseIterable {
-    case visualize
-    case favorites
-    case reports
-    case expert
+    case preview
+    case library
+    case more
 
     var id: Int { rawValue }
 
+    static var home: Self { .preview }
+    static var saved: Self { .library }
+    static var expert: Self { .more }
+
     var title: String {
         switch self {
-        case .visualize: "Visualize"
-        case .favorites: "Favorites"
-        case .reports: "Reports"
-        case .expert: "Expert"
+        case .preview: "Preview"
+        case .library: "Library"
+        case .more: "More"
         }
     }
 
     var iconOutlined: String {
         switch self {
-        case .visualize: "wand.and.stars"
-        case .favorites: "heart"
-        case .reports: "doc.text"
-        case .expert: "person.crop.circle"
+        case .preview: "sparkles.rectangle.stack"
+        case .library: "square.stack.3d.up"
+        case .more: "ellipsis.circle"
         }
     }
 
     var iconFilled: String {
         switch self {
-        case .visualize: "wand.and.stars"
-        case .favorites: "heart.fill"
-        case .reports: "doc.text.fill"
-        case .expert: "person.crop.circle.fill"
+        case .preview: "sparkles.rectangle.stack.fill"
+        case .library: "square.stack.3d.up.fill"
+        case .more: "ellipsis.circle.fill"
         }
     }
 
     @ViewBuilder
     func makeContentView() -> some View {
         switch self {
-        case .visualize: BrandSelectorView()
-        case .favorites: FavoritesView()
-        case .reports: ReportsHomeView()
-        case .expert: ExpertHomeView()
+        case .preview: PreviewHomeView()
+        case .library: LibraryHomeView()
+        case .more: MoreHomeView()
         }
     }
 

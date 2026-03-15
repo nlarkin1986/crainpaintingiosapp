@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-03-08T03:44:50.012Z",
+  "status": "passed",
+  "sources": {
+    "benjaminMoore": {
+      "catalogUrl": "https://www.benjaminmoore.com/en-us/paint-colors",
+      "referenceDetailUrl": "https://www.benjaminmoore.com/en-us/paint-colors/color/100/golden-beige",
+      "searchApiUrl": "https://api.benjaminmoore.io/service/advancedSearch?version=v1.0"
+    },
+    "sherwinWilliams": {
+      "landingUrl": "https://www.sherwin-williams.com/architects-specifiers-designers/color/color-tools/downloadable-color-palettes",
+      "designerEditionZipUrl": "https://images.sherwin-williams.com/content_images/sw-xcl-sherwin-williams-ede.zip",
+      "colorSnapZipUrl": "https://images.sherwin-williams.com/content_images/SW-XCL-SHERWIN-WILLIAMS-COLORC.zip"
+    }
+  },
+  "benjaminMoore": {
+    "importedCount": 4036,
+    "excludedReasons": {
+      "duplicate_family_aliases": 425,
+      "missing_family_fallbacks": 447,
+      "stain_or_nonpaint": 0,
+      "missing_required_fields": 0,
+      "duplicate_numbers": 0
+    },
+    "familyCounts": {
+      "Beige": 95,
+      "Black": 1,
+      "Blue": 451,
+      "Brown": 74,
+      "Gray": 472,
+      "Green": 624,
+      "Neutral": 430,
+      "Orange": 537,
+      "Purple": 233,
+      "Red": 619,
+      "White": 230,
+      "Yellow": 270
+    }
+  },
+  "sherwinWilliams": {
+    "importedCount": 1726,
+    "excludedReasons": {
+      "duplicate_numbers": 0,
+      "missing_required_fields": 0
+    },
+    "sourceCounts": {
+      "colorsnapWorkbookRows": 1526,
+      "designerWorkbookRows": 200
+    },
+    "familyCounts": {
+      "Beige": 353,
+      "Black": 8,
+      "Blue": 218,
+      "Brown": 165,
+      "Gray": 330,
+      "Green": 87,
+      "Neutral": 184,
+      "Orange": 90,
+      "Pink": 17,
+      "Purple": 10,
+      "Red": 150,
+      "White": 37,
+      "Yellow": 77
+    }
+  },
+  "validation": {
+    "benjaminMoore": {
+      "localCount": 4036,
+      "officialCount": 4036,
+      "missing": 0,
+      "extra": 0,
+      "mismatched": 0
+    },
+    "sherwinWilliams": {
+      "localCount": 1726,
+      "officialCount": 1726,
+      "missing": 0,
+      "extra": 0,
+      "mismatched": 0
+    },
+    "popularColorChecks": {
+      "benjaminMooreMissing": 0,
+      "sherwinWilliamsMissing": 0
+    }
+  },
+  "notes": [
+    "Benjamin Moore colors come from the vendor's published advanced-search API, with family labels overlaid from the official paint-colors page when available.",
+    "Sherwin-Williams family labels are derived from official hex values because the downloadable workbooks do not publish a single canonical family column.",
+    "The iOS bundled JSON files are exact copies of the canonical web JSON artifacts."
+  ]
+}

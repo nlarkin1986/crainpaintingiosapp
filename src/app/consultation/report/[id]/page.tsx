@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import {
+  mapConsultationOrder,
+  mapConsultationReport,
+} from "@/lib/consultation-report";
 import { ReportHeader } from "@/components/report/report-header";
 import { ColorRecommendation } from "@/components/report/color-recommendation";
 import { SunTimeline } from "@/components/report/sun-timeline";
@@ -32,7 +35,7 @@ async function getReportData(
   const supabase = await createClient();
 
   const { data: report, error: reportError } = await supabase
-    .from("consultation_reports")
+    .from("reports")
     .select("*")
     .eq("id", id)
     .eq("access_token", token)
@@ -41,16 +44,16 @@ async function getReportData(
   if (reportError || !report) return null;
 
   const { data: order, error: orderError } = await supabase
-    .from("consultation_orders")
+    .from("orders")
     .select("*")
-    .eq("id", report.orderId)
+    .eq("id", report.order_id)
     .single();
 
   if (orderError || !order) return null;
 
   return {
-    report: report as ConsultationReport,
-    order: order as ConsultationOrder,
+    report: mapConsultationReport(report),
+    order: mapConsultationOrder(order),
   };
 }
 

@@ -8,6 +8,8 @@ options:
   groupSortPosition: top
 settings:
   base:
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: PMFQA4TKBG
     SWIFT_VERSION: "5.9"
     GENERATE_INFOPLIST_FILE: true
     INFOPLIST_KEY_UIApplicationSceneManifest_Generation: true
@@ -28,6 +30,7 @@ targets:
       path: Sources/Resources/Info.plist
       properties:
         CFBundleDisplayName: "Crain Paint"
+        API_BASE_URL: "https://crain-paint-visualizer-ios-backend.vercel.app"
         NSCameraUsageDescription: "We need camera access to photograph your room for paint visualization"
         NSPhotoLibraryUsageDescription: "We need photo library access to select room photos for paint visualization"
         STRIPE_MERCHANT_IDENTIFIER: "merchant.com.crainpainting.visualizer"

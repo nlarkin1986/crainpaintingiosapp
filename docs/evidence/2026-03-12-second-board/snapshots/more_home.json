@@ -1,0 +1,1027 @@
+[
+  {
+    "AXFrame" : "{{0, 0}, {402, 874}}",
+    "AXUniqueId" : null,
+    "frame" : {
+      "y" : 0,
+      "x" : 0,
+      "width" : 402,
+      "height" : 874
+    },
+    "role_description" : "application",
+    "AXLabel" : "Crain Paint",
+    "content_required" : false,
+    "type" : "Application",
+    "title" : null,
+    "help" : null,
+    "custom_actions" : [
+
+    ],
+    "AXValue" : null,
+    "enabled" : true,
+    "role" : "AXApplication",
+    "children" : [
+      {
+        "AXFrame" : "{{16, 78}, {51.333333333333329, 26.333333333333329}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 78,
+          "x" : 16,
+          "width" : 51.333333333333329,
+          "height" : 26.333333333333329
+        },
+        "role_description" : "text",
+        "AXLabel" : "More",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 112.33333333333333}, {334, 37.999999999999986}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 112.33333333333333,
+          "x" : 16,
+          "width" : 334,
+          "height" : 37.999999999999986
+        },
+        "role_description" : "text",
+        "AXLabel" : "Consultation, help, and device settings stay here so Preview and Library can stay focused.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 170.33333333333331}, {117, 24}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 170.33333333333331,
+          "x" : 16,
+          "width" : 117,
+          "height" : 24
+        },
+        "role_description" : "text",
+        "AXLabel" : "Consultation",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{32, 75.666666666666671}, {338, 605.33333333333326}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 75.666666666666671,
+          "x" : 32,
+          "width" : 338,
+          "height" : 605.33333333333326
+        },
+        "role_description" : "image",
+        "AXLabel" : "WelcomeHero",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 198.33333333333331}, {370, 38}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 198.33333333333331,
+          "x" : 16,
+          "width" : 370,
+          "height" : 38
+        },
+        "role_description" : "text",
+        "AXLabel" : "Bring Curt in when you want a confident final call after you have tested a few directions.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{40, 508.33333333333331}, {94.333333333333314, 14.333333333333314}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 508.33333333333331,
+          "x" : 40,
+          "width" : 94.333333333333314,
+          "height" : 14.333333333333314
+        },
+        "role_description" : "text",
+        "AXLabel" : "Optional add-on",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{32, 534.66666666666663}, {230.66666666666663, 26.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 534.66666666666663,
+          "x" : 32,
+          "width" : 230.66666666666663,
+          "height" : 26.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Detailed Color Analysis",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{32, 569}, {270.33333333333331, 38}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 569,
+          "x" : 32,
+          "width" : 270.33333333333331,
+          "height" : 38
+        },
+        "role_description" : "text",
+        "AXLabel" : "In-depth expert review with a recorded walkthrough.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{32, 615}, {122, 20.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 615,
+          "x" : 32,
+          "width" : 122,
+          "height" : 20.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Current Project",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{32, 643.33333333333337}, {310.33333333333331, 30.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 643.33333333333337,
+          "x" : 32,
+          "width" : 310.33333333333331,
+          "height" : 30.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Bring Curt in after your free previews when you want a confident final recommendation.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{45, 714.66666666666663}, {10.333333969116211, 12.666666984558105}}",
+        "AXUniqueId" : "sparkles",
+        "frame" : {
+          "y" : 714.66666666666663,
+          "x" : 45,
+          "width" : 10.333333969116211,
+          "height" : 12.666666984558105
+        },
+        "role_description" : "image",
+        "AXLabel" : "Sparkle",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{62.333333333333336, 697.66666666666663}, {55.666666666666664, 46.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 697.66666666666663,
+          "x" : 62.333333333333336,
+          "width" : 55.666666666666664,
+          "height" : 46.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "2-3 business days",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{151.66666666666666, 716.33333333333326}, {13.666666984558105, 9}}",
+        "AXUniqueId" : "video.fill",
+        "frame" : {
+          "y" : 716.33333333333326,
+          "x" : 151.66666666666666,
+          "width" : 13.666666984558105,
+          "height" : 9
+        },
+        "role_description" : "image",
+        "AXLabel" : "Facetime Video Call",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{172.33333333333334, 705.66666666666663}, {73.666666666666657, 30.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 705.66666666666663,
+          "x" : 172.33333333333334,
+          "width" : 73.666666666666657,
+          "height" : 30.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Recorded walkthrough",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{279, 714.66666666666663}, {12.333333969116211, 12.333333969116211}}",
+        "AXUniqueId" : "sun.max.fill",
+        "frame" : {
+          "y" : 714.66666666666663,
+          "x" : 279,
+          "width" : 12.333333969116211,
+          "height" : 12.333333969116211
+        },
+        "role_description" : "image",
+        "AXLabel" : "Brightness Higher",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{298.33333333333331, 705.66666666666663}, {54, 30.333333333333371}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 705.66666666666663,
+          "x" : 298.33333333333331,
+          "width" : 54,
+          "height" : 30.333333333333371
+        },
+        "role_description" : "text",
+        "AXLabel" : "Lighting-aware",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{33.333333333333336, 769}, {16.999999999999993, 17}}",
+        "AXUniqueId" : "checkmark.circle.fill",
+        "frame" : {
+          "y" : 769,
+          "x" : 33.333333333333336,
+          "width" : 16.999999999999993,
+          "height" : 17
+        },
+        "role_description" : "image",
+        "AXLabel" : "Selected",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{59.666666666666664, 768}, {200.66666666666666, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 768,
+          "x" : 59.666666666666664,
+          "width" : 200.66666666666666,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "4-5 expert recommendations",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{33.333333333333336, 796}, {16.999999999999993, 17}}",
+        "AXUniqueId" : "checkmark.circle.fill",
+        "frame" : {
+          "y" : 796,
+          "x" : 33.333333333333336,
+          "width" : 16.999999999999993,
+          "height" : 17
+        },
+        "role_description" : "image",
+        "AXLabel" : "Selected",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{59.666666666666664, 795}, {224.33333333333334, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 795,
+          "x" : 59.666666666666664,
+          "width" : 224.33333333333334,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "Recorded walkthrough from Curt",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{33.333333333333336, 823}, {16.999999999999993, 17}}",
+        "AXUniqueId" : "checkmark.circle.fill",
+        "frame" : {
+          "y" : 823,
+          "x" : 33.333333333333336,
+          "width" : 16.999999999999993,
+          "height" : 17
+        },
+        "role_description" : "image",
+        "AXLabel" : "Selected",
+        "content_required" : false,
+        "type" : "Image",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXImage",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{59.666666666666664, 822}, {229.33333333333334, 18}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 822,
+          "x" : 59.666666666666664,
+          "width" : 229.33333333333334,
+          "height" : 18
+        },
+        "role_description" : "text",
+        "AXLabel" : "Lighting and time-of-day analysis",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{32, 857}, {338, 66.333333333333371}}",
+        "AXUniqueId" : "more.consultation.primary",
+        "frame" : {
+          "y" : 857,
+          "x" : 32,
+          "width" : 338,
+          "height" : 66.333333333333371
+        },
+        "role_description" : "button",
+        "AXLabel" : "Add Curt's Consultation for $149.00",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{31.25, 934.58331298828125}, {339.5, 49.5}}",
+        "AXUniqueId" : "more.consultation.sample",
+        "frame" : {
+          "y" : 934.58331298828125,
+          "x" : 31.25,
+          "width" : 339.5,
+          "height" : 49.5
+        },
+        "role_description" : "button",
+        "AXLabel" : "Preview Sample Walkthrough",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1019.3333333333335}, {112, 24}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1019.3333333333335,
+          "x" : 16,
+          "width" : 112,
+          "height" : 24
+        },
+        "role_description" : "text",
+        "AXLabel" : "Help & learn",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1047.3333333333335}, {365.33333333333331, 38}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1047.3333333333335,
+          "x" : 16,
+          "width" : 365.33333333333331,
+          "height" : 38
+        },
+        "role_description" : "text",
+        "AXLabel" : "Use this area for product guidance and the tools that support a paint decision.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1101.3333333333333}, {370, 94.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1101.3333333333333,
+          "x" : 16,
+          "width" : 370,
+          "height" : 94.333333333333258
+        },
+        "role_description" : "button",
+        "AXLabel" : "How the preview flow works, Revisit the core steps and free-preview promise.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1196}, {370, 94.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1196,
+          "x" : 16,
+          "width" : 370,
+          "height" : 94.333333333333258
+        },
+        "role_description" : "button",
+        "AXLabel" : "Open Color Matcher, Sample a real-world object and start a room from that direction.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1290.6666666666665}, {370, 94.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1290.6666666666665,
+          "x" : 16,
+          "width" : 370,
+          "height" : 94.333333333333258
+        },
+        "role_description" : "button",
+        "AXLabel" : "Start a new room preview, Jump straight into a fresh room and upload the photo first.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1385.3333333333333}, {370, 94.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1385.3333333333333,
+          "x" : 16,
+          "width" : 370,
+          "height" : 94.333333333333258
+        },
+        "role_description" : "button",
+        "AXLabel" : "Open the Library, Review saved projects, colors, and reports.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1499.6666666666667}, {76.666666666666657, 24}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1499.6666666666667,
+          "x" : 16,
+          "width" : 76.666666666666657,
+          "height" : 24
+        },
+        "role_description" : "text",
+        "AXLabel" : "Settings",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1527.6666666666667}, {350.33333333333331, 38}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1527.6666666666667,
+          "x" : 16,
+          "width" : 350.33333333333331,
+          "height" : 38
+        },
+        "role_description" : "text",
+        "AXLabel" : "Device permissions and app-level preferences live with the system until deeper settings screens exist.",
+        "content_required" : false,
+        "type" : "StaticText",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXStaticText",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1581.6666666666665}, {370, 114.33333333333326}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1581.6666666666665,
+          "x" : 16,
+          "width" : 370,
+          "height" : 114.33333333333326
+        },
+        "role_description" : "button",
+        "AXLabel" : "Open iPhone Settings, Manage camera, photos, and notification permissions for the app.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{16, 1696.3333333333333}, {370, 94.333333333333258}}",
+        "AXUniqueId" : null,
+        "frame" : {
+          "y" : 1696.3333333333333,
+          "x" : 16,
+          "width" : 370,
+          "height" : 94.333333333333258
+        },
+        "role_description" : "button",
+        "AXLabel" : "Preview sample consultation, Watch the add-on sample again before booking expert help.",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{20, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.preview",
+        "frame" : {
+          "y" : 750,
+          "x" : 20,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "Preview",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{142, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.library",
+        "frame" : {
+          "y" : 750,
+          "x" : 142,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "Library",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      },
+      {
+        "AXFrame" : "{{264, 750}, {118, 52}}",
+        "AXUniqueId" : "app.tab.more",
+        "frame" : {
+          "y" : 750,
+          "x" : 264,
+          "width" : 118,
+          "height" : 52
+        },
+        "role_description" : "button",
+        "AXLabel" : "More",
+        "content_required" : false,
+        "type" : "Button",
+        "title" : null,
+        "help" : null,
+        "custom_actions" : [
+
+        ],
+        "AXValue" : null,
+        "enabled" : true,
+        "role" : "AXButton",
+        "children" : [
+
+        ],
+        "subrole" : null,
+        "pid" : 52011
+      }
+    ],
+    "subrole" : null,
+    "pid" : 52011
+  }
+]
