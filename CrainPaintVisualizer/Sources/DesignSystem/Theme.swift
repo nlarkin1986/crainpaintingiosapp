@@ -145,6 +145,16 @@ final class Theme {
         (color.opacity(0.16), 24, 8)
     }
 
+    // MARK: - Background Gradient
+
+    var backgroundGradient: LinearGradient {
+        LinearGradient(
+            colors: [ColorTokens.backgroundGradientTop, ColorTokens.backgroundGradientBottom],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+
     // MARK: - Animation
 
     static let animationFast: Animation = .spring(response: 0.2)

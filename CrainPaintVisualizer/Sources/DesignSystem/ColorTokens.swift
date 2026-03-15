@@ -52,6 +52,11 @@ enum ColorTokens {
     static let stepCurrent = tealStrong
     static let stepUpcoming = Color(hex: "D9D4CB")
 
+    // MARK: - Background Gradient (light mode only)
+
+    static let backgroundGradientTop = Color(hex: "FAFAF8")
+    static let backgroundGradientBottom = Color(hex: "F5F5F7")
+
     // MARK: - Adaptive Colors (Light / Dark)
 
     static let backgroundPrimary = Color("backgroundPrimary")

@@ -2,7 +2,7 @@ import SwiftUI
 
 enum StepProgressStyle {
     case classic
-    case compact
+    case pill
 }
 
 struct StepProgressView: View {
@@ -17,8 +17,8 @@ struct StepProgressView: View {
         switch style {
         case .classic:
             classicBody
-        case .compact:
-            compactBody
+        case .pill:
+            pillBody
         }
     }
 
@@ -72,32 +72,59 @@ struct StepProgressView: View {
         .accessibilityLabel("Step \(currentStep + 1) of \(steps.count): \(steps[currentStep])")
     }
 
-    private var compactBody: some View {
-        VStack(alignment: .leading, spacing: theme.space8) {
-            HStack(spacing: theme.space8) {
-                Text("Step \(currentStep + 1) of \(steps.count)")
-                    .font(theme.captionSmall.weight(.semibold))
-                    .foregroundStyle(theme.foreground)
-
-                Spacer()
-
-                Text(steps[currentStep])
-                    .font(theme.captionSmall)
-                    .foregroundStyle(theme.mutedForeground)
-            }
-
-            HStack(spacing: theme.space8) {
-                ForEach(Array(steps.enumerated()), id: \.offset) { index, _ in
-                    Capsule()
-                        .fill(compactFill(for: index))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 6)
+    private var pillBody: some View {
+        HStack(spacing: 0) {
+            ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
+                if index > 0 {
+                    Rectangle()
+                        .fill(index <= currentStep ? theme.primary : theme.border)
+                        .frame(height: 1)
+                        .frame(maxWidth: 12)
                 }
+
+                HStack(spacing: theme.space4) {
+                    if index < currentStep {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 10, weight: .bold))
+                    }
+                    Text(step)
+                        .font(theme.label)
+                        .fontWeight(index == currentStep ? .semibold : .regular)
+                }
+                .foregroundStyle(pillTextColor(for: index))
+                .padding(.horizontal, theme.space12)
+                .padding(.vertical, theme.space4)
+                .background(pillBackground(for: index))
+                .clipShape(Capsule())
+                .shadow(
+                    color: index == currentStep ? theme.actionPrimary.opacity(0.3) : .clear,
+                    radius: index == currentStep ? 6 : 0,
+                    y: 0
+                )
             }
         }
         .padding(.horizontal, theme.spacingMD)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Step \(currentStep + 1) of \(steps.count): \(steps[currentStep])")
+        .animation(Theme.animationDefault, value: currentStep)
+    }
+
+    @ViewBuilder
+    private func pillBackground(for index: Int) -> some View {
+        if index < currentStep {
+            theme.primary
+        } else if index == currentStep {
+            theme.ctaGradient
+        } else {
+            theme.muted
+        }
+    }
+
+    private func pillTextColor(for index: Int) -> Color {
+        if index <= currentStep {
+            return .white
+        }
+        return theme.mutedForeground
     }
 
     private func circleFill(for index: Int) -> Color {
@@ -106,9 +133,4 @@ struct StepProgressView: View {
         return theme.stepUpcoming
     }
 
-    private func compactFill(for index: Int) -> Color {
-        if index < currentStep { return theme.primary }
-        if index == currentStep { return theme.primary.opacity(0.6) }
-        return theme.border
-    }
 }

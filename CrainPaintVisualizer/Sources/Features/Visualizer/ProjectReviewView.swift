@@ -45,7 +45,7 @@ struct ProjectReviewView: View {
                 .accessibilityIdentifier("projectReview.generate")
             }
         }
-        .background(theme.background.ignoresSafeArea())
+        .background(theme.backgroundGradient.ignoresSafeArea())
         .navigationTitle("Review Project")
         .navigationBarTitleDisplayMode(.inline)
     }

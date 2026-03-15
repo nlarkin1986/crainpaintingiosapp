@@ -135,6 +135,7 @@ struct ItemPickerView: View {
                 }
             }
         }
+        .background(theme.backgroundGradient.ignoresSafeArea())
         .navigationTitle("Pick Colors")
         .navigationBarTitleDisplayMode(.inline)
         .task {

@@ -59,7 +59,7 @@ struct SurfacePickerView: View {
                 .accessibilityIdentifier("surfacePicker.visualizeNow")
             }
         }
-        .background(theme.background.ignoresSafeArea())
+        .background(theme.backgroundGradient.ignoresSafeArea())
         .navigationTitle("Choose Surface")
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -6,16 +6,20 @@ struct PhotoUploadView: View {
     @Environment(Theme.self) private var theme
     @Environment(RouterPath.self) private var router
     @Environment(VisualizerViewModel.self) private var visualizerVM
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var showCamera = false
     @State private var showCameraAlert = false
     @State private var cameraAlertMessage = "Please enable camera access in Settings to take photos."
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var isImportingPhoto = false
+    @State private var hasAppeared = false
+    @State private var cameraTapCount = 0
+    @State private var libraryTapCount = 0
 
     var body: some View {
         VStack(spacing: 0) {
             ScrollView(showsIndicators: false) {
-                VStack(spacing: theme.space16) {
+                VStack(spacing: theme.space24) {
                     WizardHeader(
                         steps: wizardSteps,
                         currentStep: 0,
@@ -26,21 +30,6 @@ struct PhotoUploadView: View {
                         .padding(.horizontal, theme.spacingMD)
                         .accessibilityElement(children: .contain)
                         .accessibilityIdentifier("photoUpload.surface")
-
-                    inlineHint
-
-                    Button {
-                        router.navigate(to: .colorMatcher)
-                    } label: {
-                        HStack(spacing: theme.space8) {
-                            Image(systemName: "camera.viewfinder")
-                            Text("Need to match an object color first? Open Color Matcher")
-                        }
-                        .font(theme.captionSmall.weight(.semibold))
-                        .foregroundStyle(theme.primary)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("photoUpload.openColorMatcher")
                 }
                 .padding(.bottom, 120)
             }
@@ -49,13 +38,16 @@ struct PhotoUploadView: View {
                 AppButton("Continue to Surface", variant: .cta, icon: "arrow.right", isDisabled: !visualizerVM.hasPhoto) {
                     router.navigate(to: .surfacePicker)
                 }
+                .animation(reduceMotion ? .none : Theme.animationDefault, value: visualizerVM.hasPhoto)
                 .accessibilityIdentifier("photoUpload.nextStep")
             }
         }
-        .background(theme.background.ignoresSafeArea())
+        .background(theme.backgroundGradient.ignoresSafeArea())
         .navigationTitle("Add Photo")
         .navigationBarTitleDisplayMode(.inline)
         .sensoryFeedback(.success, trigger: visualizerVM.hasPhoto)
+        .sensoryFeedback(.impact(weight: .light), trigger: cameraTapCount)
+        .sensoryFeedback(.impact(weight: .light), trigger: libraryTapCount)
         .fullScreenCover(isPresented: $showCamera) {
             CameraView { capture in
                 visualizerVM.setPhoto(from: capture.data)
@@ -76,8 +68,13 @@ struct PhotoUploadView: View {
             isImportingPhoto = true
             defer { isImportingPhoto = false }
 
-            if let importedPhoto = try? await selectedPhoto.loadTransferable(type: ImportedPhoto.self) {
-                await visualizerVM.setPhoto(from: importedPhoto)
+            do {
+                if let data = try await selectedPhoto.loadTransferable(type: Data.self) {
+                    visualizerVM.setPhoto(from: data)
+                }
+            } catch {
+                showCameraAlert = true
+                cameraAlertMessage = "Unable to load the selected photo. Please try a different image."
             }
         }
     }
@@ -117,56 +114,59 @@ struct PhotoUploadView: View {
             .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
         } else {
             VStack(spacing: theme.space16) {
-                ZStack {
-                    Circle()
-                        .fill(theme.card)
-                        .frame(width: 80, height: 80)
-                        .shadow(color: .black.opacity(0.06), radius: 8, y: 2)
-                    Image(systemName: "arrow.up.doc")
-                        .font(.system(size: 28, weight: .medium))
-                        .foregroundStyle(theme.primary)
-                }
-
                 Text("Take or Upload Photo")
-                    .font(theme.headline)
+                    .font(theme.heading2)
                     .foregroundStyle(theme.foreground)
 
-                Text("Capture or select the room you want to visualize.")
-                    .font(theme.caption)
+                Text("Capture or select the room you want to visualize")
+                    .font(theme.bodyDefault)
                     .foregroundStyle(theme.mutedForeground)
                     .multilineTextAlignment(.center)
 
                 HStack(spacing: theme.spacingSM) {
                     uploadOptionCard(icon: "camera", label: "Camera") {
+                        cameraTapCount += 1
                         requestCameraAccess()
                     }
 
                     PhotosPicker(selection: $selectedPhoto, matching: .images) {
                         uploadOptionCardLabel(icon: "photo.on.rectangle", label: "Library")
                     }
+                    .onChange(of: selectedPhoto) { libraryTapCount += 1 }
                 }
-            }
-            .padding(theme.spacingLG)
-            .frame(maxWidth: .infinity)
-            .aspectRatio(3 / 4, contentMode: .fit)
-            .background(theme.muted.opacity(0.45))
-            .clipShape(RoundedRectangle(cornerRadius: theme.radiusLG))
-            .overlay(
-                RoundedRectangle(cornerRadius: theme.radiusLG)
-                    .stroke(theme.border, style: StrokeStyle(lineWidth: 1.5, dash: [8]))
-            )
-        }
-    }
 
-    private var inlineHint: some View {
-        HStack(alignment: .top, spacing: theme.space8) {
-            Image(systemName: "lightbulb")
-                .foregroundStyle(theme.primary)
-            Text("Use even light and keep the wall or surface fully in frame for the most believable preview.")
-                .font(theme.caption)
-                .foregroundStyle(theme.mutedForeground)
+                Divider()
+                    .foregroundStyle(theme.border)
+
+                // Inline tip
+                HStack(alignment: .top, spacing: theme.space8) {
+                    Image(systemName: "lightbulb.fill")
+                        .font(.system(size: 14))
+                        .foregroundStyle(theme.primary.opacity(0.7))
+                    Text("Use even lighting for the most believable preview")
+                        .font(theme.captionSmall)
+                        .foregroundStyle(theme.mutedForeground)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            }
+            .padding(theme.space24)
+            .frame(maxWidth: .infinity)
+            .background(theme.card)
+            .clipShape(RoundedRectangle(cornerRadius: theme.radiusXL))
+            .overlay(
+                RoundedRectangle(cornerRadius: theme.radiusXL)
+                    .stroke(theme.border.opacity(0.8), lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(0.12), radius: 12, y: 4)
+            .offset(y: hasAppeared ? 0 : 30)
+            .opacity(hasAppeared ? 1 : 0)
+            .animation(reduceMotion ? .none : .spring(response: 0.6, dampingFraction: 0.8), value: hasAppeared)
+            .onAppear {
+                guard !hasAppeared else { return }
+                hasAppeared = true
+            }
         }
-        .padding(.horizontal, theme.spacingMD)
     }
 
     private func uploadOptionCard(icon: String, label: String, action: @escaping () -> Void) -> some View {

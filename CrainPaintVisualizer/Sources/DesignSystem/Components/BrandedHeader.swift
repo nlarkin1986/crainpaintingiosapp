@@ -160,11 +160,11 @@ struct WizardHeader: View {
     var helper: String? = nil
 
     var body: some View {
-        VStack(alignment: .leading, spacing: theme.space8) {
+        VStack(alignment: .leading, spacing: theme.space16) {
             StepProgressView(
                 steps: steps,
                 currentStep: currentStep,
-                style: .compact
+                style: .pill
             )
 
             if let helper {
@@ -174,7 +174,7 @@ struct WizardHeader: View {
                     .padding(.horizontal, theme.spacingMD)
             }
         }
-        .padding(.top, theme.space8)
+        .padding(.top, theme.space20)
     }
 }
 
