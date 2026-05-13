@@ -23,7 +23,6 @@ export default function StatusPage({ params }: { params: Promise<{ orderId: stri
 
   useEffect(() => {
     const supabase = createClient();
-    let pollInterval: NodeJS.Timeout;
 
     const checkStatus = async () => {
       const { data: order } = await supabase
@@ -51,7 +50,7 @@ export default function StatusPage({ params }: { params: Promise<{ orderId: stri
 
     // Poll every 5 seconds
     checkStatus();
-    pollInterval = setInterval(checkStatus, 5000);
+    const pollInterval = setInterval(checkStatus, 5000);
 
     return () => clearInterval(pollInterval);
   }, [orderId, router]);

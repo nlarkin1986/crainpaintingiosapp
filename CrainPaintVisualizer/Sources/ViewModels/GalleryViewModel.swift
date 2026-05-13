@@ -22,7 +22,19 @@ final class GalleryViewModel {
     }
 
     private func generatedSections(using visualizer: VisualizerViewModel) -> [RoomSection] {
-        guard !visualizer.selectedColors.isEmpty else { return [] }
+        if !visualizer.generatedVisualizations.isEmpty {
+            return [
+                RoomSection(
+                    id: "generated-\(roomName(for: visualizer).lowercased().replacingOccurrences(of: " ", with: "-"))",
+                    name: roomName(for: visualizer),
+                    icon: iconName(for: visualizer.selectedSurface),
+                    visualizations: visualizer.generatedVisualizations
+                )
+            ]
+        }
+
+        guard !visualizer.selectedColors.isEmpty,
+              visualizer.isShowingGenerationPlaceholders else { return [] }
 
         let roomName = roomName(for: visualizer)
         let surface = visualizer.surfaceDescription.isEmpty ? "Selected Surface" : visualizer.surfaceDescription

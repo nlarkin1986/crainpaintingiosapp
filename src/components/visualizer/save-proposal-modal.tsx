@@ -30,7 +30,7 @@ export function SaveProposalModal({ results, onClose, onSaved, surface }: SavePr
 
   useEffect(() => {
     if (!clientSearch.trim() || !showSearch) {
-      setClientSearchResults([]);
+      queueMicrotask(() => setClientSearchResults([]));
       return;
     }
     clearTimeout(searchTimeout.current);

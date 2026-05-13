@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put, type PutCommandOptions } from "@vercel/blob";
+import { put } from "@vercel/blob";
 
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
 import { nanoid } from "nanoid";
 import { buildPaintPrompt, normalizeCustomInstruction } from "@/lib/prompt";
 import { rateLimit } from "@/lib/rate-limit";
 import { generatePaintVisualization, GeminiGenerationError } from "@/lib/gemini";
+import {
+  assertCanCreateVisualization,
+  incrementCompletedVisualization,
+  normalizeDeviceId,
+  upsertStoreKitEntitlement,
+} from "@/lib/visualization-meter";
+import { StoreKitVerificationError } from "@/lib/storekit";
 import {
   extensionForMimeType,
   isSupportedImageMimeType,
@@ -35,12 +42,14 @@ export async function POST(request: NextRequest) {
     const surface = formData.get("surface") as string | null;
     const customInstruction = formData.get("customInstruction") as string | null;
     const brand = (formData.get("brand") as string | null) ?? "benjamin_moore";
+    const deviceId = normalizeDeviceId(formData.get("deviceId"));
+    const signedTransactionJWS = formData.get("signedTransactionJWS") as string | null;
     const normalizedCustomInstruction = normalizeCustomInstruction(customInstruction);
 
     // --- Validate required fields ---
-    if (!image || !colorName || !colorHex || !colorNumber || !surface) {
+    if (!image || !colorName || !colorHex || !colorNumber || !surface || !deviceId) {
       return NextResponse.json(
-        { error: "Missing required fields: image, colorName, colorHex, colorNumber, surface" },
+        { error: "Missing required fields: image, colorName, colorHex, colorNumber, surface, deviceId" },
         { status: 400 }
       );
     }
@@ -88,6 +97,22 @@ export async function POST(request: NextRequest) {
         { status: 429, headers: { "X-RateLimit-Remaining": "0" } }
       );
     }
+
+    // StoreKit entitlements are verified server-side when supplied. If a device
+    // has no active entitlement, only successful completed renders count.
+    try {
+      await upsertStoreKitEntitlement(deviceId, signedTransactionJWS);
+    } catch (err) {
+      if (err instanceof StoreKitVerificationError) {
+        return NextResponse.json(
+          { error: "Purchase could not be verified.", code: err.code },
+          { status: 402 }
+        );
+      }
+      throw err;
+    }
+
+    let usage = await assertCanCreateVisualization(deviceId);
 
     // --- Upload original image to Vercel Blob ---
     const imageBuffer = Buffer.from(await image.arrayBuffer());
@@ -160,9 +185,11 @@ export async function POST(request: NextRequest) {
       token: blobToken,
     });
 
+    usage = await incrementCompletedVisualization(deviceId);
+
     // --- Return response ---
     return NextResponse.json(
-      { originalUrl, resultUrl, shareId },
+      { originalUrl, resultUrl, shareId, usage },
       {
         status: 200,
         headers: { "X-RateLimit-Remaining": String(remaining) },
@@ -170,6 +197,23 @@ export async function POST(request: NextRequest) {
     );
   } catch (err) {
     console.error("Visualize API error:", err);
+    if (
+      err &&
+      typeof err === "object" &&
+      "code" in err &&
+      (err as { code?: string }).code === "FREE_LIMIT_EXCEEDED"
+    ) {
+      const limited = err as { status?: number; usage?: unknown };
+      return NextResponse.json(
+        {
+          error: "You have used your free AI paint visualizations.",
+          code: "FREE_LIMIT_EXCEEDED",
+          usage: limited.usage,
+        },
+        { status: limited.status ?? 402 }
+      );
+    }
+
     return NextResponse.json(
       { error: "An unexpected error occurred. Please try again." },
       { status: 500 }

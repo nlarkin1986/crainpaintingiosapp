@@ -18,7 +18,7 @@ const SURFACE_PROMPT_MAP: Record<string, string> = {
 
 const MAX_CUSTOM_INSTRUCTION_LENGTH = 80;
 const IMAGE_EDIT_GUARDRAILS =
-  "Edit the provided photo only. Keep the original camera angle, framing, depth, and lighting unchanged. Do not add, remove, or reshape objects, architecture, furniture, decor, people, sky, or landscaping. Preserve all surface textures and shadows; only change paint color on the requested surface.";
+  "Edit the provided photo only and return only the edited image. Keep the original camera angle, lens perspective, framing, room geometry, architecture, furniture, decor, windows, reflections, people, pets, sky, and landscaping unchanged. Preserve existing material texture, grain, plaster variation, shadow direction, highlights, occlusion, and natural lighting. Do not smooth walls, replace objects, change staging, add labels, or create a render-like illustration. Change paint color only on the requested surface with a realistic professional paint coating.";
 
 function withImageEditGuardrails(surfaceInstruction: string): string {
   return `${IMAGE_EDIT_GUARDRAILS} ${surfaceInstruction}`;
@@ -75,7 +75,7 @@ export function buildPaintPrompt(params: {
   // Custom instruction overrides surface lookup
   if (customInstruction) {
     return withImageEditGuardrails(
-      `Repaint ONLY the ${customInstruction} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`
+      `Repaint ONLY the user-described surface "${customInstruction}" to ${colorDescription}. Use a realistic residential paint finish with natural edge discipline at trim, corners, fixtures, and object boundaries. Keep every other element completely unchanged.`
     );
   }
 
@@ -83,7 +83,7 @@ export function buildPaintPrompt(params: {
   // (UI prevents this via disabled button, but be defensive)
   if (params.surface === "custom") {
     return withImageEditGuardrails(
-      `Repaint ONLY the selected surface to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`
+      `Repaint ONLY the selected surface to ${colorDescription}. If the exact surface is ambiguous, choose the broad paintable wall-like surface most likely intended and leave all non-target surfaces unchanged.`
     );
   }
 
@@ -102,6 +102,6 @@ export function buildPaintPrompt(params: {
   // Fallback for any unknown surface key
   const normalizedSurface = sanitizePromptValue(params.surface);
   return withImageEditGuardrails(
-    `Repaint ONLY the ${normalizedSurface} to ${colorDescription}. Apply a smooth, professional paint finish. Keep all other elements completely unchanged. Preserve the original camera angle, lighting, shadows, and textures.`
+    `Repaint ONLY the ${normalizedSurface} to ${colorDescription}. Use a realistic residential paint finish with natural edge discipline at trim, corners, fixtures, and object boundaries. Keep every other element completely unchanged.`
   );
 }

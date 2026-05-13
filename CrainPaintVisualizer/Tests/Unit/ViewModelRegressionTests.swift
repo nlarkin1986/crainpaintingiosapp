@@ -117,6 +117,22 @@ final class ViewModelRegressionTests: XCTestCase {
         XCTAssertEqual(viewModel.state, .error("Couldn’t read a clear color from that photo. Try centering the sample and using even light."))
     }
 
+    func testVisualizerLocksOnlyAfterFiveCompletedRendersWithoutEntitlement() {
+        let defaults = UserDefaults(suiteName: "VisualizerMeterTests")!
+        defaults.removePersistentDomain(forName: "VisualizerMeterTests")
+
+        let viewModel = VisualizerViewModel(userDefaults: defaults)
+
+        viewModel.usage = VisualizationUsage(completedCount: 4, freeLimit: 5, remainingFree: 1, hasEntitlement: false)
+        XCTAssertFalse(viewModel.isLocked)
+
+        viewModel.usage = VisualizationUsage(completedCount: 5, freeLimit: 5, remainingFree: 0, hasEntitlement: false)
+        XCTAssertTrue(viewModel.isLocked)
+
+        viewModel.usage = VisualizationUsage(completedCount: 5, freeLimit: 5, remainingFree: 0, hasEntitlement: true)
+        XCTAssertFalse(viewModel.isLocked)
+    }
+
     private func makeReport(id: String, createdAt: Date) -> MasterReport {
         MasterReport(
             id: id,

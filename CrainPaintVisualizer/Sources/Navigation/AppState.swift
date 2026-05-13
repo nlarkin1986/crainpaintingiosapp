@@ -18,6 +18,8 @@ final class AppState {
         let arguments = Set(processInfo.arguments)
         if arguments.contains("UITEST_RESET_STATE") {
             userDefaults.removeObject(forKey: Self.onboardingKey)
+            userDefaults.removeObject(forKey: "completedVisualizations")
+            userDefaults.removeObject(forKey: "visualizerEntitlementActive")
             AppStorage.resetAllFiles()
         }
 

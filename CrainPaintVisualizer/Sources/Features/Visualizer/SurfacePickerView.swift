@@ -83,14 +83,37 @@ struct SurfacePickerView: View {
 
             FloatingActionBar {
                 let isDisabled = visualizerVM.selectedSurface == nil || (visualizerVM.selectedSurface == .custom && visualizerVM.customSurfaceText.isEmpty)
-                AppButton("Visualize Now", variant: .cta, icon: "wand.and.stars", isDisabled: isDisabled) {
-                    router.navigate(to: .resultsGallery)
+                VStack(spacing: theme.spacingSM) {
+                    if !visualizerVM.hasVisualizerEntitlement {
+                        Text("\(visualizerVM.remainingFreeRenders) free AI renders left")
+                            .font(theme.micro)
+                            .foregroundStyle(theme.mutedForeground)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+
+                    AppButton(
+                        visualizerVM.isLocked ? "Unlock More AI Renders" : "Generate AI Visualization",
+                        variant: .cta,
+                        icon: visualizerVM.isLocked ? "lock.fill" : "wand.and.stars",
+                        isDisabled: isDisabled
+                    ) {
+                        if visualizerVM.isLocked {
+                            visualizerVM.showPaywall = true
+                        } else {
+                            router.navigate(to: .resultsGallery)
+                        }
+                    }
+                    .accessibilityIdentifier("surfacePicker.visualizeNow")
                 }
-                .accessibilityIdentifier("surfacePicker.visualizeNow")
             }
         }
         .navigationTitle("Select Surface")
         .navigationBarTitleDisplayMode(.large)
+        .sheet(isPresented: Bindable(visualizerVM).showPaywall) {
+            VisualizerPaywallView()
+                .environment(theme)
+                .environment(visualizerVM)
+        }
     }
     
     // MARK: - Helper Views

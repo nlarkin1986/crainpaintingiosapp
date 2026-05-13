@@ -9,13 +9,17 @@ struct Visualization: Identifiable, Hashable {
     let beforeImageName: String
     let afterImageName: String
     let surface: String
+    var originalImageURL: URL? = nil
+    var resultImageURL: URL? = nil
+    var shareId: String? = nil
+    var isAIGenerated: Bool = false
 
     var inferredBrand: PaintBrand {
         colorCode.uppercased().contains("SW") ? .sherwinWilliams : .benjaminMoore
     }
 
     var hasReferenceImages: Bool {
-        !beforeImageName.isEmpty && !afterImageName.isEmpty
+        resultImageURL != nil || (!beforeImageName.isEmpty && !afterImageName.isEmpty)
     }
 
     var asPaintColor: PaintColor {

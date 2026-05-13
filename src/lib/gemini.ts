@@ -1,8 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 
-const DEFAULT_PRIMARY_MODEL = "nano-banana-pro-preview";
+const DEFAULT_PRIMARY_MODEL = "gemini-2.5-flash-image";
 const DEFAULT_FALLBACK_MODEL = "gemini-3.1-flash-image-preview";
-const DEFAULT_SECONDARY_FALLBACK_MODEL = "gemini-2.5-flash-image";
+const DEFAULT_SECONDARY_FALLBACK_MODEL = "gemini-2.0-flash-preview-image-generation";
 const REQUEST_TIMEOUT_MS = 45_000;
 const MAX_RETRIES = 2;
 

@@ -59,7 +59,7 @@ export function AboutSection() {
               />
             </div>
             <p className="text-lg leading-relaxed text-foreground">
-              Curt Crain isn't just a painter—he's an artist who happens to
+              Curt Crain isn&apos;t just a painter—he&apos;s an artist who happens to
               excel at transforming homes and commercial spaces. With over two
               decades of hands-on experience, Curt has developed an eye for
               color that goes beyond paint chips and fan decks.
@@ -73,11 +73,11 @@ export function AboutSection() {
               accidental.
             </p>
             <p className="text-lg leading-relaxed text-foreground">
-              Whether you're refreshing a single room or orchestrating a
-              whole-home color transformation, Curt's consultations provide the
-              professional guidance that eliminates guesswork and buyer's
+              Whether you&apos;re refreshing a single room or orchestrating a
+              whole-home color transformation, Curt&apos;s consultations provide the
+              professional guidance that eliminates guesswork and buyer&apos;s
               remorse. His recommendations are grounded in real-world experience
-              with thousands of projects and refined by an artist's sensitivity
+              with thousands of projects and refined by an artist&apos;s sensitivity
               to nuance.
             </p>
           </div>

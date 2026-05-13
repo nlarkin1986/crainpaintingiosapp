@@ -25,6 +25,7 @@ final class GalleryViewModelTests: XCTestCase {
         _ = visualizer.addColor(whiteDove)
         _ = visualizer.addColor(haleNavy)
         visualizer.selectedSurface = .walls
+        visualizer.generationState = .preparing
 
         let sections = gallery.sections(using: visualizer)
 
@@ -43,7 +44,7 @@ final class GalleryViewModelTests: XCTestCase {
         XCTAssertEqual(sections.first?.name, "Living Room")
     }
 
-    func testVisualizationLookupFindsGeneratedVisualization() {
+    func testVisualizationLookupFindsCompletedAIGeneratedVisualization() {
         let visualizer = VisualizerViewModel()
         let gallery = GalleryViewModel()
         let color = PaintColor(
@@ -54,10 +55,27 @@ final class GalleryViewModelTests: XCTestCase {
             brand: .benjaminMoore
         )
 
-        _ = visualizer.addColor(color)
-        let visualization = gallery.visualization(for: "generated-0-\(color.id)", using: visualizer)
+        visualizer.generatedVisualizations = [
+            Visualization(
+                id: "share_123",
+                colorName: color.name,
+                colorHex: color.hex,
+                colorCode: color.number,
+                roomName: "Current Room",
+                beforeImageName: "",
+                afterImageName: "",
+                surface: "Full Walls",
+                originalImageURL: URL(string: "https://example.com/original.jpg"),
+                resultImageURL: URL(string: "https://example.com/result.jpg"),
+                shareId: "share_123",
+                isAIGenerated: true
+            )
+        ]
+
+        let visualization = gallery.visualization(for: "share_123", using: visualizer)
 
         XCTAssertEqual(visualization?.colorName, "White Dove")
-        XCTAssertEqual(visualization?.surface, "Selected Surface")
+        XCTAssertEqual(visualization?.surface, "Full Walls")
+        XCTAssertEqual(visualization?.resultImageURL?.absoluteString, "https://example.com/result.jpg")
     }
 }

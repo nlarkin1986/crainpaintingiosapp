@@ -28,17 +28,31 @@ struct VisualizationDetailView: View {
                     .padding(.horizontal, theme.spacingMD)
 
                     if showBeforeAfter {
-                        ComparisonSliderView(
-                            beforeImage: beforeImage(for: visualization),
-                            afterImage: afterImage(for: visualization)
-                        )
-                        .aspectRatio(3/4, contentMode: .fit)
-                        .padding(.horizontal, theme.spacingMD)
-                        .onTapGesture { showFullscreen = true }
+                        if let resultURL = visualization.resultImageURL {
+                            AsyncComparisonSliderView(
+                                beforeURL: visualization.originalImageURL,
+                                afterURL: resultURL,
+                                fallbackBeforeImage: referencePhoto ?? visualizerVM.photo
+                            )
+                            .aspectRatio(3/4, contentMode: .fit)
+                            .padding(.horizontal, theme.spacingMD)
+                        } else {
+                            ComparisonSliderView(
+                                beforeImage: beforeImage(for: visualization),
+                                afterImage: afterImage(for: visualization)
+                            )
+                            .aspectRatio(3/4, contentMode: .fit)
+                            .padding(.horizontal, theme.spacingMD)
+                            .onTapGesture { showFullscreen = true }
+                        }
                     } else {
                         afterOnlyPreview(for: visualization)
                             .padding(.horizontal, theme.spacingMD)
-                            .onTapGesture { showFullscreen = true }
+                            .onTapGesture {
+                                if visualization.resultImageURL == nil {
+                                    showFullscreen = true
+                                }
+                            }
                     }
 
                     VStack(spacing: theme.spacingMD) {
@@ -232,7 +246,22 @@ extension VisualizationDetailView {
 
     private func afterOnlyPreview(for visualization: Visualization) -> some View {
         Group {
-            if let photo = referencePhoto ?? visualizerVM.photo {
+            if let resultURL = visualization.resultImageURL {
+                AsyncImage(url: resultURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    case .failure:
+                        unavailableImage
+                    default:
+                        ProgressView()
+                            .tint(theme.primary)
+                    }
+                }
+                .background(theme.muted.opacity(0.25))
+            } else if let photo = referencePhoto ?? visualizerVM.photo {
                 Image(uiImage: tintedPreviewImage(from: photo, hex: visualization.colorHex))
                     .resizable()
                     .scaledToFit()
@@ -256,6 +285,16 @@ extension VisualizationDetailView {
         .clipShape(RoundedRectangle(cornerRadius: theme.radiusXL))
     }
 
+    private var unavailableImage: some View {
+        RoundedRectangle(cornerRadius: theme.radiusXL)
+            .fill(theme.muted)
+            .overlay(
+                Label("Generated image unavailable", systemImage: "wifi.exclamationmark")
+                    .font(theme.caption)
+                    .foregroundStyle(theme.mutedForeground)
+            )
+    }
+
     private func tintedPreviewImage(from image: UIImage, hex: String) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: image.size)
         let overlayColor = UIColor(Color(hex: hex))
@@ -267,6 +306,129 @@ extension VisualizationDetailView {
             context.cgContext.setFillColor(overlayColor.withAlphaComponent(0.3).cgColor)
             context.cgContext.fill(rect)
         }
+    }
+}
+
+private struct AsyncComparisonSliderView: View {
+    @Environment(Theme.self) private var theme
+
+    let beforeURL: URL?
+    let afterURL: URL
+    let fallbackBeforeImage: UIImage?
+
+    @State private var sliderPosition: CGFloat = 0.5
+    @GestureState private var dragOffset: CGFloat = 0
+
+    var body: some View {
+        GeometryReader { geo in
+            let width = geo.size.width
+            let currentX = (sliderPosition * width) + dragOffset
+
+            ZStack {
+                remoteImage(url: afterURL, fallback: nil)
+                    .frame(width: width, height: geo.size.height)
+
+                remoteImage(url: beforeURL, fallback: fallbackBeforeImage)
+                    .frame(width: width, height: geo.size.height)
+                    .mask(
+                        HStack(spacing: 0) {
+                            Rectangle()
+                                .frame(width: max(0, min(currentX, width)))
+                            Spacer(minLength: 0)
+                        }
+                    )
+
+                ZStack {
+                    Rectangle()
+                        .fill(Color.white)
+                        .frame(width: 2)
+                        .shadow(color: .black.opacity(0.3), radius: 4)
+
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 44, height: 44)
+                        .shadow(color: .black.opacity(0.2), radius: 6)
+                        .overlay(
+                            HStack(spacing: theme.space2) {
+                                Image(systemName: "chevron.left")
+                                Image(systemName: "chevron.right")
+                            }
+                            .font(theme.micro)
+                            .foregroundStyle(theme.primary)
+                        )
+                }
+                .position(x: max(0, min(currentX, width)), y: geo.size.height / 2)
+
+                HStack {
+                    comparisonLabel("BEFORE", foreground: .white, background: .black.opacity(0.45))
+                    Spacer()
+                    comparisonLabel("AI RESULT", foreground: theme.actionPrimaryText, background: theme.actionPrimary.opacity(0.9))
+                }
+                .frame(maxHeight: .infinity, alignment: .bottom)
+            }
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture()
+                    .updating($dragOffset) { value, state, _ in
+                        state = value.translation.width
+                    }
+                    .onEnded { value in
+                        let newPosition = sliderPosition + (value.translation.width / width)
+                        withAnimation(.spring(response: 0.25)) {
+                            sliderPosition = max(0, min(1, newPosition))
+                        }
+                    }
+            )
+        }
+        .clipShape(RoundedRectangle(cornerRadius: theme.radiusXL))
+        .accessibilityElement()
+        .accessibilityLabel("Before and AI paint result comparison")
+        .accessibilityValue("\(Int(sliderPosition * 100))% showing before image")
+    }
+
+    private func remoteImage(url: URL?, fallback: UIImage?) -> some View {
+        Group {
+            if let url {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image.resizable().scaledToFit()
+                    case .failure:
+                        fallbackView(fallback)
+                    default:
+                        ProgressView().tint(theme.primary)
+                    }
+                }
+            } else {
+                fallbackView(fallback)
+            }
+        }
+        .background(theme.muted.opacity(0.25))
+    }
+
+    @ViewBuilder
+    private func fallbackView(_ image: UIImage?) -> some View {
+        if let image {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+        } else {
+            RoundedRectangle(cornerRadius: theme.radiusXL)
+                .fill(theme.muted)
+                .overlay(Image(systemName: "photo").foregroundStyle(theme.mutedForeground))
+        }
+    }
+
+    private func comparisonLabel(_ text: String, foreground: Color, background: Color) -> some View {
+        Text(text)
+            .font(theme.micro)
+            .tracking(1)
+            .foregroundStyle(foreground)
+            .padding(.horizontal, theme.space12)
+            .padding(.vertical, theme.space4)
+            .background(background)
+            .clipShape(Capsule())
+            .padding(theme.space16)
     }
 }
 

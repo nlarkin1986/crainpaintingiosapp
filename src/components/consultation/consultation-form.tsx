@@ -410,7 +410,7 @@ export function ConsultationForm({
         <div className="animate-[stepFadeIn_0.3s_ease-out]">
           <h2 className="mb-2 font-heading text-2xl font-bold">Your Email</h2>
           <p className="mb-6 text-lg text-muted-foreground">
-            We'll send your color report to this email
+            We&apos;ll send your color report to this email
           </p>
 
           <Input

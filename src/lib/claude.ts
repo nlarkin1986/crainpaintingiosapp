@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import type { ColorRecommendation } from '@/types/consultation';
 
 const anthropic = new Anthropic();
+const DEFAULT_CLAUDE_REPORT_MODEL = 'claude-sonnet-4-5-20250929';
 
 export interface ReportGenerationInput {
   roomType: string;
@@ -26,18 +27,56 @@ export interface GeneratedReport {
   surfacePrep: string[];
 }
 
+function assertStringArray(value: unknown, field: string): asserts value is string[] {
+  if (!Array.isArray(value) || value.some((item) => typeof item !== 'string')) {
+    throw new Error(`Report response field "${field}" must be an array of strings`);
+  }
+}
+
+function validateGeneratedReport(value: unknown): GeneratedReport {
+  if (!value || typeof value !== 'object') {
+    throw new Error('Report response must be a JSON object');
+  }
+
+  const report = value as GeneratedReport;
+  if (typeof report.executiveSummary !== 'string' || report.executiveSummary.trim().length < 20) {
+    throw new Error('Report response is missing a usable executive summary');
+  }
+
+  if (!Array.isArray(report.recommendations) || report.recommendations.length === 0) {
+    throw new Error('Report response is missing color recommendations');
+  }
+
+  for (const recommendation of report.recommendations) {
+    if (
+      !recommendation ||
+      typeof recommendation.colorName !== 'string' ||
+      typeof recommendation.colorNumber !== 'string' ||
+      typeof recommendation.hex !== 'string' ||
+      typeof recommendation.rationale !== 'string' ||
+      typeof recommendation.finishSheen !== 'string'
+    ) {
+      throw new Error('Report response includes a malformed color recommendation');
+    }
+  }
+
+  assertStringArray(report.applicationTips, 'applicationTips');
+  assertStringArray(report.surfacePrep, 'surfacePrep');
+  return report;
+}
+
 export async function generateReport(input: ReportGenerationInput): Promise<GeneratedReport> {
   const recCount = input.packageType === 'quick_review' ? '2-3'
     : input.packageType === 'video_consultation' ? '4-5'
     : '6-8';
 
   const response = await anthropic.messages.create({
-    model: 'claude-sonnet-4-5-20250929',
+    model: process.env.CLAUDE_REPORT_MODEL ?? DEFAULT_CLAUDE_REPORT_MODEL,
     max_tokens: 4096,
     messages: [
       {
         role: 'user',
-        content: `You are Curt Crain, a professional painter, fine artist, and Benjamin Moore color specialist with 20+ years of experience. Generate a detailed color consultation report.
+        content: `You are writing in Curt Crain's expert voice: a practical professional painter, fine artist, and Benjamin Moore color specialist. Generate a detailed color consultation report that feels human-reviewed, specific, and buildable.
 
 ## Context
 - Room type: ${input.roomType}
@@ -56,8 +95,9 @@ Generate ${recCount} color recommendations. For each:
 2. Write a detailed rationale (2-3 sentences) explaining WHY this color works for this specific room, considering lighting, mood, and existing preferences
 3. Specify finish/sheen recommendation
 4. Consider how the color shifts from morning to evening light
+5. Avoid generic design clichés. Mention practical painting constraints when relevant: sheen, prep, undertones, adjacent trim, natural/artificial light, and sample testing.
 
-Return a JSON object with this exact structure:
+Return ONLY valid JSON with this exact structure and no markdown:
 {
   "executiveSummary": "2-3 paragraph executive summary of the consultation",
   "recommendations": [
@@ -73,7 +113,7 @@ Return a JSON object with this exact structure:
   "surfacePrep": ["prep step 1", "prep step 2"]
 }
 
-Write in a warm, expert tone. Be specific about lighting conditions and how they interact with each color.`
+Write in a warm, expert tone. Be specific about lighting conditions and how they interact with each color. Do not recommend unsafe, unavailable, or invented paint products.`
       }
     ],
   });
@@ -88,5 +128,5 @@ Write in a warm, expert tone. Be specific about lighting conditions and how they
     throw new Error('Could not parse report from Claude response');
   }
 
-  return JSON.parse(jsonMatch[0]);
+  return validateGeneratedReport(JSON.parse(jsonMatch[0]));
 }

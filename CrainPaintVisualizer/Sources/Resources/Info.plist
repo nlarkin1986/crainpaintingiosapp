@@ -26,5 +26,7 @@
 	<string>We need photo library access to select room photos for paint visualization</string>
 	<key>STRIPE_MERCHANT_IDENTIFIER</key>
 	<string>merchant.com.crainpainting.visualizer</string>
+	<key>VISUALIZER_UNLOCK_PRODUCT_ID</key>
+	<string>com.crainpainting.visualizer.pro.lifetime</string>
 </dict>
 </plist>

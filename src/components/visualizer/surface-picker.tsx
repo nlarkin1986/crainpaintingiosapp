@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, PaintRoller, LayoutGrid, DoorOpen, Minus, ArrowUpFromDot, PanelLeftClose, Pencil, Home, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 
 interface SurfacePickerProps {
   selectedSurface: string;
@@ -43,18 +43,13 @@ export function SurfacePicker({
   onBack,
   isSubmitting,
 }: SurfacePickerProps) {
-  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
+  const photoPreviewUrl = useMemo(() => photo ? URL.createObjectURL(photo) : null, [photo]);
 
   useEffect(() => {
-    if (!photo) {
-      setPhotoPreviewUrl(null);
-      return;
+    if (photoPreviewUrl) {
+      return () => URL.revokeObjectURL(photoPreviewUrl);
     }
-
-    const objectUrl = URL.createObjectURL(photo);
-    setPhotoPreviewUrl(objectUrl);
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [photo]);
+  }, [photoPreviewUrl]);
 
   return (
     <div className="flex flex-col gap-6">
